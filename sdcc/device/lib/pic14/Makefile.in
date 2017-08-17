@@ -12,7 +12,7 @@
 # but WITHOUT ANY WARRANTY, to the extent permitted by law; without
 # even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 # PARTICULAR PURPOSE.
-
+@ARCH@ = p16f87
 @SET_MAKE@
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
