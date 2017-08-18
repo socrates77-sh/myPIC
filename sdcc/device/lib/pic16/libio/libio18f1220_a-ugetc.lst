@@ -1,0 +1,433 @@
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:25:14 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f1220
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _usart_getc
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _PORTAbits
+                      00021         extern  _PORTBbits
+                      00022         extern  _LATAbits
+                      00023         extern  _LATBbits
+                      00024         extern  _TRISAbits
+                      00025         extern  _TRISBbits
+                      00026         extern  _PIE1bits
+                      00027         extern  _PIR1bits
+                      00028         extern  _IPR1bits
+                      00029         extern  _PIE2bits
+                      00030         extern  _PIR2bits
+                      00031         extern  _IPR2bits
+                      00032         extern  _EECON1bits
+                      00033         extern  _BAUDCTLbits
+                      00034         extern  _RCSTAbits
+                      00035         extern  _TXSTAbits
+                      00036         extern  _T3CONbits
+                      00037         extern  _ECCPASbits
+                      00038         extern  _CCP1CONbits
+                      00039         extern  _ADCON2bits
+                      00040         extern  _ADCON1bits
+                      00041         extern  _ADCON0bits
+                      00042         extern  _T2CONbits
+                      00043         extern  _T1CONbits
+                      00044         extern  _RCONbits
+                      00045         extern  _WDTCONbits
+                      00046         extern  _LVDCONbits
+                      00047         extern  _OSCCONbits
+                      00048         extern  _T0CONbits
+                      00049         extern  _STATUSbits
+                      00050         extern  _INTCON3bits
+                      00051         extern  _INTCON2bits
+                      00052         extern  _INTCONbits
+                      00053         extern  _STKPTRbits
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054         extern  _USART_Status
+                      00055         extern  _PORTA
+                      00056         extern  _PORTB
+                      00057         extern  _LATA
+                      00058         extern  _LATB
+                      00059         extern  _TRISA
+                      00060         extern  _TRISB
+                      00061         extern  _PIE1
+                      00062         extern  _PIR1
+                      00063         extern  _IPR1
+                      00064         extern  _PIE2
+                      00065         extern  _PIR2
+                      00066         extern  _IPR2
+                      00067         extern  _EECON1
+                      00068         extern  _EECON2
+                      00069         extern  _EEDATA
+                      00070         extern  _EEADR
+                      00071         extern  _BAUDCTL
+                      00072         extern  _RCSTA
+                      00073         extern  _TXSTA
+                      00074         extern  _TXREG
+                      00075         extern  _RCREG
+                      00076         extern  _SPBRG
+                      00077         extern  _SPBRGH
+                      00078         extern  _T3CON
+                      00079         extern  _TMR3L
+                      00080         extern  _TMR3H
+                      00081         extern  _ECCPAS
+                      00082         extern  _CCP1CON
+                      00083         extern  _CCPR1L
+                      00084         extern  _CCPR1H
+                      00085         extern  _ADCON2
+                      00086         extern  _ADCON1
+                      00087         extern  _ADCON0
+                      00088         extern  _ADRESL
+                      00089         extern  _ADRESH
+                      00090         extern  _T2CON
+                      00091         extern  _PR2
+                      00092         extern  _TMR2
+                      00093         extern  _T1CON
+                      00094         extern  _TMR1L
+                      00095         extern  _TMR1H
+                      00096         extern  _RCON
+                      00097         extern  _WDTCON
+                      00098         extern  _LVDCON
+                      00099         extern  _OSCCON
+                      00100         extern  _T0CON
+                      00101         extern  _TMR0L
+                      00102         extern  _TMR0H
+                      00103         extern  _STATUS
+                      00104         extern  _FSR2L
+                      00105         extern  _FSR2H
+                      00106         extern  _PLUSW2
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107         extern  _PREINC2
+                      00108         extern  _POSTDEC2
+                      00109         extern  _POSTINC2
+                      00110         extern  _INDF2
+                      00111         extern  _BSR
+                      00112         extern  _FSR1L
+                      00113         extern  _FSR1H
+                      00114         extern  _PLUSW1
+                      00115         extern  _PREINC1
+                      00116         extern  _POSTDEC1
+                      00117         extern  _POSTINC1
+                      00118         extern  _INDF1
+                      00119         extern  _WREG
+                      00120         extern  _FSR0L
+                      00121         extern  _FSR0H
+                      00122         extern  _PLUSW0
+                      00123         extern  _PREINC0
+                      00124         extern  _POSTDEC0
+                      00125         extern  _POSTINC0
+                      00126         extern  _INDF0
+                      00127         extern  _INTCON3
+                      00128         extern  _INTCON2
+                      00129         extern  _INTCON
+                      00130         extern  _PRODL
+                      00131         extern  _PRODH
+                      00132         extern  _TABLAT
+                      00133         extern  _TBLPTRL
+                      00134         extern  _TBLPTRH
+                      00135         extern  _TBLPTRU
+                      00136         extern  _PCL
+                      00137         extern  _PCLATH
+                      00138         extern  _PCLATU
+                      00139         extern  _STKPTR
+                      00140         extern  _TOSL
+                      00141         extern  _TOSH
+                      00142         extern  _TOSU
+                      00143 
+                      00144 ;--------------------------------------------------------
+                      00145 ;       Equates to used internal registers
+                      00146 ;--------------------------------------------------------
+  00000FE8            00147 WREG    equ     0xfe8
+  00000FE5            00148 POSTDEC1        equ     0xfe5
+  00000FE4            00149 PREINC1 equ     0xfe4
+                      00150 
+                      00151 ;--------------------------------------------------------
+                      00152 ; global & static initialisations
+                      00153 ;--------------------------------------------------------
+                      00154 ; I code from now on!
+                      00155 ; ; Starting pCode block
+                      00156 ; ;ic:1:  _entry($10) :
+                      00157 ; ;ic:2:        proc _usart_getc [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char function ( ) fixed}
+                      00158 S_ugetc__usart_getc     code
+000000                00159 _usart_getc:
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160 ; ;ic:3:        iTemp0 [k3 lr3:31 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat] = &[_USART_Status [k2 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{struct USART fixed}]
+                      00161 ; ;ic:4:        iTemp4 [k9 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}{ sir@ _USART_Status} = @[iTemp0 [k3 lr3:31 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat] + 0x0 {const-unsigned-char literal}]
+                      00162 ; ;ic:5:        iTemp5 [k10 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char register}[r0x00 ] = iTemp4 [k9 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}{ sir@ _USART_Status} & 0xf0 {const-unsigned-char literal}
+                      00163 ;       .line   43; usart/ugetc.c       USART_Status.val &= 0xf0;
+000000 0EF0           00164         MOVLW   0xf0
+000002 0100           00165         BANKSEL _USART_Status
+000004 1500           00166         ANDWF   _USART_Status, W, B
+                      00167 ; #     MOVWF   r0x00
+                      00168 ; #;;ic:6:      *(iTemp0 [k3 lr3:31 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat]) := iTemp5 [k10 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char register}[r0x00 ]
+                      00169 ; #     MOVF    r0x00, W
+000006 6F00           00170         MOVWF   _USART_Status, B
+                      00171 ; ;ic:7:        iTemp6 [k12 lr7:8 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {6,1} near* fixed}[remat] = &[_RCSTAbits [k11 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-struct __00000067 fixed}]
+                      00172 ; ;ic:8:        iTemp7 [k14 lr8:9 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {6,1} near* fixed}[remat] := iTemp6 [k12 lr7:8 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {6,1} near* fixed}[remat]
+                      00173 ; ;ic:9:        iTemp8 [k15 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {6,1} fixed}[bad ] = @[iTemp7 [k14 lr8:9 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {6,1} near* fixed}[remat] + 0x0 {const-unsigned-char literal}]
+                      00174 ;       .line   45; usart/ugetc.c       if (RCSTAbits.RX9)
+000008 AC00           00175         BTFSS   _RCSTAbits, 6
+00000A D000           00176         BRA     _00108_DS_
+                      00177 ; ;ic:10:       if iTemp8 [k15 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {6,1} fixed}[bad ] == 0 goto _iffalse_1($4)
+                      00178 ; ;ic:11:       iTemp10 [k18 lr11:12 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {0,1} near* fixed}[remat] := iTemp0 [k3 lr3:31 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat]
+                      00179 ; ;ic:12:       *(iTemp10 [k18 lr11:12 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {0,1} near* fixed}[remat]) := 0x0 {const-unsigned-char literal}
+                      00180 ; #     BCF     _USART_Status, 0, B
+                      00181 ; #;;ic:13:     iTemp11 [k19 lr13:14 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} near* fixed}[remat] = &[_RCSTAbits [k11 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-struct __00000067 fixed}]
+                      00182 ; #;;ic:14:     iTemp12 [k21 lr14:15 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} near* fixed}[remat] := iTemp11 [k19 lr13:14 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} near* fixed}[remat]
+                      00183 ; #;;ic:15:     iTemp13 [k22 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} fixed}[bad ] = @[iTemp12 [k21 lr14:15 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} near* fixed}[remat] + 0x0 {const-unsigned-char literal}]
+                      00184 ; #     BTFSS   _RCSTAbits, 0
+                      00185 ; #     GOTO    _00108_DS_
+                      00186 ; #;;ic:16:     if iTemp13 [k22 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,1} fixed}[bad ] == 0 goto _iffalse_1($4)
+                      00187 ; #;;ic:17:     iTemp15 [k25 lr17:18 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {0,1} near* fixed}[remat] := iTemp0 [k3 lr3:31 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat]
+                      00188 ; #;;ic:18:     *(iTemp15 [k25 lr17:18 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {0,1} near* fixed}[remat]) := 0x1 {const-unsigned-char literal}
+                      00189 ; #     BSF     _USART_Status, 0, B
+                      00190 ; #;;ic:19:  _iffalse_1($4) :
+                      00191 ; #;;ic:20:     iTemp16 [k26 lr20:21 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {2,1} near* fixed}[remat] = &[_RCSTAbits [k11 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-struct __00000067 fixed}]
+                      00192 ; #;;ic:21:     iTemp17 [k28 lr21:22 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {2,1} near* fixed}[remat] := iTemp16 [k26 lr20:21 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {2,1} near* fixed}[remat]
+                      00193 ; #;;ic:22:     iTemp18 [k29 lr22:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {2,1} fixed}[bad ] = @[iTemp17 [k28 lr21:22 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {2,1} near* fixed}[remat] + 0x0 {const-unsigned-char literal}]
+                      00194 ; #     BTFSS   _RCSTAbits, 2
+                      00195 ; removed redundant BANKSEL
+                      00196 ;       .line   47; usart/ugetc.c       USART_Status.RX_NINE = 0;
+00000C 9100           00197         BCF     _USART_Status, 0, B
+                      00198 ;       .line   48; usart/ugetc.c       if (RCSTAbits.RX9D)
+00000E A000           00199         BTFSS   _RCSTAbits, 0
+000010 D000           00200         BRA     _10105_DS_
+                      00201 ; removed redundant BANKSEL
+                      00202 ;       .line   50; usart/ugetc.c       USART_Status.RX_NINE = 1;
+000012 8100           00203         BSF     _USART_Status, 0, B
+000014                00204 _10105_DS_:
+000014                00205 _00108_DS_:
+                      00206 ;       .line   54; usart/ugetc.c       if (RCSTAbits.FERR)
+000014 A400           00207         BTFSS   _RCSTAbits, 2
+000016 D000           00208         BRA     _00110_DS_
+                      00209 ; ;ic:23:       if iTemp18 [k29 lr22:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {2,1} fixed}[bad ] == 0 goto _iffalse_2($6)
+                      00210 ; ;ic:24:       iTemp20 [k32 lr24:25 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {2,1} near* fixed}[remat] := iTemp0 [k3 lr3:31 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat]
+                      00211 ; ;ic:25:       *(iTemp20 [k32 lr24:25 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {2,1} near* fixed}[remat]) := 0x1 {const-unsigned-char literal}
+000018 0100           00212         BANKSEL _USART_Status
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00213 ;       .line   55; usart/ugetc.c       USART_Status.FRAME_ERROR = 1;
+00001A 8500           00214         BSF     _USART_Status, 2, B
+                      00215 ; ;ic:26:  _iffalse_2($6) :
+                      00216 ; ;ic:27:       iTemp21 [k33 lr27:28 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat] = &[_RCSTAbits [k11 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-struct __00000067 fixed}]
+                      00217 ; ;ic:28:       iTemp22 [k35 lr28:29 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat] := iTemp21 [k33 lr27:28 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat]
+                      00218 ; ;ic:29:       iTemp23 [k36 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} fixed}[bad ] = @[iTemp22 [k35 lr28:29 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat] + 0x0 {const-unsigned-char literal}]
+00001C                00219 _00110_DS_:
+                      00220 ;       .line   57; usart/ugetc.c       if (RCSTAbits.OERR)
+00001C A200           00221         BTFSS   _RCSTAbits, 1
+00001E D000           00222         BRA     _00112_DS_
+                      00223 ; ;ic:30:       if iTemp23 [k36 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} fixed}[bad ] == 0 goto _iffalse_3($8)
+                      00224 ; ;ic:31:       iTemp25 [k39 lr31:32 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {3,1} near* fixed}[remat] := iTemp0 [k3 lr3:31 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-char near* fixed}[remat]
+                      00225 ; ;ic:32:       *(iTemp25 [k39 lr31:32 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-bitfield {3,1} near* fixed}[remat]) := 0x1 {const-unsigned-char literal}
+000020 0100           00226         BANKSEL _USART_Status
+                      00227 ;       .line   58; usart/ugetc.c       USART_Status.OVERRUN_ERROR = 1;
+000022 8700           00228         BSF     _USART_Status, 3, B
+                      00229 ; ;ic:33:  _iffalse_3($8) :
+                      00230 ; ;ic:34:       ret _RCREG [k40 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr}
+000024                00231 _00112_DS_:
+                      00232 ;       .line   60; usart/ugetc.c       return (RCREG);
+000024 5000           00233         MOVF    _RCREG, W
+                      00234 ; ;ic:35:  _return($9) :
+                      00235 ; ;ic:36:       eproc _usart_getc [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char function ( ) fixed}
+000026 0012           00236         RETURN  
+                      00237 
+                      00238 
+                      00239 
+                      00240 ; Statistics:
+                      00241 ; code size:       40 (0x0028) bytes ( 0.03%)
+                      00242 ;                  20 (0x0014) words
+                      00243 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00244 ; access size:      0 (0x0000) bytes
+                      00245 
+                      00246 
+                      00247         end
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+WREG                              00000FE8
+_00108_DS_                        00000014
+_00110_DS_                        0000001C
+_00112_DS_                        00000024
+_10105_DS_                        00000014
+_ADCON0                           00000000
+_ADCON0bits                       00000000
+_ADCON1                           00000000
+_ADCON1bits                       00000000
+_ADCON2                           00000000
+_ADCON2bits                       00000000
+_ADRESH                           00000000
+_ADRESL                           00000000
+_BAUDCTL                          00000000
+_BAUDCTLbits                      00000000
+_BSR                              00000000
+_CCP1CON                          00000000
+_CCP1CONbits                      00000000
+_CCPR1H                           00000000
+_CCPR1L                           00000000
+_ECCPAS                           00000000
+_ECCPASbits                       00000000
+_EEADR                            00000000
+_EECON1                           00000000
+_EECON1bits                       00000000
+_EECON2                           00000000
+_EEDATA                           00000000
+_FSR0H                            00000000
+_FSR0L                            00000000
+_FSR1H                            00000000
+_FSR1L                            00000000
+_FSR2H                            00000000
+_FSR2L                            00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INTCON                           00000000
+_INTCON2                          00000000
+_INTCON2bits                      00000000
+_INTCON3                          00000000
+_INTCON3bits                      00000000
+_INTCONbits                       00000000
+_IPR1                             00000000
+_IPR1bits                         00000000
+_IPR2                             00000000
+_IPR2bits                         00000000
+_LATA                             00000000
+_LATAbits                         00000000
+_LATB                             00000000
+_LATBbits                         00000000
+_LVDCON                           00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_LVDCONbits                       00000000
+_OSCCON                           00000000
+_OSCCONbits                       00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATU                           00000000
+_PIE1                             00000000
+_PIE1bits                         00000000
+_PIE2                             00000000
+_PIE2bits                         00000000
+_PIR1                             00000000
+_PIR1bits                         00000000
+_PIR2                             00000000
+_PIR2bits                         00000000
+_PLUSW0                           00000000
+_PLUSW1                           00000000
+_PLUSW2                           00000000
+_PORTA                            00000000
+_PORTAbits                        00000000
+_PORTB                            00000000
+_PORTBbits                        00000000
+_POSTDEC0                         00000000
+_POSTDEC1                         00000000
+_POSTDEC2                         00000000
+_POSTINC0                         00000000
+_POSTINC1                         00000000
+_POSTINC2                         00000000
+_PR2                              00000000
+_PREINC0                          00000000
+_PREINC1                          00000000
+_PREINC2                          00000000
+_PRODH                            00000000
+_PRODL                            00000000
+_RCON                             00000000
+_RCONbits                         00000000
+_RCREG                            00000000
+_RCSTA                            00000000
+_RCSTAbits                        00000000
+_SPBRG                            00000000
+_SPBRGH                           00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_STKPTR                           00000000
+_STKPTRbits                       00000000
+_T0CON                            00000000
+_T0CONbits                        00000000
+_T1CON                            00000000
+_T1CONbits                        00000000
+_T2CON                            00000000
+_T2CONbits                        00000000
+_T3CON                            00000000
+_T3CONbits                        00000000
+_TABLAT                           00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f1220_a-ugetc.asm8-18-2017  19:25:14          PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_TBLPTRH                          00000000
+_TBLPTRL                          00000000
+_TBLPTRU                          00000000
+_TMR0H                            00000000
+_TMR0L                            00000000
+_TMR1H                            00000000
+_TMR1L                            00000000
+_TMR2                             00000000
+_TMR3H                            00000000
+_TMR3L                            00000000
+_TOSH                             00000000
+_TOSL                             00000000
+_TOSU                             00000000
+_TRISA                            00000000
+_TRISAbits                        00000000
+_TRISB                            00000000
+_TRISBbits                        00000000
+_TXREG                            00000000
+_TXSTA                            00000000
+_TXSTAbits                        00000000
+_USART_Status                     00000000
+_WDTCON                           00000000
+_WDTCONbits                       00000000
+_WREG                             00000000
+__18F1220                         00000001
+_usart_getc                       00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

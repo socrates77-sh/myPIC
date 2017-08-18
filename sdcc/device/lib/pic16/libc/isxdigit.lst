@@ -1,0 +1,158 @@
+gpasm-0.14.1 (Aug 18 2017)   isxdigit.asm       8-18-2017  19:21:29          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:29 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _isxdigit
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ;       Equates to used internal registers
+                      00019 ;--------------------------------------------------------
+  00000FD8            00020 STATUS  equ     0xfd8
+  00000FE8            00021 WREG    equ     0xfe8
+  00000FE1            00022 FSR1L   equ     0xfe1
+  00000FD9            00023 FSR2L   equ     0xfd9
+  00000FE5            00024 POSTDEC1        equ     0xfe5
+  00000FE4            00025 PREINC1 equ     0xfe4
+  00000FDB            00026 PLUSW2  equ     0xfdb
+                      00027 
+                      00028 
+                      00029 ; Internal registers
+                      00030 .registers      udata_ovr       0x0000
+000000                00031 r0x00   res     1
+                      00032 
+                      00033 ;--------------------------------------------------------
+                      00034 ; global & static initialisations
+                      00035 ;--------------------------------------------------------
+                      00036 ; I code from now on!
+                      00037 ; ; Starting pCode block
+                      00038 ; ;ic:1:  _entry($9) :
+                      00039 ; ;ic:2:        proc _isxdigit [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00040 S_isxdigit__isxdigit    code
+000000                00041 _isxdigit:
+                      00042 ;       .line   33; ctype/isxdigit.c    char isxdigit (unsigned char c)
+000000 CFD9 FFE5      00043         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00044         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00045         MOVFF   r0x00, POSTDEC1
+                      00046 ; ;ic:3: iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] = recv _isxdigit [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+00000C 0E02           00047         MOVLW   0x02
+00000E CFDB F000      00048         MOVFF   PLUSW2, r0x00
+                      00049 ; ;ic:4:        iTemp1 [k4 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] < 0x30 {unsigned-char literal}
+                      00050 ;       .line   35; ctype/isxdigit.c    if ( ( c >= UC('0') && c <= UC('9')) ||
+000012 0E30           00051         MOVLW   0x30
+000014 5C00           00052         SUBWF   r0x00, W
+000016 E300           00053         BNC     _00109_DS_
+gpasm-0.14.1 (Aug 18 2017)   isxdigit.asm       8-18-2017  19:21:29          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ; ;ic:5:        if iTemp1 [k4 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _orif_1($5)
+                      00055 ; ;ic:6:        iTemp2 [k5 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] > 0x39 {unsigned-char literal}
+000018 0E3A           00056         MOVLW   0x3a
+00001A 5C00           00057         SUBWF   r0x00, W
+00001C E300           00058         BNC     _00105_DS_
+                      00059 ; ;ic:7:        if iTemp2 [k5 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iftrue_0($1)
+                      00060 ; ;ic:8:  _orif_1($5) :
+                      00061 ; ;ic:9:        iTemp3 [k6 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] < 0x61 {unsigned-char literal}
+00001E                00062 _00109_DS_:
+                      00063 ;       .line   36; ctype/isxdigit.c    ( c >= UC('a') && c <= UC('f')) ||
+00001E 0E61           00064         MOVLW   0x61
+000020 5C00           00065         SUBWF   r0x00, W
+000022 E300           00066         BNC     _00111_DS_
+                      00067 ; ;ic:10:       if iTemp3 [k6 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _orif_0($7)
+                      00068 ; ;ic:11:       iTemp4 [k7 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] > 0x66 {unsigned-char literal}
+000024 0E67           00069         MOVLW   0x67
+000026 5C00           00070         SUBWF   r0x00, W
+000028 E300           00071         BNC     _00105_DS_
+                      00072 ; ;ic:12:       if iTemp4 [k7 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iftrue_0($1)
+                      00073 ; ;ic:13:  _orif_0($7) :
+                      00074 ; ;ic:14:       iTemp5 [k8 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] < 0x41 {unsigned-char literal}
+00002A                00075 _00111_DS_:
+                      00076 ;       .line   37; ctype/isxdigit.c    ( c >= UC('A') && c <= UC('F')) )
+00002A 0E41           00077         MOVLW   0x41
+00002C 5C00           00078         SUBWF   r0x00, W
+00002E E300           00079         BNC     _00106_DS_
+                      00080 ; ;ic:15:       if iTemp5 [k8 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _iffalse_0($2)
+                      00081 ; ;ic:16:       iTemp6 [k9 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _isxdigit_c_1_10}[r0x00 ] > 0x46 {unsigned-char literal}
+000030 0E47           00082         MOVLW   0x47
+000032 5C00           00083         SUBWF   r0x00, W
+000034 E200           00084         BC      _00106_DS_
+                      00085 ; ;ic:17:       if iTemp6 [k9 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _iffalse_0($2)
+                      00086 ; ;ic:18:  _iftrue_0($1) :
+                      00087 ; ;ic:19:       ret 0x1 {const-unsigned-char literal}
+000036                00088 _00105_DS_:
+                      00089 ;       .line   38; ctype/isxdigit.c    return 1;
+000036 0E01           00090         MOVLW   0x01
+000038 D000           00091         BRA     _00112_DS_
+                      00092 ; ;ic:20:  _iffalse_0($2) :
+                      00093 ; ;ic:21:       ret 0x0 {const-unsigned-char literal}
+00003A                00094 _00106_DS_:
+                      00095 ;       .line   39; ctype/isxdigit.c    return 0;
+00003A 6AE8           00096         CLRF    WREG
+                      00097 ; ;ic:22:  _return($8) :
+                      00098 ; ;ic:23:       eproc _isxdigit [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+00003C                00099 _00112_DS_:
+00003C CFE4 F000      00100         MOVFF   PREINC1, r0x00
+000040 CFE4 FFD9      00101         MOVFF   PREINC1, FSR2L
+000044 0012           00102         RETURN  
+                      00103 
+                      00104 
+                      00105 
+                      00106 ; Statistics:
+gpasm-0.14.1 (Aug 18 2017)   isxdigit.asm       8-18-2017  19:21:29          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ; code size:       70 (0x0046) bytes ( 0.05%)
+                      00108 ;                  35 (0x0023) words
+                      00109 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00110 ; access size:      1 (0x0001) bytes
+                      00111 
+                      00112 
+                      00113         end
+gpasm-0.14.1 (Aug 18 2017)   isxdigit.asm       8-18-2017  19:21:29          PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+STATUS                            00000FD8
+WREG                              00000FE8
+_00105_DS_                        00000036
+_00106_DS_                        0000003A
+_00109_DS_                        0000001E
+_00111_DS_                        0000002A
+_00112_DS_                        0000003C
+__18F452                          00000001
+_isxdigit                         00000000
+r0x00                             00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

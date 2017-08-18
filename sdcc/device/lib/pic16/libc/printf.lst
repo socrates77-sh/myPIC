@@ -1,0 +1,178 @@
+gpasm-0.14.1 (Aug 18 2017)   printf.asm         8-18-2017  19:21:34          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:34 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _printf
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _stdin
+                      00021         extern  _stdout
+                      00022         extern  _vfprintf
+                      00023 
+                      00024 ;--------------------------------------------------------
+                      00025 ;       Equates to used internal registers
+                      00026 ;--------------------------------------------------------
+  00000FE8            00027 WREG    equ     0xfe8
+  00000FE1            00028 FSR1L   equ     0xfe1
+  00000FD9            00029 FSR2L   equ     0xfd9
+  00000FDA            00030 FSR2H   equ     0xfda
+  00000FE5            00031 POSTDEC1        equ     0xfe5
+  00000FE4            00032 PREINC1 equ     0xfe4
+  00000FDB            00033 PLUSW2  equ     0xfdb
+  00000FF3            00034 PRODL   equ     0xff3
+                      00035 
+                      00036 
+                      00037 ; Internal registers
+                      00038 .registers      udata_ovr       0x0000
+000000                00039 r0x00   res     1
+000001                00040 r0x01   res     1
+000002                00041 r0x02   res     1
+                      00042 
+                      00043 ;--------------------------------------------------------
+                      00044 ; global & static initialisations
+                      00045 ;--------------------------------------------------------
+                      00046 ; I code from now on!
+                      00047 ; ; Starting pCode block
+                      00048 ; ;ic:1:  _entry($2) :
+                      00049 ; ;ic:2:        proc _printf [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( const-char generic* auto) __reentrant fixed}
+                      00050 S_printf__printf        code
+000000                00051 _printf:
+                      00052 ;       .line   38; stdio/printf.c      printf (const char *fmt, ...)
+000000 CFD9 FFE5      00053         MOVFF   FSR2L, POSTDEC1
+gpasm-0.14.1 (Aug 18 2017)   printf.asm         8-18-2017  19:21:34          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000004 CFE1 FFD9      00054         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00055         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00056         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00057         MOVFF   r0x02, POSTDEC1
+                      00058 ; ;ic:3:        iTemp1 [k5 lr3:4 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* near* auto}[r0x00 r0x01 ] = &[fmt [k4 lr0:0 so:2]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* auto}]
+                      00059 ;       .line   47; stdio/printf.c      va_start (ap, fmt);
+000014 0E02           00060         MOVLW   0x02
+000016 24D9           00061         ADDWF   FSR2L, W
+000018 6E00           00062         MOVWF   r0x00
+00001A 0E00           00063         MOVLW   0x00
+00001C 20DA           00064         ADDWFC  FSR2H, W
+                      00065 ; #     MOVWF   r0x01
+                      00066 ; #;;ic:4:      iTemp2 [k6 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* fixed}[r0x00 r0x01 r0x02 ] = (unsigned-char generic* fixed)iTemp1 [k5 lr3:4 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* near* auto}[r0x00 r0x01 ]
+                      00067 ; #     MOVF    r0x01, W
+                      00068 ; #     MOVWF   r0x01
+                      00069 ; #     MOVWF   r0x01
+00001E 6E00           00070         MOVWF   r0x01
+                      00071 ; #     MOVF    r0x00, W
+                      00072 ; #     MOVWF   r0x00
+000020 0E80           00073         MOVLW   0x80
+000022 6E00           00074         MOVWF   r0x02
+                      00075 ; ;ic:5:        iTemp0 [k2 lr5:8 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_ap_1_17}[r0x00 r0x01 r0x02 ] = iTemp2 [k6 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x3 {const-unsigned-char literal}
+000024 0E03           00076         MOVLW   0x03
+000026 2600           00077         ADDWF   r0x00, F
+000028 0E00           00078         MOVLW   0x00
+00002A 2200           00079         ADDWFC  r0x01, F
+00002C 2200           00080         ADDWFC  r0x02, F
+                      00081 ; ;ic:6:        send _stdout [k9 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* generic* fixed}{argreg = 1}
+                      00082 ; ;ic:7:        send fmt [k4 lr0:0 so:2]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* auto}{argreg = 2}
+                      00083 ; ;ic:8:        send iTemp0 [k2 lr5:8 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_ap_1_17}[r0x00 r0x01 r0x02 ]{argreg = 3}
+                      00084 ; ;ic:9:        iTemp4 [k13 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ] = call _vfprintf [k8 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* generic* fixed, const-char generic* fixed, unsigned-char generic* fixed) fixed}
+                      00085 ;       .line   48; stdio/printf.c      return vfprintf (stdout, fmt, ap);
+00002E 5000           00086         MOVF    r0x02, W
+000030 6EE5           00087         MOVWF   POSTDEC1
+000032 5000           00088         MOVF    r0x01, W
+000034 6EE5           00089         MOVWF   POSTDEC1
+000036 5000           00090         MOVF    r0x00, W
+000038 6EE5           00091         MOVWF   POSTDEC1
+00003A 0E04           00092         MOVLW   0x04
+00003C CFDB FFE5      00093         MOVFF   PLUSW2, POSTDEC1
+000040 0E03           00094         MOVLW   0x03
+000042 CFDB FFE5      00095         MOVFF   PLUSW2, POSTDEC1
+000046 0E02           00096         MOVLW   0x02
+000048 CFDB FFE5      00097         MOVFF   PLUSW2, POSTDEC1
+00004C 0100           00098         BANKSEL (_stdout + 2)
+00004E 5100           00099         MOVF    (_stdout + 2), W, B
+000050 6EE5           00100         MOVWF   POSTDEC1
+                      00101 ; removed redundant BANKSEL
+000052 5100           00102         MOVF    (_stdout + 1), W, B
+000054 6EE5           00103         MOVWF   POSTDEC1
+                      00104 ; removed redundant BANKSEL
+000056 5100           00105         MOVF    _stdout, W, B
+000058 6EE5           00106         MOVWF   POSTDEC1
+gpasm-0.14.1 (Aug 18 2017)   printf.asm         8-18-2017  19:21:34          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00005A EC00 F000      00107         CALL    _vfprintf
+00005E 6E00           00108         MOVWF   r0x00
+000060 CFF3 F000      00109         MOVFF   PRODL, r0x01
+000064 0E09           00110         MOVLW   0x09
+000066 26E1           00111         ADDWF   FSR1L, F
+                      00112 ; ;ic:10:       ret iTemp4 [k13 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ]
+000068 C000 FFF3      00113         MOVFF   r0x01, PRODL
+00006C 5000           00114         MOVF    r0x00, W
+                      00115 ; ;ic:11:  _return($1) :
+                      00116 ; ;ic:12:       eproc _printf [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( const-char generic* auto) __reentrant fixed}
+00006E CFE4 F000      00117         MOVFF   PREINC1, r0x02
+000072 CFE4 F000      00118         MOVFF   PREINC1, r0x01
+000076 CFE4 F000      00119         MOVFF   PREINC1, r0x00
+00007A CFE4 FFD9      00120         MOVFF   PREINC1, FSR2L
+00007E 0012           00121         RETURN  
+                      00122 
+                      00123 
+                      00124 
+                      00125 ; Statistics:
+                      00126 ; code size:      128 (0x0080) bytes ( 0.10%)
+                      00127 ;                  64 (0x0040) words
+                      00128 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00129 ; access size:      3 (0x0003) bytes
+                      00130 
+                      00131 
+                      00132         end
+gpasm-0.14.1 (Aug 18 2017)   printf.asm         8-18-2017  19:21:34          PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2H                             00000FDA
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODL                             00000FF3
+WREG                              00000FE8
+__18F452                          00000001
+_printf                           00000000
+_stdin                            00000000
+_stdout                           00000000
+_vfprintf                         00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

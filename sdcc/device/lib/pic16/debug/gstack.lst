@@ -1,0 +1,262 @@
+gpasm-0.14.1 (Aug 18 2017)   gstack.asm         8-18-2017  19:21:19          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:19 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  __gstack_overflow
+                      00016         global  __gstack_succ_str
+                      00017         global  __gstack_fail_str
+                      00018         global  __gstack_init
+                      00019         global  __gstack_test
+                      00020 
+                      00021 ;--------------------------------------------------------
+                      00022 ; extern variables in this module
+                      00023 ;--------------------------------------------------------
+                      00024         extern  _WREG
+                      00025         extern  _FSR1L
+                      00026         extern  _FSR1H
+                      00027         extern  _FSR0L
+                      00028         extern  _FSR0H
+                      00029         extern  _STATUS
+                      00030         extern  _POSTINC0
+                      00031         extern  _POSTDEC1
+                      00032         extern  _PREINC1
+                      00033         extern  _TOSL
+                      00034         extern  _TOSH
+                      00035         extern  _TOSU
+                      00036         extern  _PCL
+                      00037         extern  _PCLATH
+                      00038         extern  _PCLATU
+                      00039         extern  _stack
+                      00040         extern  _stack_end
+                      00041 ;--------------------------------------------------------
+                      00042 ;       Access bank symbols
+                      00043 ;--------------------------------------------------------
+                      00044         udata_acs
+000000                00045 __wreg_store    res     1
+000001                00046 __status_store  res     1
+000002                00047 __fsr0_store    res     2
+000004                00048 __gstack_begin  res     2
+000006                00049 __gstack_end    res     2
+                      00050 
+                      00051 
+                      00052         idata
+000000                00053 __init_ok       db      0x00
+gpasm-0.14.1 (Aug 18 2017)   gstack.asm         8-18-2017  19:21:19          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000001                00054 __gstack_fail_str       db      0x53, 0x74, 0x61, 0x63, 0x6b, 0x20, 0x6f, 0x76, 0x65, 0x72, 0x66, 0x6c
+00000D                00055         db      0x6f, 0x77, 0x0a, 0x00
+000011                00056 __gstack_succ_str       db      0x53, 0x74, 0x61, 0x63, 0x6b, 0x20, 0x6f, 0x6b, 0x0a, 0x00
+00001B                00057 __gstack_overflow       db      LOW(__gstack_overflow_default), HIGH(__gstack_overflow_default), UPPER(__gstack_overflow_default)
+                      00058 
+                      00059 ;--------------------------------------------------------
+                      00060 ; global & static initialisations
+                      00061 ;--------------------------------------------------------
+                      00062 ; I code from now on!
+                      00063 ; ; Starting pCode block
+                      00064 ; ;ic:1:  _entry($2) :
+                      00065 ; ;ic:2:        proc __gstack_test [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+                      00066 S_gstack___gstack_test  code
+000000                00067 __gstack_test:
+                      00068 ; ;ic:3: inline
+000000 C000 F000      00069         movff _WREG, __wreg_store
+000004 C000 F000      00070         movff _STATUS, __status_store
+                      00071         ; if first time, initialize boundary variables
+000008 5000           00072         movf __init_ok, w
+00000A E100           00073         bnz @1
+00000C EC00 F000      00074         call __gstack_init
+000010                00075 @1:
+000010 5000           00076         movf __gstack_begin, w
+000012 6000           00077         cpfslt _FSR1L
+000014 D000           00078         bra @2
+000016 D000           00079         bra @3
+000018                00080 @2:
+000018 5000           00081         movf __gstack_begin+1, w
+00001A 6000           00082         cpfslt _FSR1H
+00001C D000           00083         bra @4
+00001E D000           00084         bra @3
+000020                00085 @4:
+000020 5000           00086         movf __gstack_end, w
+000022 6400           00087         cpfsgt _FSR1L
+000024 D000           00088         bra @5
+000026 D000           00089         bra @3
+000028                00090 @5:
+000028 5000           00091         movf __gstack_end+1, w
+00002A 6400           00092         cpfsgt _FSR1H
+00002C D000           00093         bra @6
+                      00094         ; fail
+00002E                00095 @3:
+00002E 0005           00096         push
+000030 0E00           00097         movlw LOW(ret_lab)
+000032 6E00           00098         movwf _TOSL
+000034 0E00           00099         movlw HIGH(ret_lab)
+000036 6E00           00100         movwf _TOSH
+000038 0E00           00101         movlw UPPER(ret_lab)
+00003A 6E00           00102         movwf _TOSU
+00003C C000 F000      00103         movff __gstack_overflow+2, _PCLATU
+000040 C000 F000      00104         movff __gstack_overflow+1, _PCLATH
+000044 5000           00105         movf __gstack_overflow, w
+                      00106         ; execute
+gpasm-0.14.1 (Aug 18 2017)   gstack.asm         8-18-2017  19:21:19          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000046 6E00           00107         movwf _PCL
+000048                00108 ret_lab:
+000048 D000           00109         bra @10
+                      00110         ; success
+00004A                00111 @6:
+00004A C000 F000      00112         movff _FSR0L, __fsr0_store
+00004E C000 F000      00113         movff _FSR0H, __fsr0_store+1
+000052 EE00 F000      00114         lfsr 0, __gstack_succ_str
+                      00115         ; print corresponding string
+000056                00116 @8:
+000056 5000           00117         movf _POSTINC0, w
+000058 C000 FF7F      00118         movff _WREG, 0xf7f
+00005C E100           00119         bnz @8
+00005E                00120 @9:
+00005E C000 F000      00121         movff __fsr0_store+1, _FSR0H
+000062 C000 F000      00122         movff __fsr0_store, _FSR0L
+000066                00123 @10:
+000066 C000 F000      00124         movff __status_store, _STATUS
+00006A C000 F000      00125         movff __wreg_store, _WREG
+00006E 0012           00126         return
+                      00127         
+                      00128 ; ;ic:4:  _return($1) :
+                      00129 ; ;ic:5:        eproc __gstack_test [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+                      00130 ; ; Starting pCode block
+                      00131 ; ;ic:1:  _entry($2) :
+                      00132 ; ;ic:2:        proc __gstack_init [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+                      00133 S_gstack___gstack_init  code
+000000                00134 __gstack_init:
+                      00135 ; ;ic:3: inline
+000000 0E00           00136         movlw LOW(_stack)
+000002 6E00           00137         movwf __gstack_begin
+000004 0E00           00138         movlw HIGH(_stack)
+000006 6E00           00139         movwf __gstack_begin+1
+000008 0E00           00140         movlw LOW(_stack_end)
+00000A 6E00           00141         movwf __gstack_end
+00000C 0E00           00142         movlw HIGH(_stack_end)
+00000E 6E00           00143         movwf __gstack_end+1
+                      00144         ; load default handler
+                      00145         ; movlw LOW(__gstack_overflow_default)
+                      00146         ; movwf __gstack_overflow
+                      00147         ; movlw HIGH(__gstack_overflow_default)
+                      00148         ; movwf __gstack_overflow+1
+                      00149         ; movlw UPPER(__gstack_overflow_default)
+                      00150         ; movwf __gstack_overflow+2
+000010 0E01           00151         movlw 1
+000012 6E00           00152         movwf __init_ok
+000014 0012           00153         return;
+                      00154         
+                      00155 ; ;ic:4:  _return($1) :
+                      00156 ; ;ic:5:        eproc __gstack_init [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+                      00157 ; ; Starting pCode block
+                      00158 ; ;ic:1:  _entry($2) :
+                      00159 ; ;ic:2:        proc __gstack_overflow_default [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+gpasm-0.14.1 (Aug 18 2017)   gstack.asm         8-18-2017  19:21:19          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160 S_gstack___gstack_overflow_default      code
+000000                00161 __gstack_overflow_default:
+                      00162 ; ;ic:3: inline
+000000 EE00 F000      00163         lfsr 0, __gstack_fail_str
+                      00164         ; incf _FSR0L, f
+000004                00165 @0:
+000004 5000           00166         movf _POSTINC0, w
+000006 C000 FF7F      00167         movff _WREG, 0xf7f
+00000A E100           00168         bnz @0
+                      00169         ; sleep
+00000C                00170 @00:
+00000C EF00 F000      00171         goto @00
+                      00172         
+                      00173 ; ;ic:4:  _return($1) :
+                      00174 ; ;ic:5:        eproc __gstack_overflow_default [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+                      00175 
+                      00176 
+                      00177 ; Statistics:
+                      00178 ; code size:      176 (0x00b0) bytes ( 0.13%)
+                      00179 ;                  88 (0x0058) words
+                      00180 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00181 ; access size:      0 (0x0000) bytes
+                      00182 
+                      00183 
+                      00184         end
+gpasm-0.14.1 (Aug 18 2017)   gstack.asm         8-18-2017  19:21:19          PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+@0                                00000004
+@00                               0000000C
+@1                                00000010
+@10                               00000066
+@2                                00000018
+@3                                0000002E
+@4                                00000020
+@5                                00000028
+@6                                0000004A
+@8                                00000056
+@9                                0000005E
+_FSR0H                            00000000
+_FSR0L                            00000000
+_FSR1H                            00000000
+_FSR1L                            00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATU                           00000000
+_POSTDEC1                         00000000
+_POSTINC0                         00000000
+_PREINC1                          00000000
+_STATUS                           00000000
+_TOSH                             00000000
+_TOSL                             00000000
+_TOSU                             00000000
+_WREG                             00000000
+__18F452                          00000001
+__fsr0_store                      00000002
+__gstack_begin                    00000004
+__gstack_end                      00000006
+__gstack_fail_str                 00000001
+__gstack_init                     00000000
+__gstack_overflow                 0000001B
+__gstack_overflow_default         00000000
+__gstack_succ_str                 00000011
+__gstack_test                     00000000
+__init_ok                         00000000
+__status_store                    00000001
+__wreg_store                      00000000
+_stack                            00000000
+_stack_end                        00000000
+ret_lab                           00000048
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

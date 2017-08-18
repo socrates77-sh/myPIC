@@ -1,0 +1,267 @@
+gpasm-0.14.1 (Aug 18 2017)   strncmp.asm        8-18-2017  19:22:22          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:22:22 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _strncmp
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  __gptrget1
+                      00021 
+                      00022 ;--------------------------------------------------------
+                      00023 ;       Equates to used internal registers
+                      00024 ;--------------------------------------------------------
+  00000FD8            00025 STATUS  equ     0xfd8
+  00000FE8            00026 WREG    equ     0xfe8
+  00000FE9            00027 FSR0L   equ     0xfe9
+  00000FE1            00028 FSR1L   equ     0xfe1
+  00000FD9            00029 FSR2L   equ     0xfd9
+  00000FE5            00030 POSTDEC1        equ     0xfe5
+  00000FE4            00031 PREINC1 equ     0xfe4
+  00000FDB            00032 PLUSW2  equ     0xfdb
+  00000FF3            00033 PRODL   equ     0xff3
+                      00034 
+                      00035 
+                      00036 ; Internal registers
+                      00037 .registers      udata_ovr       0x0000
+000000                00038 r0x00   res     1
+000001                00039 r0x01   res     1
+000002                00040 r0x02   res     1
+000003                00041 r0x03   res     1
+000004                00042 r0x04   res     1
+000005                00043 r0x05   res     1
+000006                00044 r0x06   res     1
+000007                00045 r0x07   res     1
+000008                00046 r0x08   res     1
+                      00047 
+                      00048 ;--------------------------------------------------------
+                      00049 ; global & static initialisations
+                      00050 ;--------------------------------------------------------
+                      00051 ; I code from now on!
+                      00052 ; ; Starting pCode block
+                      00053 ; ;ic:1:  _entry($9) :
+gpasm-0.14.1 (Aug 18 2017)   strncmp.asm        8-18-2017  19:22:22          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ; ;ic:2:        proc _strncmp [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed, char generic* fixed, unsigned-int fixed) fixed}
+                      00055 S_strncmp__strncmp      code
+000000                00056 _strncmp:
+                      00057 ;       .line   32; string/strncmp.c    strncmp (char *first, char *last, size_t count) 
+000000 CFD9 FFE5      00058         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00059         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00060         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00061         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00062         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00063         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00064         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00065         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00066         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00067         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00068         MOVFF   r0x08, POSTDEC1
+                      00069 ; ;ic:3: iTemp0 [k2 lr3:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strncmp_first_1_28}[r0x00 r0x01 r0x02 ] = recv _strncmp [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed, char generic* fixed, unsigned-int fixed) fixed}
+00002C 0E02           00070         MOVLW   0x02
+00002E CFDB F000      00071         MOVFF   PLUSW2, r0x00
+000032 0E03           00072         MOVLW   0x03
+000034 CFDB F000      00073         MOVFF   PLUSW2, r0x01
+000038 0E04           00074         MOVLW   0x04
+00003A CFDB F000      00075         MOVFF   PLUSW2, r0x02
+                      00076 ; ;ic:4: iTemp1 [k4 lr4:10 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strncmp_last_1_28}[r0x03 r0x04 r0x05 ] = recv _strncmp [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed, char generic* fixed, unsigned-int fixed) fixed}
+00003E 0E05           00077         MOVLW   0x05
+000040 CFDB F000      00078         MOVFF   PLUSW2, r0x03
+000044 0E06           00079         MOVLW   0x06
+000046 CFDB F000      00080         MOVFF   PLUSW2, r0x04
+00004A 0E07           00081         MOVLW   0x07
+00004C CFDB F000      00082         MOVFF   PLUSW2, r0x05
+                      00083 ; ;ic:5: iTemp2 [k6 lr5:11 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _strncmp_count_1_28}[r0x06 r0x07 ] = recv _strncmp [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed, char generic* fixed, unsigned-int fixed) fixed}
+000050 0E08           00084         MOVLW   0x08
+000052 CFDB F000      00085         MOVFF   PLUSW2, r0x06
+000056 0E09           00086         MOVLW   0x09
+000058 CFDB F000      00087         MOVFF   PLUSW2, r0x07
+                      00088 ; ;ic:6:        if iTemp2 [k6 lr5:11 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _strncmp_count_1_28}[r0x06 r0x07 ] != 0 goto preHeaderLbl0($14)
+                      00089 ;       .line   34; string/strncmp.c    if (!count)
+00005C 5000           00090         MOVF    r0x06, W
+00005E 1000           00091         IORWF   r0x07, W
+000060 E100           00092         BNZ     _00109_DS_
+                      00093 ; ;ic:7:        ret 0x0 {int literal}
+                      00094 ;       .line   35; string/strncmp.c    return 0;
+000062 6AF3           00095         CLRF    PRODL
+000064 6AE8           00096         CLRF    WREG
+000066 D000           00097         BRA     _00112_DS_
+                      00098 ; ;ic:8:  preHeaderLbl0($14) :
+                      00099 ; ;ic:9:        iTemp12 [k17 lr9:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] := iTemp0 [k2 lr3:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strncmp_first_1_28}[r0x00 r0x01 r0x02 ]
+                      00100 ; ;ic:10:       iTemp14 [k19 lr10:27 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] := iTemp1 [k4 lr4:10 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strncmp_last_1_28}[r0x03 r0x04 r0x05 ]
+                      00101 ; ;ic:11:       iTemp3 [k8 lr11:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] := iTemp2 [k6 lr5:11 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _strncmp_count_1_28}[r0x06 r0x07 ]
+                      00102 ; ;ic:13:  _whilecontinue_0($5) :
+                      00103 ; ;ic:14:       iTemp3 [k8 lr11:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = iTemp3 [k8 lr11:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] - 0x1 {const-unsigned-char literal}
+000068                00104 _00109_DS_:
+                      00105 ;       .line   37; string/strncmp.c    while (--count && *first && *first == *last)
+000068 0EFF           00106         MOVLW   0xff
+gpasm-0.14.1 (Aug 18 2017)   strncmp.asm        8-18-2017  19:22:22          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00006A 2600           00107         ADDWF   r0x06, F
+00006C 2200           00108         ADDWFC  r0x07, F
+                      00109 ; ;ic:15:       if iTemp3 [k8 lr11:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] == 0 goto _whilebreak_0($7)
+00006E 5000           00110         MOVF    r0x06, W
+000070 1000           00111         IORWF   r0x07, W
+000072 E000           00112         BZ      _00111_DS_
+                      00113 ; ;ic:16:       iTemp5 [k10 lr16:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x08 ] = @[iTemp12 [k17 lr9:25 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+000074 C000 FFE9      00114         MOVFF   r0x00, FSR0L
+000078 C000 FFF3      00115         MOVFF   r0x01, PRODL
+00007C 5000           00116         MOVF    r0x02, W
+00007E EC00 F000      00117         CALL    __gptrget1
+000082 6E00           00118         MOVWF   r0x08
+                      00119 ; ;ic:17:       if iTemp5 [k10 lr16:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x08 ] == 0 goto _whilebreak_0($7)
+000084 5000           00120         MOVF    r0x08, W
+000086 E000           00121         BZ      _00111_DS_
+                      00122 ; ;ic:18:       iTemp9 [k14 lr18:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] = @[iTemp14 [k19 lr10:27 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] + 0x0 {const-unsigned-char literal}]
+000088 C000 FFE9      00123         MOVFF   r0x03, FSR0L
+00008C C000 FFF3      00124         MOVFF   r0x04, PRODL
+000090 5000           00125         MOVF    r0x05, W
+000092 EC00 F000      00126         CALL    __gptrget1
+                      00127 ; #     MOVWF   r0x09
+                      00128 ; #;;ic:19:     iTemp10 [k15 lr19:20 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp5 [k10 lr16:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x08 ] == iTemp9 [k14 lr18:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ]
+                      00129 ; #     MOVF    r0x08, W
+                      00130 ; #     XORWF   r0x09, W
+000096 1800           00131         XORWF   r0x08, W
+000098 E100           00132         BNZ     _00111_DS_
+                      00133 ; ;ic:20:       if iTemp10 [k15 lr19:20 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _whilebreak_0($7)
+                      00134 ; ;ic:21:       iTemp12 [k17 lr9:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] = iTemp12 [k17 lr9:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+                      00135 ;       .line   39; string/strncmp.c    first++;
+00009A 2A00           00136         INCF    r0x00, F
+00009C E300           00137         BNC     _00127_DS_
+00009E 4A00           00138         INFSNZ  r0x01, F
+0000A0 2A00           00139         INCF    r0x02, F
+                      00140 ; ;ic:22:       iTemp14 [k19 lr10:27 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] = iTemp14 [k19 lr10:27 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] + 0x1 {const-unsigned-char literal}
+0000A2                00141 _00127_DS_:
+                      00142 ;       .line   40; string/strncmp.c    last++;
+0000A2 2A00           00143         INCF    r0x03, F
+0000A4 E300           00144         BNC     _00128_DS_
+0000A6 4A00           00145         INFSNZ  r0x04, F
+0000A8 2A00           00146         INCF    r0x05, F
+                      00147 ; ;ic:23:        goto _whilecontinue_0($5)
+0000AA                00148 _00128_DS_:
+0000AA D000           00149         BRA     _00109_DS_
+                      00150 ; ;ic:24:  _whilebreak_0($7) :
+                      00151 ; ;ic:25:       iTemp16 [k21 lr25:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x00 ] = @[iTemp12 [k17 lr9:25 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+0000AC                00152 _00111_DS_:
+                      00153 ;       .line   43; string/strncmp.c    return *first - *last;
+0000AC C000 FFE9      00154         MOVFF   r0x00, FSR0L
+0000B0 C000 FFF3      00155         MOVFF   r0x01, PRODL
+0000B4 5000           00156         MOVF    r0x02, W
+0000B6 EC00 F000      00157         CALL    __gptrget1
+0000BA 6E00           00158         MOVWF   r0x00
+                      00159 ; ;ic:26:       iTemp17 [k22 lr26:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ] = (int fixed)iTemp16 [k21 lr25:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x00 ]
+gpasm-0.14.1 (Aug 18 2017)   strncmp.asm        8-18-2017  19:22:22          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000BC 6A00           00160         CLRF    r0x01
+0000BE BE00           00161         BTFSC   r0x00, 7
+0000C0 6800           00162         SETF    r0x01
+                      00163 ; ;ic:27:       iTemp19 [k24 lr27:28 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x03 ] = @[iTemp14 [k19 lr10:27 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] + 0x0 {const-unsigned-char literal}]
+0000C2 C000 FFE9      00164         MOVFF   r0x03, FSR0L
+0000C6 C000 FFF3      00165         MOVFF   r0x04, PRODL
+0000CA 5000           00166         MOVF    r0x05, W
+0000CC EC00 F000      00167         CALL    __gptrget1
+0000D0 6E00           00168         MOVWF   r0x03
+                      00169 ; ;ic:28:       iTemp20 [k25 lr28:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x03 r0x02 ] = (int fixed)iTemp19 [k24 lr27:28 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x03 ]
+0000D2 6A00           00170         CLRF    r0x02
+0000D4 BE00           00171         BTFSC   r0x03, 7
+0000D6 6800           00172         SETF    r0x02
+                      00173 ; ;ic:29:       iTemp21 [k26 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ] = iTemp17 [k22 lr26:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ] - iTemp20 [k25 lr28:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x03 r0x02 ]
+0000D8 5000           00174         MOVF    r0x03, W
+0000DA 5E00           00175         SUBWF   r0x00, F
+0000DC 5000           00176         MOVF    r0x02, W
+0000DE 5A00           00177         SUBWFB  r0x01, F
+                      00178 ; ;ic:30:       ret iTemp21 [k26 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ]
+0000E0 C000 FFF3      00179         MOVFF   r0x01, PRODL
+0000E4 5000           00180         MOVF    r0x00, W
+                      00181 ; ;ic:31:  _return($8) :
+                      00182 ; ;ic:32:       eproc _strncmp [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed, char generic* fixed, unsigned-int fixed) fixed}
+0000E6                00183 _00112_DS_:
+0000E6 CFE4 F000      00184         MOVFF   PREINC1, r0x08
+0000EA CFE4 F000      00185         MOVFF   PREINC1, r0x07
+0000EE CFE4 F000      00186         MOVFF   PREINC1, r0x06
+0000F2 CFE4 F000      00187         MOVFF   PREINC1, r0x05
+0000F6 CFE4 F000      00188         MOVFF   PREINC1, r0x04
+0000FA CFE4 F000      00189         MOVFF   PREINC1, r0x03
+0000FE CFE4 F000      00190         MOVFF   PREINC1, r0x02
+000102 CFE4 F000      00191         MOVFF   PREINC1, r0x01
+000106 CFE4 F000      00192         MOVFF   PREINC1, r0x00
+00010A CFE4 FFD9      00193         MOVFF   PREINC1, FSR2L
+00010E 0012           00194         RETURN  
+                      00195 
+                      00196 
+                      00197 
+                      00198 ; Statistics:
+                      00199 ; code size:      272 (0x0110) bytes ( 0.21%)
+                      00200 ;                 136 (0x0088) words
+                      00201 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00202 ; access size:      9 (0x0009) bytes
+                      00203 
+                      00204 
+                      00205         end
+gpasm-0.14.1 (Aug 18 2017)   strncmp.asm        8-18-2017  19:22:22          PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00109_DS_                        00000068
+_00111_DS_                        000000AC
+_00112_DS_                        000000E6
+_00127_DS_                        000000A2
+_00128_DS_                        000000AA
+__18F452                          00000001
+__gptrget1                        00000000
+_strncmp                          00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

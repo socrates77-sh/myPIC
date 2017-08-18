@@ -1,0 +1,198 @@
+gpasm-0.14.1 (Aug 18 2017)   strchr.asm         8-18-2017  19:22:14          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:22:13 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _strchr
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  __gptrget1
+                      00021 
+                      00022 ;--------------------------------------------------------
+                      00023 ;       Equates to used internal registers
+                      00024 ;--------------------------------------------------------
+  00000FD8            00025 STATUS  equ     0xfd8
+  00000FE8            00026 WREG    equ     0xfe8
+  00000FE9            00027 FSR0L   equ     0xfe9
+  00000FE1            00028 FSR1L   equ     0xfe1
+  00000FD9            00029 FSR2L   equ     0xfd9
+  00000FE5            00030 POSTDEC1        equ     0xfe5
+  00000FE4            00031 PREINC1 equ     0xfe4
+  00000FDB            00032 PLUSW2  equ     0xfdb
+  00000FF3            00033 PRODL   equ     0xff3
+  00000FF4            00034 PRODH   equ     0xff4
+                      00035 
+                      00036 
+                      00037 ; Internal registers
+                      00038 .registers      udata_ovr       0x0000
+000000                00039 r0x00   res     1
+000001                00040 r0x01   res     1
+000002                00041 r0x02   res     1
+000003                00042 r0x03   res     1
+000004                00043 r0x04   res     1
+                      00044 
+                      00045 ;--------------------------------------------------------
+                      00046 ; global & static initialisations
+                      00047 ;--------------------------------------------------------
+                      00048 ; I code from now on!
+                      00049 ; ; Starting pCode block
+                      00050 ; ;ic:1:  _entry($8) :
+                      00051 ; ;ic:2:        proc _strchr [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char fixed) fixed}
+                      00052 S_strchr__strchr        code
+000000                00053 _strchr:
+gpasm-0.14.1 (Aug 18 2017)   strchr.asm         8-18-2017  19:22:14          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ;       .line   32; string/strchr.c     strchr (char *string, char ch)
+000000 CFD9 FFE5      00055         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00056         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00057         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00058         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00059         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00060         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00061         MOVFF   r0x04, POSTDEC1
+                      00062 ; ;ic:3: iTemp7 [k11 lr3:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] = recv _strchr [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char fixed) fixed}
+00001C 0E02           00063         MOVLW   0x02
+00001E CFDB F000      00064         MOVFF   PLUSW2, r0x00
+000022 0E03           00065         MOVLW   0x03
+000024 CFDB F000      00066         MOVFF   PLUSW2, r0x01
+000028 0E04           00067         MOVLW   0x04
+00002A CFDB F000      00068         MOVFF   PLUSW2, r0x02
+                      00069 ; ;ic:4: iTemp1 [k4 lr4:15 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char fixed}{ sir@ _strchr_ch_1_28}[r0x03 ] = recv _strchr [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char fixed) fixed}
+00002E 0E05           00070         MOVLW   0x05
+000030 CFDB F000      00071         MOVFF   PLUSW2, r0x03
+                      00072 ; ;ic:6:  _whilecontinue_0($2) :
+                      00073 ; ;ic:7:        iTemp3 [k7 lr7:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x04 ] = @[iTemp7 [k11 lr3:17 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+000034                00074 _00106_DS_:
+                      00075 ;       .line   34; string/strchr.c     while (*string && *string != ch)
+000034 C000 FFE9      00076         MOVFF   r0x00, FSR0L
+000038 C000 FFF3      00077         MOVFF   r0x01, PRODL
+00003C 5000           00078         MOVF    r0x02, W
+00003E EC00 F000      00079         CALL    __gptrget1
+000042 6E00           00080         MOVWF   r0x04
+                      00081 ; ;ic:8:        if iTemp3 [k7 lr7:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x04 ] == 0 goto _whilebreak_0($4)
+000044 5000           00082         MOVF    r0x04, W
+000046 E000           00083         BZ      _00108_DS_
+                      00084 ; ;ic:9:        iTemp6 [k10 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp3 [k7 lr7:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x04 ] == iTemp1 [k4 lr4:15 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char fixed}{ sir@ _strchr_ch_1_28}[r0x03 ]
+000048 5000           00085         MOVF    r0x04, W
+00004A 1800           00086         XORWF   r0x03, W
+00004C E000           00087         BZ      _00108_DS_
+                      00088 ; ;ic:10:       if iTemp6 [k10 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _whilebreak_0($4)
+                      00089 ; ;ic:11:       iTemp7 [k11 lr3:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] = iTemp7 [k11 lr3:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+                      00090 ;       .line   35; string/strchr.c     ++string;
+00004E 2A00           00091         INCF    r0x00, F
+000050 E300           00092         BNC     _00124_DS_
+000052 4A00           00093         INFSNZ  r0x01, F
+000054 2A00           00094         INCF    r0x02, F
+                      00095 ; ;ic:12:        goto _whilecontinue_0($2)
+000056                00096 _00124_DS_:
+000056 D000           00097         BRA     _00106_DS_
+                      00098 ; ;ic:13:  _whilebreak_0($4) :
+                      00099 ; ;ic:14:       iTemp9 [k13 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x04 ] = @[iTemp7 [k11 lr3:17 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+000058                00100 _00108_DS_:
+                      00101 ;       .line   37; string/strchr.c     if (*string == ch)
+000058 C000 FFE9      00102         MOVFF   r0x00, FSR0L
+00005C C000 FFF3      00103         MOVFF   r0x01, PRODL
+000060 5000           00104         MOVF    r0x02, W
+000062 EC00 F000      00105         CALL    __gptrget1
+                      00106 ; #     MOVWF   r0x04
+gpasm-0.14.1 (Aug 18 2017)   strchr.asm         8-18-2017  19:22:14          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ; #;;ic:15:     iTemp10 [k14 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp9 [k13 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x04 ] == iTemp1 [k4 lr4:15 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char fixed}{ sir@ _strchr_ch_1_28}[r0x03 ]
+                      00108 ; #     MOVF    r0x04, W
+000066 1800           00109         XORWF   r0x03, W
+000068 E100           00110         BNZ     _00110_DS_
+                      00111 ; ;ic:16:       if iTemp10 [k14 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_0($6)
+                      00112 ; ;ic:17:       ret iTemp7 [k11 lr3:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ]
+                      00113 ;       .line   38; string/strchr.c     return string;
+00006A C000 FFF4      00114         MOVFF   r0x02, PRODH
+00006E C000 FFF3      00115         MOVFF   r0x01, PRODL
+000072 5000           00116         MOVF    r0x00, W
+000074 D000           00117         BRA     _00111_DS_
+                      00118 ; ;ic:18:  _iffalse_0($6) :
+                      00119 ; ;ic:19:       ret 0x0 {char generic* literal}
+000076                00120 _00110_DS_:
+                      00121 ;       .line   40; string/strchr.c     return NULL;
+000076 6AF4           00122         CLRF    PRODH
+000078 6AF3           00123         CLRF    PRODL
+00007A 6AE8           00124         CLRF    WREG
+                      00125 ; ;ic:20:  _return($7) :
+                      00126 ; ;ic:21:       eproc _strchr [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char fixed) fixed}
+00007C                00127 _00111_DS_:
+00007C CFE4 F000      00128         MOVFF   PREINC1, r0x04
+000080 CFE4 F000      00129         MOVFF   PREINC1, r0x03
+000084 CFE4 F000      00130         MOVFF   PREINC1, r0x02
+000088 CFE4 F000      00131         MOVFF   PREINC1, r0x01
+00008C CFE4 F000      00132         MOVFF   PREINC1, r0x00
+000090 CFE4 FFD9      00133         MOVFF   PREINC1, FSR2L
+000094 0012           00134         RETURN  
+                      00135 
+                      00136 
+                      00137 
+                      00138 ; Statistics:
+                      00139 ; code size:      150 (0x0096) bytes ( 0.11%)
+                      00140 ;                  75 (0x004b) words
+                      00141 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00142 ; access size:      5 (0x0005) bytes
+                      00143 
+                      00144 
+                      00145         end
+gpasm-0.14.1 (Aug 18 2017)   strchr.asm         8-18-2017  19:22:14          PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODH                             00000FF4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00106_DS_                        00000034
+_00108_DS_                        00000058
+_00110_DS_                        00000076
+_00111_DS_                        0000007C
+_00124_DS_                        00000056
+__18F452                          00000001
+__gptrget1                        00000000
+_strchr                           00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,588 @@
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:27:12 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f14k50
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _i2c_restart
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _UEP0bits
+                      00021         extern  _UEP1bits
+                      00022         extern  _UEP2bits
+                      00023         extern  _UEP3bits
+                      00024         extern  _UEP4bits
+                      00025         extern  _UEP5bits
+                      00026         extern  _UEP6bits
+                      00027         extern  _UEP7bits
+                      00028         extern  _UEIEbits
+                      00029         extern  _UADDRbits
+                      00030         extern  _UFRMLbits
+                      00031         extern  _UFRMHbits
+                      00032         extern  _UEIRbits
+                      00033         extern  _UIEbits
+                      00034         extern  _UCFGbits
+                      00035         extern  _UIRbits
+                      00036         extern  _USTATbits
+                      00037         extern  _UCONbits
+                      00038         extern  _SRCON0bits
+                      00039         extern  _SRCON1bits
+                      00040         extern  _CM2CON0bits
+                      00041         extern  _CM2CON1bits
+                      00042         extern  _CM1CON0bits
+                      00043         extern  _SSPMSKbits
+                      00044         extern  _SLRCONbits
+                      00045         extern  _WPUAbits
+                      00046         extern  _WPUBbits
+                      00047         extern  _IOCAbits
+                      00048         extern  _IOCBbits
+                      00049         extern  _ANSELbits
+                      00050         extern  _ANSELHbits
+                      00051         extern  _PORTAbits
+                      00052         extern  _PORTBbits
+                      00053         extern  _PORTCbits
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054         extern  _LATAbits
+                      00055         extern  _LATBbits
+                      00056         extern  _LATCbits
+                      00057         extern  _DDRAbits
+                      00058         extern  _TRISAbits
+                      00059         extern  _DDRBbits
+                      00060         extern  _TRISBbits
+                      00061         extern  _DDRCbits
+                      00062         extern  _TRISCbits
+                      00063         extern  _OSCTUNEbits
+                      00064         extern  _PIE1bits
+                      00065         extern  _PIR1bits
+                      00066         extern  _IPR1bits
+                      00067         extern  _PIE2bits
+                      00068         extern  _PIR2bits
+                      00069         extern  _IPR2bits
+                      00070         extern  _EECON1bits
+                      00071         extern  _EEADRbits
+                      00072         extern  _EEADRHbits
+                      00073         extern  _RCSTAbits
+                      00074         extern  _TXSTAbits
+                      00075         extern  _T3CONbits
+                      00076         extern  _ECCP1ASbits
+                      00077         extern  _PWM1CONbits
+                      00078         extern  _BAUDCONbits
+                      00079         extern  _BAUDCTLbits
+                      00080         extern  _PSTRCONbits
+                      00081         extern  _REFCON0bits
+                      00082         extern  _VREFCON0bits
+                      00083         extern  _REFCON1bits
+                      00084         extern  _VREFCON1bits
+                      00085         extern  _REFCON2bits
+                      00086         extern  _VREFCON2bits
+                      00087         extern  _CCP1CONbits
+                      00088         extern  _ADCON2bits
+                      00089         extern  _ADCON1bits
+                      00090         extern  _ADCON0bits
+                      00091         extern  _SSPCON2bits
+                      00092         extern  _SSPCON1bits
+                      00093         extern  _SSPSTATbits
+                      00094         extern  _T2CONbits
+                      00095         extern  _T1CONbits
+                      00096         extern  _RCONbits
+                      00097         extern  _WDTCONbits
+                      00098         extern  _OSCCON2bits
+                      00099         extern  _OSCCONbits
+                      00100         extern  _T0CONbits
+                      00101         extern  _STATUSbits
+                      00102         extern  _INTCON3bits
+                      00103         extern  _INTCON2bits
+                      00104         extern  _INTCONbits
+                      00105         extern  _STKPTRbits
+                      00106         extern  _UEP0
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107         extern  _UEP1
+                      00108         extern  _UEP2
+                      00109         extern  _UEP3
+                      00110         extern  _UEP4
+                      00111         extern  _UEP5
+                      00112         extern  _UEP6
+                      00113         extern  _UEP7
+                      00114         extern  _UEIE
+                      00115         extern  _UADDR
+                      00116         extern  _UFRML
+                      00117         extern  _UFRMH
+                      00118         extern  _UEIR
+                      00119         extern  _UIE
+                      00120         extern  _UCFG
+                      00121         extern  _UIR
+                      00122         extern  _USTAT
+                      00123         extern  _UCON
+                      00124         extern  _SRCON0
+                      00125         extern  _SRCON1
+                      00126         extern  _CM2CON0
+                      00127         extern  _CM2CON1
+                      00128         extern  _CM1CON0
+                      00129         extern  _SSPMSK
+                      00130         extern  _SLRCON
+                      00131         extern  _WPUA
+                      00132         extern  _WPUB
+                      00133         extern  _IOCA
+                      00134         extern  _IOCB
+                      00135         extern  _ANSEL
+                      00136         extern  _ANSELH
+                      00137         extern  _PORTA
+                      00138         extern  _PORTB
+                      00139         extern  _PORTC
+                      00140         extern  _LATA
+                      00141         extern  _LATB
+                      00142         extern  _LATC
+                      00143         extern  _DDRA
+                      00144         extern  _TRISA
+                      00145         extern  _DDRB
+                      00146         extern  _TRISB
+                      00147         extern  _DDRC
+                      00148         extern  _TRISC
+                      00149         extern  _OSCTUNE
+                      00150         extern  _PIE1
+                      00151         extern  _PIR1
+                      00152         extern  _IPR1
+                      00153         extern  _PIE2
+                      00154         extern  _PIR2
+                      00155         extern  _IPR2
+                      00156         extern  _EECON1
+                      00157         extern  _EECON2
+                      00158         extern  _EEDATA
+                      00159         extern  _EEADR
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160         extern  _EEADRH
+                      00161         extern  _RCSTA
+                      00162         extern  _TXSTA
+                      00163         extern  _TXREG
+                      00164         extern  _RCREG
+                      00165         extern  _SPBRG
+                      00166         extern  _SPBRGH
+                      00167         extern  _T3CON
+                      00168         extern  _TMR3L
+                      00169         extern  _TMR3H
+                      00170         extern  _ECCP1AS
+                      00171         extern  _PWM1CON
+                      00172         extern  _BAUDCON
+                      00173         extern  _BAUDCTL
+                      00174         extern  _PSTRCON
+                      00175         extern  _REFCON0
+                      00176         extern  _VREFCON0
+                      00177         extern  _REFCON1
+                      00178         extern  _VREFCON1
+                      00179         extern  _REFCON2
+                      00180         extern  _VREFCON2
+                      00181         extern  _CCP1CON
+                      00182         extern  _CCPR1
+                      00183         extern  _CCPR1L
+                      00184         extern  _CCPR1H
+                      00185         extern  _ADCON2
+                      00186         extern  _ADCON1
+                      00187         extern  _ADCON0
+                      00188         extern  _ADRES
+                      00189         extern  _ADRESL
+                      00190         extern  _ADRESH
+                      00191         extern  _SSPCON2
+                      00192         extern  _SSPCON1
+                      00193         extern  _SSPSTAT
+                      00194         extern  _SSPADD
+                      00195         extern  _SSPBUF
+                      00196         extern  _T2CON
+                      00197         extern  _PR2
+                      00198         extern  _TMR2
+                      00199         extern  _T1CON
+                      00200         extern  _TMR1L
+                      00201         extern  _TMR1H
+                      00202         extern  _RCON
+                      00203         extern  _WDTCON
+                      00204         extern  _OSCCON2
+                      00205         extern  _OSCCON
+                      00206         extern  _T0CON
+                      00207         extern  _TMR0L
+                      00208         extern  _TMR0H
+                      00209         extern  _STATUS
+                      00210         extern  _FSR2L
+                      00211         extern  _FSR2H
+                      00212         extern  _PLUSW2
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00213         extern  _PREINC2
+                      00214         extern  _POSTDEC2
+                      00215         extern  _POSTINC2
+                      00216         extern  _INDF2
+                      00217         extern  _BSR
+                      00218         extern  _FSR1L
+                      00219         extern  _FSR1H
+                      00220         extern  _PLUSW1
+                      00221         extern  _PREINC1
+                      00222         extern  _POSTDEC1
+                      00223         extern  _POSTINC1
+                      00224         extern  _INDF1
+                      00225         extern  _WREG
+                      00226         extern  _FSR0L
+                      00227         extern  _FSR0H
+                      00228         extern  _PLUSW0
+                      00229         extern  _PREINC0
+                      00230         extern  _POSTDEC0
+                      00231         extern  _POSTINC0
+                      00232         extern  _INDF0
+                      00233         extern  _INTCON3
+                      00234         extern  _INTCON2
+                      00235         extern  _INTCON
+                      00236         extern  _PROD
+                      00237         extern  _PRODL
+                      00238         extern  _PRODH
+                      00239         extern  _TABLAT
+                      00240         extern  _TBLPTR
+                      00241         extern  _TBLPTRL
+                      00242         extern  _TBLPTRH
+                      00243         extern  _TBLPTRU
+                      00244         extern  _PC
+                      00245         extern  _PCL
+                      00246         extern  _PCLATH
+                      00247         extern  _PCLATU
+                      00248         extern  _STKPTR
+                      00249         extern  _TOS
+                      00250         extern  _TOSL
+                      00251         extern  _TOSH
+                      00252         extern  _TOSU
+                      00253 
+                      00254 ;--------------------------------------------------------
+                      00255 ; global & static initialisations
+                      00256 ;--------------------------------------------------------
+                      00257 ; I code from now on!
+                      00258 ; ; Starting pCode block
+                      00259 ; ;ic:1:  _entry($2) :
+                      00260 ; ;ic:2:        proc _i2c_restart [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+                      00261 S_i2crestart__i2c_restart       code
+000000                00262 _i2c_restart:
+                      00263 ; ;ic:3:        iTemp0 [k3 lr3:4 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat] = &[_SSPCON2bits [k2 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-struct __00000400 fixed}]
+                      00264 ; ;ic:4:        iTemp1 [k5 lr4:5 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat] := iTemp0 [k3 lr3:4 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat]
+                      00265 ; ;ic:5:        *(iTemp1 [k5 lr4:5 so:0]{ ia1 a2p0 re0 rm1 nos0 ru0 dp0}{volatile-unsigned-bitfield {1,1} near* fixed}[remat]) := 0x1 {const-unsigned-char literal}
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00266 ;       .line   34; i2c/i2crestart.c    SSPCON2bits.RSEN = 1;
+000000 8200           00267         BSF     _SSPCON2bits, 1
+                      00268 ; ;ic:6:  _return($1) :
+                      00269 ; ;ic:7:        eproc _i2c_restart [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( ) fixed}
+000002 0012           00270         RETURN  
+                      00271 
+                      00272 
+                      00273 
+                      00274 ; Statistics:
+                      00275 ; code size:        4 (0x0004) bytes ( 0.00%)
+                      00276 ;                   2 (0x0002) words
+                      00277 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00278 ; access size:      0 (0x0000) bytes
+                      00279 
+                      00280 
+                      00281         end
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+_ADCON0                           00000000
+_ADCON0bits                       00000000
+_ADCON1                           00000000
+_ADCON1bits                       00000000
+_ADCON2                           00000000
+_ADCON2bits                       00000000
+_ADRES                            00000000
+_ADRESH                           00000000
+_ADRESL                           00000000
+_ANSEL                            00000000
+_ANSELH                           00000000
+_ANSELHbits                       00000000
+_ANSELbits                        00000000
+_BAUDCON                          00000000
+_BAUDCONbits                      00000000
+_BAUDCTL                          00000000
+_BAUDCTLbits                      00000000
+_BSR                              00000000
+_CCP1CON                          00000000
+_CCP1CONbits                      00000000
+_CCPR1                            00000000
+_CCPR1H                           00000000
+_CCPR1L                           00000000
+_CM1CON0                          00000000
+_CM1CON0bits                      00000000
+_CM2CON0                          00000000
+_CM2CON0bits                      00000000
+_CM2CON1                          00000000
+_CM2CON1bits                      00000000
+_DDRA                             00000000
+_DDRAbits                         00000000
+_DDRB                             00000000
+_DDRBbits                         00000000
+_DDRC                             00000000
+_DDRCbits                         00000000
+_ECCP1AS                          00000000
+_ECCP1ASbits                      00000000
+_EEADR                            00000000
+_EEADRH                           00000000
+_EEADRHbits                       00000000
+_EEADRbits                        00000000
+_EECON1                           00000000
+_EECON1bits                       00000000
+_EECON2                           00000000
+_EEDATA                           00000000
+_FSR0H                            00000000
+_FSR0L                            00000000
+_FSR1H                            00000000
+_FSR1L                            00000000
+_FSR2H                            00000000
+_FSR2L                            00000000
+_INDF0                            00000000
+_INDF1                            00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_INDF2                            00000000
+_INTCON                           00000000
+_INTCON2                          00000000
+_INTCON2bits                      00000000
+_INTCON3                          00000000
+_INTCON3bits                      00000000
+_INTCONbits                       00000000
+_IOCA                             00000000
+_IOCAbits                         00000000
+_IOCB                             00000000
+_IOCBbits                         00000000
+_IPR1                             00000000
+_IPR1bits                         00000000
+_IPR2                             00000000
+_IPR2bits                         00000000
+_LATA                             00000000
+_LATAbits                         00000000
+_LATB                             00000000
+_LATBbits                         00000000
+_LATC                             00000000
+_LATCbits                         00000000
+_OSCCON                           00000000
+_OSCCON2                          00000000
+_OSCCON2bits                      00000000
+_OSCCONbits                       00000000
+_OSCTUNE                          00000000
+_OSCTUNEbits                      00000000
+_PC                               00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATU                           00000000
+_PIE1                             00000000
+_PIE1bits                         00000000
+_PIE2                             00000000
+_PIE2bits                         00000000
+_PIR1                             00000000
+_PIR1bits                         00000000
+_PIR2                             00000000
+_PIR2bits                         00000000
+_PLUSW0                           00000000
+_PLUSW1                           00000000
+_PLUSW2                           00000000
+_PORTA                            00000000
+_PORTAbits                        00000000
+_PORTB                            00000000
+_PORTBbits                        00000000
+_PORTC                            00000000
+_PORTCbits                        00000000
+_POSTDEC0                         00000000
+_POSTDEC1                         00000000
+_POSTDEC2                         00000000
+_POSTINC0                         00000000
+_POSTINC1                         00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_POSTINC2                         00000000
+_PR2                              00000000
+_PREINC0                          00000000
+_PREINC1                          00000000
+_PREINC2                          00000000
+_PROD                             00000000
+_PRODH                            00000000
+_PRODL                            00000000
+_PSTRCON                          00000000
+_PSTRCONbits                      00000000
+_PWM1CON                          00000000
+_PWM1CONbits                      00000000
+_RCON                             00000000
+_RCONbits                         00000000
+_RCREG                            00000000
+_RCSTA                            00000000
+_RCSTAbits                        00000000
+_REFCON0                          00000000
+_REFCON0bits                      00000000
+_REFCON1                          00000000
+_REFCON1bits                      00000000
+_REFCON2                          00000000
+_REFCON2bits                      00000000
+_SLRCON                           00000000
+_SLRCONbits                       00000000
+_SPBRG                            00000000
+_SPBRGH                           00000000
+_SRCON0                           00000000
+_SRCON0bits                       00000000
+_SRCON1                           00000000
+_SRCON1bits                       00000000
+_SSPADD                           00000000
+_SSPBUF                           00000000
+_SSPCON1                          00000000
+_SSPCON1bits                      00000000
+_SSPCON2                          00000000
+_SSPCON2bits                      00000000
+_SSPMSK                           00000000
+_SSPMSKbits                       00000000
+_SSPSTAT                          00000000
+_SSPSTATbits                      00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_STKPTR                           00000000
+_STKPTRbits                       00000000
+_T0CON                            00000000
+_T0CONbits                        00000000
+_T1CON                            00000000
+_T1CONbits                        00000000
+_T2CON                            00000000
+_T2CONbits                        00000000
+_T3CON                            00000000
+_T3CONbits                        00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_TABLAT                           00000000
+_TBLPTR                           00000000
+_TBLPTRH                          00000000
+_TBLPTRL                          00000000
+_TBLPTRU                          00000000
+_TMR0H                            00000000
+_TMR0L                            00000000
+_TMR1H                            00000000
+_TMR1L                            00000000
+_TMR2                             00000000
+_TMR3H                            00000000
+_TMR3L                            00000000
+_TOS                              00000000
+_TOSH                             00000000
+_TOSL                             00000000
+_TOSU                             00000000
+_TRISA                            00000000
+_TRISAbits                        00000000
+_TRISB                            00000000
+_TRISBbits                        00000000
+_TRISC                            00000000
+_TRISCbits                        00000000
+_TXREG                            00000000
+_TXSTA                            00000000
+_TXSTAbits                        00000000
+_UADDR                            00000000
+_UADDRbits                        00000000
+_UCFG                             00000000
+_UCFGbits                         00000000
+_UCON                             00000000
+_UCONbits                         00000000
+_UEIE                             00000000
+_UEIEbits                         00000000
+_UEIR                             00000000
+_UEIRbits                         00000000
+_UEP0                             00000000
+_UEP0bits                         00000000
+_UEP1                             00000000
+_UEP1bits                         00000000
+_UEP2                             00000000
+_UEP2bits                         00000000
+_UEP3                             00000000
+_UEP3bits                         00000000
+_UEP4                             00000000
+_UEP4bits                         00000000
+_UEP5                             00000000
+_UEP5bits                         00000000
+_UEP6                             00000000
+_UEP6bits                         00000000
+_UEP7                             00000000
+_UEP7bits                         00000000
+_UFRMH                            00000000
+_UFRMHbits                        00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-i2crestart.asm8-18-2017  19:27:12          PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_UFRML                            00000000
+_UFRMLbits                        00000000
+_UIE                              00000000
+_UIEbits                          00000000
+_UIR                              00000000
+_UIRbits                          00000000
+_USTAT                            00000000
+_USTATbits                        00000000
+_VREFCON0                         00000000
+_VREFCON0bits                     00000000
+_VREFCON1                         00000000
+_VREFCON1bits                     00000000
+_VREFCON2                         00000000
+_VREFCON2bits                     00000000
+_WDTCON                           00000000
+_WDTCONbits                       00000000
+_WPUA                             00000000
+_WPUAbits                         00000000
+_WPUB                             00000000
+_WPUBbits                         00000000
+_WREG                             00000000
+__18F14K50                        00000001
+_i2c_restart                      00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

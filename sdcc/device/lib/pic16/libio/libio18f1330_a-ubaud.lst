@@ -1,0 +1,466 @@
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:26:08 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f1330
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _usart_baud
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _PORTAbits
+                      00021         extern  _PORTBbits
+                      00022         extern  _OVDCONSbits
+                      00023         extern  _OVDCONDbits
+                      00024         extern  _DTCONbits
+                      00025         extern  _PWMCON1bits
+                      00026         extern  _PWMCON0bits
+                      00027         extern  _LATAbits
+                      00028         extern  _LATBbits
+                      00029         extern  _FLTCONFIGbits
+                      00030         extern  _DDRAbits
+                      00031         extern  _TRISAbits
+                      00032         extern  _DDRBbits
+                      00033         extern  _TRISBbits
+                      00034         extern  _PTCON1bits
+                      00035         extern  _PTCON0bits
+                      00036         extern  _OSCTUNEbits
+                      00037         extern  _PIE1bits
+                      00038         extern  _PIR1bits
+                      00039         extern  _IPR1bits
+                      00040         extern  _PIE2bits
+                      00041         extern  _PIR2bits
+                      00042         extern  _IPR2bits
+                      00043         extern  _PIE3bits
+                      00044         extern  _PIR3bits
+                      00045         extern  _IPR3bits
+                      00046         extern  _EECON1bits
+                      00047         extern  _RCSTAbits
+                      00048         extern  _TXSTAbits
+                      00049         extern  _CMCONbits
+                      00050         extern  _CVRCONbits
+                      00051         extern  _BAUDCONbits
+                      00052         extern  _BAUDCTLbits
+                      00053         extern  _ADCON2bits
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054         extern  _ADCON1bits
+                      00055         extern  _ADCON0bits
+                      00056         extern  _T1CONbits
+                      00057         extern  _RCONbits
+                      00058         extern  _WDTCONbits
+                      00059         extern  _LVDCONbits
+                      00060         extern  _OSCCONbits
+                      00061         extern  _T0CONbits
+                      00062         extern  _STATUSbits
+                      00063         extern  _INTCON3bits
+                      00064         extern  _INTCON2bits
+                      00065         extern  _INTCONbits
+                      00066         extern  _STKPTRbits
+                      00067         extern  _PORTA
+                      00068         extern  _PORTB
+                      00069         extern  _OVDCONS
+                      00070         extern  _OVDCOND
+                      00071         extern  _DTCON
+                      00072         extern  _PWMCON1
+                      00073         extern  _PWMCON0
+                      00074         extern  _SEVTCMPH
+                      00075         extern  _SEVTCMPL
+                      00076         extern  _LATA
+                      00077         extern  _LATB
+                      00078         extern  _FLTCONFIG
+                      00079         extern  _PDC2H
+                      00080         extern  _PDC2L
+                      00081         extern  _PDC1H
+                      00082         extern  _PDC1L
+                      00083         extern  _PDC0H
+                      00084         extern  _PDC0L
+                      00085         extern  _DDRA
+                      00086         extern  _TRISA
+                      00087         extern  _DDRB
+                      00088         extern  _TRISB
+                      00089         extern  _PTPERH
+                      00090         extern  _PTPERL
+                      00091         extern  _PTMRH
+                      00092         extern  _PTMRL
+                      00093         extern  _PTCON1
+                      00094         extern  _PTCON0
+                      00095         extern  _OSCTUNE
+                      00096         extern  _PIE1
+                      00097         extern  _PIR1
+                      00098         extern  _IPR1
+                      00099         extern  _PIE2
+                      00100         extern  _PIR2
+                      00101         extern  _IPR2
+                      00102         extern  _PIE3
+                      00103         extern  _PIR3
+                      00104         extern  _IPR3
+                      00105         extern  _EECON1
+                      00106         extern  _EECON2
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107         extern  _EEDATA
+                      00108         extern  _EEADR
+                      00109         extern  _RCSTA
+                      00110         extern  _TXSTA
+                      00111         extern  _TXREG
+                      00112         extern  _RCREG
+                      00113         extern  _SPBRG
+                      00114         extern  _SPBRGH
+                      00115         extern  _CMCON
+                      00116         extern  _CVRCON
+                      00117         extern  _BAUDCON
+                      00118         extern  _BAUDCTL
+                      00119         extern  _ADCON2
+                      00120         extern  _ADCON1
+                      00121         extern  _ADCON0
+                      00122         extern  _ADRES
+                      00123         extern  _ADRESL
+                      00124         extern  _ADRESH
+                      00125         extern  _T1CON
+                      00126         extern  _TMR1L
+                      00127         extern  _TMR1H
+                      00128         extern  _RCON
+                      00129         extern  _WDTCON
+                      00130         extern  _LVDCON
+                      00131         extern  _OSCCON
+                      00132         extern  _T0CON
+                      00133         extern  _TMR0L
+                      00134         extern  _TMR0H
+                      00135         extern  _STATUS
+                      00136         extern  _FSR2L
+                      00137         extern  _FSR2H
+                      00138         extern  _PLUSW2
+                      00139         extern  _PREINC2
+                      00140         extern  _POSTDEC2
+                      00141         extern  _POSTINC2
+                      00142         extern  _INDF2
+                      00143         extern  _BSR
+                      00144         extern  _FSR1L
+                      00145         extern  _FSR1H
+                      00146         extern  _PLUSW1
+                      00147         extern  _PREINC1
+                      00148         extern  _POSTDEC1
+                      00149         extern  _POSTINC1
+                      00150         extern  _INDF1
+                      00151         extern  _WREG
+                      00152         extern  _FSR0L
+                      00153         extern  _FSR0H
+                      00154         extern  _PLUSW0
+                      00155         extern  _PREINC0
+                      00156         extern  _POSTDEC0
+                      00157         extern  _POSTINC0
+                      00158         extern  _INDF0
+                      00159         extern  _INTCON3
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160         extern  _INTCON2
+                      00161         extern  _INTCON
+                      00162         extern  _PROD
+                      00163         extern  _PRODL
+                      00164         extern  _PRODH
+                      00165         extern  _TABLAT
+                      00166         extern  _TBLPTR
+                      00167         extern  _TBLPTRL
+                      00168         extern  _TBLPTRH
+                      00169         extern  _TBLPTRU
+                      00170         extern  _PC
+                      00171         extern  _PCL
+                      00172         extern  _PCLATH
+                      00173         extern  _PCLATU
+                      00174         extern  _STKPTR
+                      00175         extern  _TOS
+                      00176         extern  _TOSL
+                      00177         extern  _TOSH
+                      00178         extern  _TOSU
+                      00179 
+                      00180 ;--------------------------------------------------------
+                      00181 ;       Equates to used internal registers
+                      00182 ;--------------------------------------------------------
+  00000FE1            00183 FSR1L   equ     0xfe1
+  00000FD9            00184 FSR2L   equ     0xfd9
+  00000FE5            00185 POSTDEC1        equ     0xfe5
+  00000FE4            00186 PREINC1 equ     0xfe4
+  00000FDB            00187 PLUSW2  equ     0xfdb
+                      00188 
+                      00189 
+                      00190 ; Internal registers
+                      00191 .registers      udata_ovr       0x0000
+000000                00192 r0x00   res     1
+000001                00193 r0x01   res     1
+                      00194 
+                      00195 ;--------------------------------------------------------
+                      00196 ; global & static initialisations
+                      00197 ;--------------------------------------------------------
+                      00198 ; I code from now on!
+                      00199 ; ; Starting pCode block
+                      00200 ; ;ic:1:  _entry($2) :
+                      00201 ; ;ic:2:        proc _usart_baud [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed) fixed}
+                      00202 S_ubaud__usart_baud     code
+000000                00203 _usart_baud:
+                      00204 ;       .line   38; usart/ubaud.c       usart_baud (sdcc_spbrg_t baudconfig) __wparam
+000000 CFD9 FFE5      00205         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00206         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00207         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00208         MOVFF   r0x01, POSTDEC1
+                      00209 ; ;ic:3: iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _usart_baud_baudconfig_1_10}[r0x00 r0x01 ] = recv _usart_baud [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed) fixed}
+000010 6E00           00210         MOVWF   r0x00
+000012 0E02           00211         MOVLW   0x02
+000014 CFDB F000      00212         MOVFF   PLUSW2, r0x01
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00213 ; ;ic:4:        iTemp1 [k5 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x02 r0x03 ] = iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _usart_baud_baudconfig_1_10}[r0x00 r0x01 ] >> 0x8 {const-unsigned-char literal}
+                      00214 ;       .line   41; usart/ubaud.c       SPBRGH = (baudconfig >> 8);
+000018 5000           00215         MOVF    r0x01, W
+                      00216 ; ;ic:5:        _SPBRGH [k4 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr} = (volatile-unsigned-char sfr)iTemp1 [k5 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x02 r0x03 ]
+00001A 6E00           00217         MOVWF   _SPBRGH
+                      00218 ; ;ic:6:        _SPBRG [k7 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char sfr} = (volatile-unsigned-char sfr)iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _usart_baud_baudconfig_1_10}[r0x00 r0x01 ]
+                      00219 ;       .line   43; usart/ubaud.c       SPBRG = baudconfig;
+00001C 5000           00220         MOVF    r0x00, W
+00001E 6E00           00221         MOVWF   _SPBRG
+                      00222 ; ;ic:7:  _return($1) :
+                      00223 ; ;ic:8:        eproc _usart_baud [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed) fixed}
+000020 CFE4 F000      00224         MOVFF   PREINC1, r0x01
+000024 CFE4 F000      00225         MOVFF   PREINC1, r0x00
+000028 CFE4 FFD9      00226         MOVFF   PREINC1, FSR2L
+00002C 0012           00227         RETURN  
+                      00228 
+                      00229 
+                      00230 
+                      00231 ; Statistics:
+                      00232 ; code size:       46 (0x002e) bytes ( 0.04%)
+                      00233 ;                  23 (0x0017) words
+                      00234 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00235 ; access size:      2 (0x0002) bytes
+                      00236 
+                      00237 
+                      00238         end
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+_ADCON0                           00000000
+_ADCON0bits                       00000000
+_ADCON1                           00000000
+_ADCON1bits                       00000000
+_ADCON2                           00000000
+_ADCON2bits                       00000000
+_ADRES                            00000000
+_ADRESH                           00000000
+_ADRESL                           00000000
+_BAUDCON                          00000000
+_BAUDCONbits                      00000000
+_BAUDCTL                          00000000
+_BAUDCTLbits                      00000000
+_BSR                              00000000
+_CMCON                            00000000
+_CMCONbits                        00000000
+_CVRCON                           00000000
+_CVRCONbits                       00000000
+_DDRA                             00000000
+_DDRAbits                         00000000
+_DDRB                             00000000
+_DDRBbits                         00000000
+_DTCON                            00000000
+_DTCONbits                        00000000
+_EEADR                            00000000
+_EECON1                           00000000
+_EECON1bits                       00000000
+_EECON2                           00000000
+_EEDATA                           00000000
+_FLTCONFIG                        00000000
+_FLTCONFIGbits                    00000000
+_FSR0H                            00000000
+_FSR0L                            00000000
+_FSR1H                            00000000
+_FSR1L                            00000000
+_FSR2H                            00000000
+_FSR2L                            00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INTCON                           00000000
+_INTCON2                          00000000
+_INTCON2bits                      00000000
+_INTCON3                          00000000
+_INTCON3bits                      00000000
+_INTCONbits                       00000000
+_IPR1                             00000000
+_IPR1bits                         00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_IPR2                             00000000
+_IPR2bits                         00000000
+_IPR3                             00000000
+_IPR3bits                         00000000
+_LATA                             00000000
+_LATAbits                         00000000
+_LATB                             00000000
+_LATBbits                         00000000
+_LVDCON                           00000000
+_LVDCONbits                       00000000
+_OSCCON                           00000000
+_OSCCONbits                       00000000
+_OSCTUNE                          00000000
+_OSCTUNEbits                      00000000
+_OVDCOND                          00000000
+_OVDCONDbits                      00000000
+_OVDCONS                          00000000
+_OVDCONSbits                      00000000
+_PC                               00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATU                           00000000
+_PDC0H                            00000000
+_PDC0L                            00000000
+_PDC1H                            00000000
+_PDC1L                            00000000
+_PDC2H                            00000000
+_PDC2L                            00000000
+_PIE1                             00000000
+_PIE1bits                         00000000
+_PIE2                             00000000
+_PIE2bits                         00000000
+_PIE3                             00000000
+_PIE3bits                         00000000
+_PIR1                             00000000
+_PIR1bits                         00000000
+_PIR2                             00000000
+_PIR2bits                         00000000
+_PIR3                             00000000
+_PIR3bits                         00000000
+_PLUSW0                           00000000
+_PLUSW1                           00000000
+_PLUSW2                           00000000
+_PORTA                            00000000
+_PORTAbits                        00000000
+_PORTB                            00000000
+_PORTBbits                        00000000
+_POSTDEC0                         00000000
+_POSTDEC1                         00000000
+_POSTDEC2                         00000000
+_POSTINC0                         00000000
+_POSTINC1                         00000000
+_POSTINC2                         00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_PREINC0                          00000000
+_PREINC1                          00000000
+_PREINC2                          00000000
+_PROD                             00000000
+_PRODH                            00000000
+_PRODL                            00000000
+_PTCON0                           00000000
+_PTCON0bits                       00000000
+_PTCON1                           00000000
+_PTCON1bits                       00000000
+_PTMRH                            00000000
+_PTMRL                            00000000
+_PTPERH                           00000000
+_PTPERL                           00000000
+_PWMCON0                          00000000
+_PWMCON0bits                      00000000
+_PWMCON1                          00000000
+_PWMCON1bits                      00000000
+_RCON                             00000000
+_RCONbits                         00000000
+_RCREG                            00000000
+_RCSTA                            00000000
+_RCSTAbits                        00000000
+_SEVTCMPH                         00000000
+_SEVTCMPL                         00000000
+_SPBRG                            00000000
+_SPBRGH                           00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_STKPTR                           00000000
+_STKPTRbits                       00000000
+_T0CON                            00000000
+_T0CONbits                        00000000
+_T1CON                            00000000
+_T1CONbits                        00000000
+_TABLAT                           00000000
+_TBLPTR                           00000000
+_TBLPTRH                          00000000
+_TBLPTRL                          00000000
+_TBLPTRU                          00000000
+_TMR0H                            00000000
+_TMR0L                            00000000
+_TMR1H                            00000000
+_TMR1L                            00000000
+_TOS                              00000000
+_TOSH                             00000000
+_TOSL                             00000000
+_TOSU                             00000000
+_TRISA                            00000000
+_TRISAbits                        00000000
+_TRISB                            00000000
+_TRISBbits                        00000000
+_TXREG                            00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f1330_a-ubaud.asm8-18-2017  19:26:08          PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_TXSTA                            00000000
+_TXSTAbits                        00000000
+_WDTCON                           00000000
+_WDTCONbits                       00000000
+_WREG                             00000000
+__18F1330                         00000001
+_usart_baud                       00000000
+r0x00                             00000000
+r0x01                             00000001
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

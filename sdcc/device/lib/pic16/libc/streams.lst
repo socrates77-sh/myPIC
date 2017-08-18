@@ -1,0 +1,58 @@
+gpasm-0.14.1 (Aug 18 2017)   streams.asm        8-18-2017  19:21:39          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:39 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _stdin
+                      00016         global  _stdout
+                      00017 
+                      00018 udata_streams_0 udata
+000000                00019 _stdout res     3
+                      00020 
+                      00021 udata_streams_1 udata
+000000                00022 _stdin  res     3
+                      00023 
+                      00024 ;--------------------------------------------------------
+                      00025 ; global & static initialisations
+                      00026 ;--------------------------------------------------------
+                      00027 ; I code from now on!
+                      00028 
+                      00029 
+                      00030 ; Statistics:
+                      00031 ; code size:        0 (0x0000) bytes ( 0.00%)
+                      00032 ;                   0 (0x0000) words
+                      00033 ; udata size:       6 (0x0006) bytes ( 0.47%)
+                      00034 ; access size:      0 (0x0000) bytes
+                      00035 
+                      00036 
+                      00037         end
+gpasm-0.14.1 (Aug 18 2017)   streams.asm        8-18-2017  19:21:39          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__18F452                          00000001
+_stdin                            00000000
+_stdout                           00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

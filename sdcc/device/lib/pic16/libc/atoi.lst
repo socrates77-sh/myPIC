@@ -1,0 +1,389 @@
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:48 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _atoi
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  __gptrget1
+                      00021         extern  __mulint
+                      00022 
+                      00023 ;--------------------------------------------------------
+                      00024 ;       Equates to used internal registers
+                      00025 ;--------------------------------------------------------
+  00000FD8            00026 STATUS  equ     0xfd8
+  00000FE8            00027 WREG    equ     0xfe8
+  00000FE9            00028 FSR0L   equ     0xfe9
+  00000FE1            00029 FSR1L   equ     0xfe1
+  00000FD9            00030 FSR2L   equ     0xfd9
+  00000FE5            00031 POSTDEC1        equ     0xfe5
+  00000FE4            00032 PREINC1 equ     0xfe4
+  00000FDB            00033 PLUSW2  equ     0xfdb
+  00000FF3            00034 PRODL   equ     0xff3
+                      00035 
+                      00036 
+                      00037 ; Internal registers
+                      00038 .registers      udata_ovr       0x0000
+000000                00039 r0x00   res     1
+000001                00040 r0x01   res     1
+000002                00041 r0x02   res     1
+000003                00042 r0x03   res     1
+000004                00043 r0x04   res     1
+000005                00044 r0x05   res     1
+000006                00045 r0x06   res     1
+000007                00046 r0x07   res     1
+000008                00047 r0x08   res     1
+000009                00048 r0x09   res     1
+                      00049 
+                      00050 ;--------------------------------------------------------
+                      00051 ; global & static initialisations
+                      00052 ;--------------------------------------------------------
+                      00053 ; I code from now on!
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ; ; Starting pCode block
+                      00055 ; ;ic:1:  _entry($24) :
+                      00056 ; ;ic:2:        proc _atoi [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed) fixed}
+                      00057 S_atoi__atoi    code
+000000                00058 _atoi:
+                      00059 ;       .line   29; stdlib/atoi.c       int atoi(char * s)
+000000 CFD9 FFE5      00060         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00061         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00062         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00063         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00064         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00065         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00066         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00067         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00068         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00069         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00070         MOVFF   r0x08, POSTDEC1
+00002C C000 FFE5      00071         MOVFF   r0x09, POSTDEC1
+                      00072 ; ;ic:3: iTemp0 [k2 lr3:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _atoi_s_1_1}[r0x00 r0x01 r0x02 ] = recv _atoi [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed) fixed}
+000030 0E02           00073         MOVLW   0x02
+000032 CFDB F000      00074         MOVFF   PLUSW2, r0x00
+000036 0E03           00075         MOVLW   0x03
+000038 CFDB F000      00076         MOVFF   PLUSW2, r0x01
+00003C 0E04           00077         MOVLW   0x04
+00003E CFDB F000      00078         MOVFF   PLUSW2, r0x02
+                      00079 ; ;ic:4:        iTemp1 [k4 lr4:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _atoi_rv_1_2}[r0x03 r0x04 ] := 0x0 {int literal}
+                      00080 ;       .line   31; stdlib/atoi.c       int rv=0; 
+000042 6A00           00081         CLRF    r0x03
+000044 6A00           00082         CLRF    r0x04
+                      00083 ; ;ic:5:        iTemp2 [k6 lr5:54 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char fixed}{ sir@ _atoi_sign_1_2}[r0x05 ] := 0x0 {const-unsigned-char literal}
+                      00084 ;       .line   32; stdlib/atoi.c       char sign = 0;
+000046 6A00           00085         CLRF    r0x05
+                      00086 ; ;ic:6:        iTemp18 [k23 lr6:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] := iTemp0 [k2 lr3:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _atoi_s_1_1}[r0x00 r0x01 r0x02 ]
+                      00087 ;       .line   35; stdlib/atoi.c       while (*s) {
+000048 C000 F000      00088         MOVFF   r0x00, r0x06
+00004C C000 F000      00089         MOVFF   r0x01, r0x07
+000050 C000 F000      00090         MOVFF   r0x02, r0x08
+                      00091 ; ;ic:8:  _whilecontinue_0($7) :
+                      00092 ; ;ic:9:        iTemp4 [k9 lr9:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] = @[iTemp18 [k23 lr6:25 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] + 0x0 {const-unsigned-char literal}]
+000054                00093 _00111_DS_:
+000054 C000 FFE9      00094         MOVFF   r0x06, FSR0L
+000058 C000 FFF3      00095         MOVFF   r0x07, PRODL
+00005C 5000           00096         MOVF    r0x08, W
+00005E EC00 F000      00097         CALL    __gptrget1
+000062 6E00           00098         MOVWF   r0x09
+                      00099 ; ;ic:10:       if iTemp4 [k9 lr9:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] == 0 goto loopExitLbl2($37)
+000064 5000           00100         MOVF    r0x09, W
+000066 E000           00101         BZ      _00141_DS_
+                      00102 ; ;ic:11:       iTemp7 [k12 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp4 [k9 lr9:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] > 0x39 {const-char literal}
+                      00103 ;       .line   36; stdlib/atoi.c       if (*s <= '9' && *s >= '0')
+000068 5000           00104         MOVF    r0x09, W
+00006A 0F80           00105         ADDLW   0x80
+00006C 0F46           00106         ADDLW   0x46
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00006E E200           00107         BC      _00106_DS_
+                      00108 ; ;ic:12:       if iTemp7 [k12 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _iffalse_0($2)
+                      00109 ; ;ic:13:       iTemp10 [k15 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp4 [k9 lr9:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] < 0x30 {const-char literal}
+000070 5000           00110         MOVF    r0x09, W
+000072 0F80           00111         ADDLW   0x80
+000074 0F50           00112         ADDLW   0x50
+000076 E200           00113         BC      _00141_DS_
+                      00114 ; ;ic:14:       if iTemp10 [k15 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto loopExitLbl2($37)
+                      00115 ; ;ic:15:  _iffalse_0($2) :
+                      00116 ; ;ic:16:       iTemp12 [k17 lr16:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] = @[iTemp18 [k23 lr6:25 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] + 0x0 {const-unsigned-char literal}]
+000078                00117 _00106_DS_:
+                      00118 ;       .line   38; stdlib/atoi.c       if (*s == '-' || *s == '+') 
+000078 C000 FFE9      00119         MOVFF   r0x06, FSR0L
+00007C C000 FFF3      00120         MOVFF   r0x07, PRODL
+000080 5000           00121         MOVF    r0x08, W
+000082 EC00 F000      00122         CALL    __gptrget1
+                      00123 ; #     MOVWF   r0x09
+                      00124 ; #;;ic:17:     iTemp13 [k18 lr17:18 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp12 [k17 lr16:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] == 0x2d {const-char literal}
+                      00125 ; #     MOVF    r0x09, W
+000086 6E00           00126         MOVWF   r0x09
+000088 0A2D           00127         XORLW   0x2d
+00008A E000           00128         BZ      _00141_DS_
+                      00129 ; ;ic:18:       if iTemp13 [k18 lr17:18 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto loopExitLbl2($37)
+                      00130 ; ;ic:19:       iTemp16 [k21 lr19:20 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp12 [k17 lr16:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x09 ] == 0x2b {const-char literal}
+00008C 5000           00131         MOVF    r0x09, W
+00008E 0A2B           00132         XORLW   0x2b
+000090 E000           00133         BZ      _00141_DS_
+                      00134 ; ;ic:20:       if iTemp16 [k21 lr19:20 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto loopExitLbl2($37)
+                      00135 ; ;ic:21:       iTemp18 [k23 lr6:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] = iTemp18 [k23 lr6:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] + 0x1 {const-unsigned-char literal}
+                      00136 ;       .line   40; stdlib/atoi.c       s++;
+000092 2A00           00137         INCF    r0x06, F
+000094 E300           00138         BNC     _00161_DS_
+000096 4A00           00139         INFSNZ  r0x07, F
+000098 2A00           00140         INCF    r0x08, F
+                      00141 ; ;ic:22:        goto _whilecontinue_0($7)
+00009A                00142 _00161_DS_:
+00009A D000           00143         BRA     _00111_DS_
+                      00144 ; ;ic:23:  loopExitLbl2($37) :
+                      00145 ; ;ic:24:       iTemp0 [k2 lr3:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _atoi_s_1_1}[r0x00 r0x01 r0x02 ] := iTemp18 [k23 lr6:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ]
+00009C                00146 _00141_DS_:
+00009C C000 F000      00147         MOVFF   r0x06, r0x00
+0000A0 C000 F000      00148         MOVFF   r0x07, r0x01
+0000A4 C000 F000      00149         MOVFF   r0x08, r0x02
+                      00150 ; ;ic:25:       iTemp20 [k25 lr25:31 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] = @[iTemp18 [k23 lr6:25 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] + 0x0 {const-unsigned-char literal}]
+                      00151 ;       .line   43; stdlib/atoi.c       if(*s == '-')sign=1;
+0000A8 C000 FFE9      00152         MOVFF   r0x06, FSR0L
+0000AC C000 FFF3      00153         MOVFF   r0x07, PRODL
+0000B0 5000           00154         MOVF    r0x08, W
+0000B2 EC00 F000      00155         CALL    __gptrget1
+0000B6 6E00           00156         MOVWF   r0x06
+                      00157 ; ;ic:26:       iTemp21 [k26 lr26:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x07 ] = iTemp20 [k25 lr25:31 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] == 0x2d {const-char literal}
+0000B8 6A00           00158         CLRF    r0x07
+0000BA 0A2D           00159         XORLW   0x2d
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000BC E100           00160         BNZ     _00163_DS_
+0000BE 2A00           00161         INCF    r0x07, F
+                      00162 ; ;ic:27:       if iTemp21 [k26 lr26:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x07 ] == 0 goto _iffalse_2($11)
+0000C0                00163 _00163_DS_:
+0000C0 5000           00164         MOVF    r0x07, W
+0000C2 E000           00165         BZ      _00115_DS_
+                      00166 ; ;ic:28:       iTemp2 [k6 lr5:54 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char fixed}{ sir@ _atoi_sign_1_2}[r0x05 ] := 0x1 {const-unsigned-char literal}
+0000C4 0E01           00167         MOVLW   0x01
+0000C6 6E00           00168         MOVWF   r0x05
+                      00169 ; ;ic:29:  _iffalse_2($11) :
+                      00170 ; ;ic:30:       if iTemp21 [k26 lr26:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x07 ] != 0 goto _iftrue_3($12)
+0000C8                00171 _00115_DS_:
+                      00172 ;       .line   46; stdlib/atoi.c       if (*s == '-' || *s == '+') s++;
+0000C8 5000           00173         MOVF    r0x07, W
+0000CA E100           00174         BNZ     _00116_DS_
+                      00175 ; ;ic:31:       iTemp27 [k32 lr31:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp20 [k25 lr25:31 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] == 0x2b {const-char literal}
+0000CC 5000           00176         MOVF    r0x06, W
+0000CE 0A2B           00177         XORLW   0x2b
+0000D0 E100           00178         BNZ     _00139_DS_
+                      00179 ; ;ic:32:       if iTemp27 [k32 lr31:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto preHeaderLbl1($35)
+                      00180 ; ;ic:33:  _iftrue_3($12) :
+                      00181 ; ;ic:34:       iTemp0 [k2 lr3:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _atoi_s_1_1}[r0x00 r0x01 r0x02 ] = iTemp0 [k2 lr3:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _atoi_s_1_1}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+0000D2                00182 _00116_DS_:
+0000D2 2A00           00183         INCF    r0x00, F
+0000D4 E300           00184         BNC     _00139_DS_
+0000D6 4A00           00185         INFSNZ  r0x01, F
+0000D8 2A00           00186         INCF    r0x02, F
+                      00187 ; ;ic:35:  preHeaderLbl1($35) :
+                      00188 ; ;ic:36:       iTemp45 [k50 lr36:52 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] := iTemp0 [k2 lr3:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _atoi_s_1_1}[r0x00 r0x01 r0x02 ]
+                      00189 ; ;ic:38:  _whilecontinue_1($17) :
+                      00190 ; ;ic:39:       iTemp31 [k36 lr39:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] = @[iTemp45 [k50 lr36:52 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+0000DA                00191 _00166_DS_:
+0000DA                00192 _00139_DS_:
+0000DA                00193 _00121_DS_:
+                      00194 ;       .line   48; stdlib/atoi.c       while (*s && *s >= '0' && *s <= '9') {
+0000DA C000 FFE9      00195         MOVFF   r0x00, FSR0L
+0000DE C000 FFF3      00196         MOVFF   r0x01, PRODL
+0000E2 5000           00197         MOVF    r0x02, W
+0000E4 EC00 F000      00198         CALL    __gptrget1
+0000E8 6E00           00199         MOVWF   r0x06
+                      00200 ; ;ic:40:       if iTemp31 [k36 lr39:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] == 0 goto _whilebreak_1($19)
+0000EA 5000           00201         MOVF    r0x06, W
+0000EC E000           00202         BZ      _00123_DS_
+                      00203 ; ;ic:41:       iTemp34 [k39 lr41:42 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp31 [k36 lr39:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] < 0x30 {const-char literal}
+0000EE 5000           00204         MOVF    r0x06, W
+0000F0 0F80           00205         ADDLW   0x80
+0000F2 0F50           00206         ADDLW   0x50
+0000F4 E300           00207         BNC     _00123_DS_
+                      00208 ; ;ic:42:       if iTemp34 [k39 lr41:42 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _whilebreak_1($19)
+                      00209 ; ;ic:43:       iTemp37 [k42 lr43:44 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp31 [k36 lr39:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ] > 0x39 {const-char literal}
+0000F6 5000           00210         MOVF    r0x06, W
+0000F8 0F80           00211         ADDLW   0x80
+0000FA 0F46           00212         ADDLW   0x46
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000FC E200           00213         BC      _00123_DS_
+                      00214 ; ;ic:44:       if iTemp37 [k42 lr43:44 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _whilebreak_1($19)
+                      00215 ; ;ic:45:       send 0xa {int literal}{argreg = 1}
+                      00216 ; ;ic:46:       send iTemp1 [k4 lr4:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _atoi_rv_1_2}[r0x03 r0x04 ]{argreg = 2}
+                      00217 ; ;ic:47:       iTemp38 [k43 lr47:50 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x07 r0x08 ] = call __mulint [k52 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( int fixed, int fixed) fixed}
+                      00218 ;       .line   49; stdlib/atoi.c       rv = (rv * 10) + (*s - '0');
+0000FE 5000           00219         MOVF    r0x04, W
+000100 6EE5           00220         MOVWF   POSTDEC1
+000102 5000           00221         MOVF    r0x03, W
+000104 6EE5           00222         MOVWF   POSTDEC1
+000106 6AE5           00223         CLRF    POSTDEC1
+000108 0E0A           00224         MOVLW   0x0a
+00010A 6EE5           00225         MOVWF   POSTDEC1
+00010C EC00 F000      00226         CALL    __mulint
+000110 6E00           00227         MOVWF   r0x07
+000112 CFF3 F000      00228         MOVFF   PRODL, r0x08
+000116 0E04           00229         MOVLW   0x04
+000118 26E1           00230         ADDWF   FSR1L, F
+                      00231 ; ;ic:48:       iTemp41 [k46 lr48:49 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x06 r0x09 ] = (int fixed)iTemp31 [k36 lr39:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x06 ]
+00011A 6A00           00232         CLRF    r0x09
+00011C BE00           00233         BTFSC   r0x06, 7
+00011E 6800           00234         SETF    r0x09
+                      00235 ; ;ic:49:       iTemp42 [k47 lr49:50 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x06 r0x09 ] = iTemp41 [k46 lr48:49 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x06 r0x09 ] - 0x30 {int literal}
+000120 0ED0           00236         MOVLW   0xd0
+000122 2600           00237         ADDWF   r0x06, F
+000124 A0D8           00238         BTFSS   STATUS, 0
+000126 0600           00239         DECF    r0x09, F
+                      00240 ; ;ic:50:       iTemp1 [k4 lr4:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _atoi_rv_1_2}[r0x03 r0x04 ] = iTemp38 [k43 lr47:50 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x07 r0x08 ] + iTemp42 [k47 lr49:50 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x06 r0x09 ]
+000128 5000           00241         MOVF    r0x06, W
+00012A 2400           00242         ADDWF   r0x07, W
+00012C 6E00           00243         MOVWF   r0x03
+00012E 5000           00244         MOVF    r0x09, W
+000130 2000           00245         ADDWFC  r0x08, W
+000132 6E00           00246         MOVWF   r0x04
+                      00247 ; ;ic:51:       iTemp45 [k50 lr36:52 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] = iTemp45 [k50 lr36:52 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+                      00248 ;       .line   50; stdlib/atoi.c       s++;
+000134 2A00           00249         INCF    r0x00, F
+000136 E300           00250         BNC     _00169_DS_
+000138 4A00           00251         INFSNZ  r0x01, F
+00013A 2A00           00252         INCF    r0x02, F
+                      00253 ; ;ic:52:        goto _whilecontinue_1($17)
+00013C                00254 _00169_DS_:
+00013C D000           00255         BRA     _00121_DS_
+                      00256 ; ;ic:53:  _whilebreak_1($19) :
+                      00257 ; ;ic:54:       if iTemp2 [k6 lr5:54 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char fixed}{ sir@ _atoi_sign_1_2}[r0x05 ] == 0 goto _iffalse_4($21)
+00013E                00258 _00123_DS_:
+                      00259 ;       .line   53; stdlib/atoi.c       if(sign)return (-rv);
+00013E 5000           00260         MOVF    r0x05, W
+000140 E000           00261         BZ      _00125_DS_
+                      00262 ; ;ic:55:       iTemp46 [k51 lr55:56 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ] = - iTemp1 [k4 lr4:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _atoi_rv_1_2}[r0x03 r0x04 ]
+000142 1C00           00263         COMF    r0x04, W
+000144 6E00           00264         MOVWF   r0x01
+000146 1C00           00265         COMF    r0x03, W
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000148 6E00           00266         MOVWF   r0x00
+00014A 4A00           00267         INFSNZ  r0x00, F
+00014C 2A00           00268         INCF    r0x01, F
+                      00269 ; ;ic:56:       ret iTemp46 [k51 lr55:56 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x00 r0x01 ]
+00014E C000 FFF3      00270         MOVFF   r0x01, PRODL
+000152 5000           00271         MOVF    r0x00, W
+000154 D000           00272         BRA     _00127_DS_
+                      00273 ; ;ic:57:  _iffalse_4($21) :
+                      00274 ; ;ic:58:       ret iTemp1 [k4 lr4:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _atoi_rv_1_2}[r0x03 r0x04 ]
+000156                00275 _00125_DS_:
+                      00276 ;       .line   54; stdlib/atoi.c       else return (rv);
+000156 C000 FFF3      00277         MOVFF   r0x04, PRODL
+00015A 5000           00278         MOVF    r0x03, W
+                      00279 ; ;ic:59:  _return($23) :
+                      00280 ; ;ic:60:       eproc _atoi [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( char generic* fixed) fixed}
+00015C                00281 _00127_DS_:
+00015C CFE4 F000      00282         MOVFF   PREINC1, r0x09
+000160 CFE4 F000      00283         MOVFF   PREINC1, r0x08
+000164 CFE4 F000      00284         MOVFF   PREINC1, r0x07
+000168 CFE4 F000      00285         MOVFF   PREINC1, r0x06
+00016C CFE4 F000      00286         MOVFF   PREINC1, r0x05
+000170 CFE4 F000      00287         MOVFF   PREINC1, r0x04
+000174 CFE4 F000      00288         MOVFF   PREINC1, r0x03
+000178 CFE4 F000      00289         MOVFF   PREINC1, r0x02
+00017C CFE4 F000      00290         MOVFF   PREINC1, r0x01
+000180 CFE4 F000      00291         MOVFF   PREINC1, r0x00
+000184 CFE4 FFD9      00292         MOVFF   PREINC1, FSR2L
+000188 0012           00293         RETURN  
+                      00294 
+                      00295 
+                      00296 
+                      00297 ; Statistics:
+                      00298 ; code size:      394 (0x018a) bytes ( 0.30%)
+                      00299 ;                 197 (0x00c5) words
+                      00300 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00301 ; access size:     10 (0x000a) bytes
+                      00302 
+                      00303 
+                      00304         end
+gpasm-0.14.1 (Aug 18 2017)   atoi.asm           8-18-2017  19:21:48          PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00106_DS_                        00000078
+_00111_DS_                        00000054
+_00115_DS_                        000000C8
+_00116_DS_                        000000D2
+_00121_DS_                        000000DA
+_00123_DS_                        0000013E
+_00125_DS_                        00000156
+_00127_DS_                        0000015C
+_00139_DS_                        000000DA
+_00141_DS_                        0000009C
+_00161_DS_                        0000009A
+_00163_DS_                        000000C0
+_00166_DS_                        000000DA
+_00169_DS_                        0000013C
+__18F452                          00000001
+__gptrget1                        00000000
+__mulint                          00000000
+_atoi                             00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+r0x09                             00000009
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

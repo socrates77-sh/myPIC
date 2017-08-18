@@ -1,0 +1,215 @@
+gpasm-0.14.1 (Aug 18 2017)   strpbrk.asm        8-18-2017  19:22:25          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:22:25 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _strpbrk
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  __gptrget1
+                      00021         extern  _strchr
+                      00022 
+                      00023 ;--------------------------------------------------------
+                      00024 ;       Equates to used internal registers
+                      00025 ;--------------------------------------------------------
+  00000FD8            00026 STATUS  equ     0xfd8
+  00000FE8            00027 WREG    equ     0xfe8
+  00000FE9            00028 FSR0L   equ     0xfe9
+  00000FE1            00029 FSR1L   equ     0xfe1
+  00000FD9            00030 FSR2L   equ     0xfd9
+  00000FE5            00031 POSTDEC1        equ     0xfe5
+  00000FE4            00032 PREINC1 equ     0xfe4
+  00000FDB            00033 PLUSW2  equ     0xfdb
+  00000FF3            00034 PRODL   equ     0xff3
+  00000FF4            00035 PRODH   equ     0xff4
+                      00036 
+                      00037 
+                      00038 ; Internal registers
+                      00039 .registers      udata_ovr       0x0000
+000000                00040 r0x00   res     1
+000001                00041 r0x01   res     1
+000002                00042 r0x02   res     1
+000003                00043 r0x03   res     1
+000004                00044 r0x04   res     1
+000005                00045 r0x05   res     1
+000006                00046 r0x06   res     1
+000007                00047 r0x07   res     1
+000008                00048 r0x08   res     1
+                      00049 
+                      00050 ;--------------------------------------------------------
+                      00051 ; global & static initialisations
+                      00052 ;--------------------------------------------------------
+                      00053 ; I code from now on!
+gpasm-0.14.1 (Aug 18 2017)   strpbrk.asm        8-18-2017  19:22:25          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ; ; Starting pCode block
+                      00055 ; ;ic:1:  _entry($7) :
+                      00056 ; ;ic:2:        proc _strpbrk [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char generic* fixed) fixed}
+                      00057 S_strpbrk__strpbrk      code
+000000                00058 _strpbrk:
+                      00059 ;       .line   32; string/strpbrk.c    strpbrk (char *string, char *control) 
+000000 CFD9 FFE5      00060         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00061         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00062         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00063         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00064         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00065         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00066         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00067         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00068         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00069         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00070         MOVFF   r0x08, POSTDEC1
+                      00071 ; ;ic:3: iTemp0 [k2 lr3:14 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strpbrk_string_1_28}[r0x00 r0x01 r0x02 ] = recv _strpbrk [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char generic* fixed) fixed}
+00002C 0E02           00072         MOVLW   0x02
+00002E CFDB F000      00073         MOVFF   PLUSW2, r0x00
+000032 0E03           00074         MOVLW   0x03
+000034 CFDB F000      00075         MOVFF   PLUSW2, r0x01
+000038 0E04           00076         MOVLW   0x04
+00003A CFDB F000      00077         MOVFF   PLUSW2, r0x02
+                      00078 ; ;ic:4: iTemp1 [k4 lr4:13 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strpbrk_control_1_28}[r0x03 r0x04 r0x05 ] = recv _strpbrk [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char generic* fixed) fixed}
+00003E 0E05           00079         MOVLW   0x05
+000040 CFDB F000      00080         MOVFF   PLUSW2, r0x03
+000044 0E06           00081         MOVLW   0x06
+000046 CFDB F000      00082         MOVFF   PLUSW2, r0x04
+00004A 0E07           00083         MOVLW   0x07
+00004C CFDB F000      00084         MOVFF   PLUSW2, r0x05
+                      00085 ; ;ic:6:  _whilecontinue_0($3) :
+                      00086 ; ;ic:7:        iTemp4 [k9 lr7:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}{ sir@ _strpbrk_ch_1_29}[r0x06 ] = @[iTemp0 [k2 lr3:14 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strpbrk_string_1_28}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+000050                00087 _00107_DS_:
+                      00088 ;       .line   36; string/strpbrk.c    while(ch = *string)
+000050 C000 FFE9      00089         MOVFF   r0x00, FSR0L
+000054 C000 FFF3      00090         MOVFF   r0x01, PRODL
+000058 5000           00091         MOVF    r0x02, W
+00005A EC00 F000      00092         CALL    __gptrget1
+00005E 6E00           00093         MOVWF   r0x06
+                      00094 ; ;ic:8:        iTemp2 [k6 lr8:11 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char register}[r0x07 ] := iTemp4 [k9 lr7:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}{ sir@ _strpbrk_ch_1_29}[r0x06 ]
+000060 C000 F000      00095         MOVFF   r0x06, r0x07
+                      00096 ; ;ic:9:        if iTemp4 [k9 lr7:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}{ sir@ _strpbrk_ch_1_29}[r0x06 ] == 0 goto _whilebreak_0($5)
+000064 5000           00097         MOVF    r0x06, W
+000066 E000           00098         BZ      _00109_DS_
+                      00099 ; ;ic:10:       send iTemp1 [k4 lr4:13 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strpbrk_control_1_28}[r0x03 r0x04 r0x05 ]{argreg = 1}
+                      00100 ; ;ic:11:       send iTemp2 [k6 lr8:11 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char register}[r0x07 ]{argreg = 2}
+                      00101 ; ;ic:12:       iTemp5 [k13 lr12:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] = call _strchr [k10 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char fixed) fixed}
+                      00102 ;       .line   38; string/strpbrk.c    if (strchr (control, ch))
+000068 5000           00103         MOVF    r0x07, W
+00006A 6EE5           00104         MOVWF   POSTDEC1
+00006C 5000           00105         MOVF    r0x05, W
+00006E 6EE5           00106         MOVWF   POSTDEC1
+gpasm-0.14.1 (Aug 18 2017)   strpbrk.asm        8-18-2017  19:22:25          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000070 5000           00107         MOVF    r0x04, W
+000072 6EE5           00108         MOVWF   POSTDEC1
+000074 5000           00109         MOVF    r0x03, W
+000076 6EE5           00110         MOVWF   POSTDEC1
+000078 EC00 F000      00111         CALL    _strchr
+00007C 6E00           00112         MOVWF   r0x06
+00007E CFF3 F000      00113         MOVFF   PRODL, r0x07
+000082 CFF4 F000      00114         MOVFF   PRODH, r0x08
+000086 0E04           00115         MOVLW   0x04
+000088 26E1           00116         ADDWF   FSR1L, F
+                      00117 ; ;ic:13:       if iTemp5 [k13 lr12:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x06 r0x07 r0x08 ] == 0 goto _whilecontinue_0($3)
+00008A 5000           00118         MOVF    r0x06, W
+00008C 1000           00119         IORWF   r0x07, W
+00008E 1000           00120         IORWF   r0x08, W
+000090 E000           00121         BZ      _00107_DS_
+                      00122 ; ;ic:14:       ret iTemp0 [k2 lr3:14 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char generic* fixed}{ sir@ _strpbrk_string_1_28}[r0x00 r0x01 r0x02 ]
+                      00123 ;       .line   39; string/strpbrk.c    return string;
+000092 C000 FFF4      00124         MOVFF   r0x02, PRODH
+000096 C000 FFF3      00125         MOVFF   r0x01, PRODL
+00009A 5000           00126         MOVF    r0x00, W
+00009C D000           00127         BRA     _00110_DS_
+                      00128 ; ;ic:15:  _whilebreak_0($5) :
+                      00129 ; ;ic:16:       ret 0x0 {char generic* literal}
+00009E                00130 _00109_DS_:
+                      00131 ;       .line   42; string/strpbrk.c    return NULL;
+00009E 6AF4           00132         CLRF    PRODH
+0000A0 6AF3           00133         CLRF    PRODL
+0000A2 6AE8           00134         CLRF    WREG
+                      00135 ; ;ic:17:  _return($6) :
+                      00136 ; ;ic:18:       eproc _strpbrk [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* function ( char generic* fixed, char generic* fixed) fixed}
+0000A4                00137 _00110_DS_:
+0000A4 CFE4 F000      00138         MOVFF   PREINC1, r0x08
+0000A8 CFE4 F000      00139         MOVFF   PREINC1, r0x07
+0000AC CFE4 F000      00140         MOVFF   PREINC1, r0x06
+0000B0 CFE4 F000      00141         MOVFF   PREINC1, r0x05
+0000B4 CFE4 F000      00142         MOVFF   PREINC1, r0x04
+0000B8 CFE4 F000      00143         MOVFF   PREINC1, r0x03
+0000BC CFE4 F000      00144         MOVFF   PREINC1, r0x02
+0000C0 CFE4 F000      00145         MOVFF   PREINC1, r0x01
+0000C4 CFE4 F000      00146         MOVFF   PREINC1, r0x00
+0000C8 CFE4 FFD9      00147         MOVFF   PREINC1, FSR2L
+0000CC 0012           00148         RETURN  
+                      00149 
+                      00150 
+                      00151 
+                      00152 ; Statistics:
+                      00153 ; code size:      206 (0x00ce) bytes ( 0.16%)
+                      00154 ;                 103 (0x0067) words
+                      00155 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00156 ; access size:      9 (0x0009) bytes
+                      00157 
+                      00158 
+                      00159         end
+gpasm-0.14.1 (Aug 18 2017)   strpbrk.asm        8-18-2017  19:22:25          PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODH                             00000FF4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00107_DS_                        00000050
+_00109_DS_                        0000009E
+_00110_DS_                        000000A4
+__18F452                          00000001
+__gptrget1                        00000000
+_strchr                           00000000
+_strpbrk                          00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

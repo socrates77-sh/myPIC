@@ -1,0 +1,75 @@
+gpasm-0.14.1 (Aug 18 2017)   strmusart.asm      8-18-2017  19:21:43          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:43 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  ___stream_usart_putchar
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _WREG
+                      00021         extern  _TXREG
+                      00022         extern  _TXSTA
+                      00023 
+                      00024 ;--------------------------------------------------------
+                      00025 ; global & static initialisations
+                      00026 ;--------------------------------------------------------
+                      00027 ; I code from now on!
+                      00028 ; ; Starting pCode block
+                      00029 ; ;ic:1:  _entry($2) :
+                      00030 ; ;ic:2:        proc ___stream_usart_putchar [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+                      00031 S_strmusart____stream_usart_putchar     code
+000000                00032 ___stream_usart_putchar:
+                      00033 ; ;ic:3: inline
+000000                00034 @1:
+000000 A200           00035         BTFSS _TXSTA, 1
+000002 D000           00036         BRA @1
+000004 6E00           00037         MOVWF _TXREG
+000006 0012           00038         RETURN
+                      00039         
+                      00040 ; ;ic:4:  _return($1) :
+                      00041 ; ;ic:5:        eproc ___stream_usart_putchar [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+                      00042 
+                      00043 
+                      00044 ; Statistics:
+                      00045 ; code size:       12 (0x000c) bytes ( 0.01%)
+                      00046 ;                   6 (0x0006) words
+                      00047 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00048 ; access size:      0 (0x0000) bytes
+                      00049 
+                      00050 
+                      00051         end
+gpasm-0.14.1 (Aug 18 2017)   strmusart.asm      8-18-2017  19:21:43          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+@1                                00000000
+_TXREG                            00000000
+_TXSTA                            00000000
+_WREG                             00000000
+__18F452                          00000001
+___stream_usart_putchar           00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

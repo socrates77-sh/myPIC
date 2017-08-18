@@ -1,0 +1,262 @@
+gpasm-0.14.1 (Aug 18 2017)   stdlib/g_ftoa.S    8-18-2017  19:21:53          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------------------------
+                      00002 ;  g_ftoa.S - floating point to ascii conversion
+                      00003 ;
+                      00004 ;  Copyright (C) 2004, George Gallant <ggallant571 AT verizon.net>
+                      00005 ;
+                      00006 ;  This library is free software; you can redistribute it and/or modify it
+                      00007 ;  under the terms of the GNU General Public License as published by the
+                      00008 ;  Free Software Foundation; either version 2, or (at your option) any
+                      00009 ;  later version.
+                      00010 ;
+                      00011 ;  This library is distributed in the hope that it will be useful,
+                      00012 ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                      00013 ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                      00014 ;  GNU General Public License for more details.
+                      00015 ;
+                      00016 ;  You should have received a copy of the GNU General Public License 
+                      00017 ;  along with this library; see the file COPYING. If not, write to the
+                      00018 ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                      00019 ;   MA 02110-1301, USA.
+                      00020 ;
+                      00021 ;  As a special exception, if you link this library with other files,
+                      00022 ;  some of which are compiled with SDCC, to produce an executable,
+                      00023 ;  this library does not by itself cause the resulting executable to
+                      00024 ;  be covered by the GNU General Public License. This exception does
+                      00025 ;  not however invalidate any other reasons why the executable file
+                      00026 ;  might be covered by the GNU General Public License.
+                      00027 ;--------------------------------------------------------------------------
+                      00028 
+                      00029 ;--
+                      00030 ;
+                      00031 ;       File:   ftoa.asm
+                      00032 ;       Author: George Gallant
+                      00033 ;       Date:   19OCT04
+                      00034 ;
+                      00035 ;       This routine provides a floating point to ascii conversion.
+                      00036 ;       It was written support the SDCC project.
+                      00037 ;
+                      00038 ;       SDCC C Syntax:
+                      00039 ;
+                      00040 ;       extern void g_ftoa(data char *buf, float num, char precision);
+                      00041 ;
+                      00042 ;       The routine is NOT reenterant but expects the entire parameter list
+                      00043 ;       to be placed on the stack.
+                      00044 ;
+                      00045 ;       Notes:  1. measured 105usec to convert -65535.996 on a 20MHz 18f252
+                      00046 ;               2. Software stack can not cross a RAM page boundary
+                      00047 ;
+                      00048 ;--
+                      00049                 list    r=dec, n=96, st=off, mm=off
+                      00050 
+                      00033                 list    r=dec, n=96, st=off, mm=off
+                      00034 
+                      00113                 list
+                      00114 #endif
+                      00053                 list
+                      00054 
+                      00055                 udata
+                      00056 
+                      00057                 extern  digits
+                      00058 
+000000                00059 exp:            res     1
+000001                00060 man:            res     4
+000005                00061 r:              res     5
+00000A                00062 x:              res     3
+00000D                00063 bp:             res     2
+00000F                00064 prec:           res     1
+000010                00065 ctr:            res     1
+                      00066 
+                      00067                 code
+                      00068 
+                      00069                 extern  cvt_dec_word
+                      00070                 global  _g_ftoa
+                      00071 
+000000 CFDA FFE5      00072 _g_ftoa:        movff   FSR2H,POSTDEC1
+000004 CFD9 FFE5      00073                 movff   FSR2L,POSTDEC1
+                      00074 
+000008 CFE2 FFDA      00075                 movff   FSR1H,FSR2H
+00000C CFE1 FFD9      00076                 movff   FSR1L,FSR2L
+                      00077 
+000010 C000 FFE5      00078                 movff   exp, POSTDEC1
+000014 C000 FFE5      00079                 movff   man+0, POSTDEC1
+000018 C000 FFE5      00080                 movff   man+1, POSTDEC1
+00001C C000 FFE5      00081                 movff   man+2, POSTDEC1
+000020 C000 FFE5      00082                 movff   man+3, POSTDEC1
+000024 C000 FFE5      00083                 movff   r+0, POSTDEC1
+000028 C000 FFE5      00084                 movff   r+1, POSTDEC1
+00002C C000 FFE5      00085                 movff   r+2, POSTDEC1
+000030 C000 FFE5      00086                 movff   r+3, POSTDEC1
+000034 C000 FFE5      00087                 movff   r+4, POSTDEC1
+000038 C000 FFE5      00088                 movff   x+0, POSTDEC1
+gpasm-0.14.1 (Aug 18 2017)   stdlib/g_ftoa.S    8-18-2017  19:21:53          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00003C C000 FFE5      00089                 movff   x+1, POSTDEC1
+000040 C000 FFE5      00090                 movff   bp+0, POSTDEC1
+000044 C000 FFE5      00091                 movff   bp+1, POSTDEC1
+000048 C000 FFE5      00092                 movff   prec, POSTDEC1
+00004C C000 FFE5      00093                 movff   ctr, POSTDEC1
+                      00094 
+000050 CFEA FFE5      00095                 movff   FSR0H,POSTDEC1
+000054 CFE9 FFE5      00096                 movff   FSR0L,POSTDEC1
+                      00097 
+000058 0E03           00098                 movlw   3
+00005A 26D9           00099                 addwf   FSR2L, f
+00005C B0D8           00100                 btfsc   STATUS,C
+00005E 2ADA           00101                 incf    FSR2H, f
+                      00102 
+000060 CFDE FFE9      00103                 movff   POSTINC2,FSR0L          ;get the low byte of buf pointer
+000064 CFDE FFEA      00104                 movff   POSTINC2,FSR0H
+                      00105 
+000068 CFDE F000      00106                 movff   POSTINC2,man+0          ;get the low byte of float
+00006C CFDE F000      00107                 movff   POSTINC2,man+1
+000070 CFDE F000      00108                 movff   POSTINC2,man+2
+000074 CFDE F000      00109                 movff   POSTINC2,exp
+                      00110 
+000078 CFDE F000      00111                 movff   POSTINC2,prec
+                      00112 
+00007C 3400           00113                 rlcf    man+2,w
+00007E 3600           00114                 rlcf    exp,f
+000080 E300           00115                 bnc     @1
+000082 0E2D           00116                 movlw   '-'
+000084 6EEE           00117                 movwf   POSTINC0
+                      00118 
+000086 C000 F000      00119 @1:             movff   man+0,r+0
+00008A C000 F000      00120                 movff   man+1,r+1
+00008E C000 F000      00121                 movff   man+2,r+2
+000092 8E00           00122                 bsf     r+2,7
+000094 6A00           00123                 clrf    r+3
+000096 6A00           00124                 clrf    r+4
+                      00125 
+                      00126 ;       Shift the mantissa left or right by the expondent
+                      00127 
+000098 5000           00128                 movf    exp,w                   ;get the expondent
+00009A 087F           00129                 sublw   127                     ;subtract the bais
+00009C E000           00130                 bz      @4                      ;skip shifting if zero
+00009E E600           00131                 bn      @3                      ;shift left if neg
+                      00132 
+0000A0 90D8           00133 @2:             bcf     STATUS,C                ;otherwise, shift right
+0000A2 3200           00134                 rrcf    r+4,f
+0000A4 3200           00135                 rrcf    r+3,f
+0000A6 3200           00136                 rrcf    r+2,f
+0000A8 3200           00137                 rrcf    r+1,f
+0000AA 3200           00138                 rrcf    r+0,f
+0000AC 2CE8           00139                 decfsz  WREG,w
+0000AE D000           00140                 bra     @2
+0000B0 D000           00141                 bra     @4
+                      00142 
+0000B2 90D8           00143 @3:             bcf     STATUS,C
+0000B4 3600           00144                 rlcf    r+0, f
+0000B6 3600           00145                 rlcf    r+1, f
+0000B8 3600           00146                 rlcf    r+2, f
+0000BA 3600           00147                 rlcf    r+3, f
+0000BC 3600           00148                 rlcf    r+4, f
+0000BE 3CE8           00149                 incfsz  WREG,w
+0000C0 D000           00150                 bra     @3
+                      00151 
+0000C2 3400           00152 @4:             rlcf    r+2,w                   ;extract bit 23
+0000C4 3600           00153                 rlcf    r+3,f                   ;shift rest of whole number
+0000C6 3600           00154                 rlcf    r+4,f
+                      00155 
+0000C8 C000 FFF3      00156                 movff   r+3,PRODL
+0000CC C000 FFF4      00157                 movff   r+4,PRODH
+0000D0 EC00 F000      00158                 call    cvt_dec_word
+                      00159 
+0000D4 0E2E           00160                 movlw   '.'
+0000D6 6EEE           00161                 movwf   POSTINC0
+                      00162 
+0000D8 0E7F           00163 @10:            movlw   0x7F                    
+0000DA 1600           00164                 andwf   r+2,f
+0000DC 6A00           00165                 clrf    r+3
+                      00166 
+0000DE C000 F000      00167                 movff   r+0,x+0                 ;temp copy
+0000E2 C000 F000      00168                 movff   r+1,x+1
+0000E6 C000 F000      00169                 movff   r+2,x+2
+                      00170 
+0000EA 90D8           00171                 bcf     STATUS,C                ;mult by 2
+0000EC 3600           00172                 rlcf    r+0,f
+0000EE 3600           00173                 rlcf    r+1,f
+0000F0 3600           00174                 rlcf    r+2,f
+0000F2 3600           00175                 rlcf    r+3,f
+                      00176 
+0000F4 90D8           00177                 bcf     STATUS,C                ;mult by 4
+0000F6 3600           00178                 rlcf    r+0,f
+gpasm-0.14.1 (Aug 18 2017)   stdlib/g_ftoa.S    8-18-2017  19:21:53          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000F8 3600           00179                 rlcf    r+1,f
+0000FA 3600           00180                 rlcf    r+2,f
+0000FC 3600           00181                 rlcf    r+3,f
+                      00182 
+0000FE 5000           00183                 movf    x+0,w                   ;mult by 5
+000100 2600           00184                 addwf   r+0,f
+000102 5000           00185                 movf    x+1,w
+000104 2200           00186                 addwfc  r+1,f
+000106 5000           00187                 movf    x+2,w
+000108 2200           00188                 addwfc  r+2,f
+00010A 0E00           00189                 movlw   0
+00010C 2200           00190                 addwfc  r+3,f
+                      00191 
+00010E 3400           00192                 rlcf    r+2,w                   ;div by 0x400000                        
+000110 3600           00193                 rlcf    r+3,f                   ;or just extract bits 24-22
+000112 34E8           00194                 rlcf    WREG,w
+000114 3600           00195                 rlcf    r+3,f
+                      00196 
+000116 5000           00197                 movf    r+3,w                   ;this is the bcd value
+000118 0F30           00198                 addlw   0x30                    ;convert to ascii
+00011A 6EEE           00199                 movwf   POSTINC0                ;and save in memory
+                      00200 
+00011C 90D8           00201                 bcf     STATUS,C                ;mult by 2
+00011E 3600           00202                 rlcf    r+0,f
+000120 3600           00203                 rlcf    r+1,f
+000122 3600           00204                 rlcf    r+2,f
+                      00205 
+000124 2E00           00206                 decfsz  prec,f
+000126 D000           00207                 bra     @10
+                      00208 
+000128 6AEE           00209                 clrf    POSTINC0                ;pack a nullbyte at the end
+                      00210 
+                      00211 
+00012A C000 FFE5      00212                 movff   ctr, POSTDEC1
+00012E C000 FFE5      00213                 movff   prec, POSTDEC1
+000132 C000 FFE5      00214                 movff   bp+1, POSTDEC1
+000136 C000 FFE5      00215                 movff   bp+0, POSTDEC1
+00013A C000 FFE5      00216                 movff   x+1, POSTDEC1
+00013E C000 FFE5      00217                 movff   x+0, POSTDEC1
+000142 C000 FFE5      00218                 movff   r+4, POSTDEC1
+000146 C000 FFE5      00219                 movff   r+3, POSTDEC1
+00014A C000 FFE5      00220                 movff   r+2, POSTDEC1
+00014E C000 FFE5      00221                 movff   r+1, POSTDEC1
+000152 C000 FFE5      00222                 movff   r+0, POSTDEC1
+000156 C000 FFE5      00223                 movff   man+3, POSTDEC1
+00015A C000 FFE5      00224                 movff   man+2, POSTDEC1
+00015E C000 FFE5      00225                 movff   man+1, POSTDEC1
+000162 C000 FFE5      00226                 movff   man+0, POSTDEC1
+000166 C000 FFE5      00227                 movff   exp, POSTDEC1
+                      00228 
+00016A CFE4 FFE9      00229                 movff   PREINC1,FSR0L
+00016E CFE4 FFEA      00230                 movff   PREINC1,FSR0H
+                      00231 
+000172 CFE4 FFD9      00232                 movff   PREINC1,FSR2L
+000176 CFE4 FFDA      00233                 movff   PREINC1,FSR2H
+00017A 0012           00234                 return
+                      00235 
+                      00236                 end
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

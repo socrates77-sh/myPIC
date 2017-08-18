@@ -1,0 +1,402 @@
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:59 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _rand_r
+                      00016         global  _rand
+                      00017         global  _srand
+                      00018 
+                      00019 ;--------------------------------------------------------
+                      00020 ; extern variables in this module
+                      00021 ;--------------------------------------------------------
+                      00022         extern  __gptrget4
+                      00023         extern  __gptrput4
+                      00024         extern  __mullong
+                      00025 
+                      00026 ;--------------------------------------------------------
+                      00027 ;       Equates to used internal registers
+                      00028 ;--------------------------------------------------------
+  00000FE8            00029 WREG    equ     0xfe8
+  00000FF6            00030 TBLPTRL equ     0xff6
+  00000FF7            00031 TBLPTRH equ     0xff7
+  00000FE9            00032 FSR0L   equ     0xfe9
+  00000FE1            00033 FSR1L   equ     0xfe1
+  00000FD9            00034 FSR2L   equ     0xfd9
+  00000FE5            00035 POSTDEC1        equ     0xfe5
+  00000FE4            00036 PREINC1 equ     0xfe4
+  00000FDB            00037 PLUSW2  equ     0xfdb
+  00000FF3            00038 PRODL   equ     0xff3
+  00000FF4            00039 PRODH   equ     0xff4
+                      00040 
+                      00041 
+                      00042         idata
+000000                00043 _next   db      0x01, 0x00, 0x00, 0x00
+                      00044 
+                      00045 
+                      00046 ; Internal registers
+                      00047 .registers      udata_ovr       0x0000
+000000                00048 r0x00   res     1
+000001                00049 r0x01   res     1
+000002                00050 r0x02   res     1
+000003                00051 r0x03   res     1
+000004                00052 r0x04   res     1
+000005                00053 r0x05   res     1
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000006                00054 r0x06   res     1
+                      00055 
+                      00056 udata_rand_0    udata
+000000                00057 _rand_r_val_1_19        res     4
+                      00058 
+                      00059 ;--------------------------------------------------------
+                      00060 ; global & static initialisations
+                      00061 ;--------------------------------------------------------
+                      00062 ; I code from now on!
+                      00063 ; ; Starting pCode block
+                      00064 ; ;ic:1:  _entry($2) :
+                      00065 ; ;ic:2:        proc _srand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-long-int fixed) fixed}
+                      00066 S_rand__srand   code
+000000                00067 _srand:
+                      00068 ;       .line   55; stdlib/rand.c       void srand(unsigned long seed)
+000000 CFD9 FFE5      00069         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00070         MOVFF   FSR1L, FSR2L
+                      00071 ; ;ic:3: _next [k4 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int fixed} = recv _srand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-long-int fixed) fixed}
+000008 0E02           00072         MOVLW   0x02
+00000A CFDB F000      00073         MOVFF   PLUSW2, _next
+00000E 0E03           00074         MOVLW   0x03
+000010 CFDB F000      00075         MOVFF   PLUSW2, (_next + 1)
+000014 0E04           00076         MOVLW   0x04
+000016 CFDB F000      00077         MOVFF   PLUSW2, (_next + 2)
+00001A 0E05           00078         MOVLW   0x05
+00001C CFDB F000      00079         MOVFF   PLUSW2, (_next + 3)
+                      00080 ; ;ic:4:  _return($1) :
+                      00081 ; ;ic:5:        eproc _srand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-long-int fixed) fixed}
+                      00082 ;       .line   57; stdlib/rand.c       next = seed;
+000020 CFE4 FFD9      00083         MOVFF   PREINC1, FSR2L
+000024 0012           00084         RETURN  
+                      00085 
+                      00086 ; ; Starting pCode block
+                      00087 ; ;ic:1:  _entry($2) :
+                      00088 ; ;ic:2:        proc _rand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( ) fixed}
+                      00089 S_rand__rand    code
+000000                00090 _rand:
+                      00091 ;       .line   50; stdlib/rand.c       long rand(void)
+000000 C000 FFE5      00092         MOVFF   r0x00, POSTDEC1
+000004 C000 FFE5      00093         MOVFF   r0x01, POSTDEC1
+000008 C000 FFE5      00094         MOVFF   r0x02, POSTDEC1
+00000C C000 FFE5      00095         MOVFF   r0x03, POSTDEC1
+                      00096 ; ;ic:3:        iTemp0 [k4 lr3:4 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-long-int near* fixed}[remat] = &[_next [k3 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int fixed}]
+                      00097 ; ;ic:4:        iTemp1 [k5 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}[r0x00 r0x01 r0x02 ] = (unsigned-long-int generic* fixed)iTemp0 [k4 lr3:4 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-long-int near* fixed}[remat]
+                      00098 ;       .line   52; stdlib/rand.c       return do_rand(&next);
+000010 0E80           00099         MOVLW   0x80
+                      00100 ; #     MOVWF   r0x02
+                      00101 ; #;;ic:5:      send iTemp1 [k5 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}[r0x00 r0x01 r0x02 ]{argreg = 1}
+                      00102 ; #;;ic:6:      iTemp2 [k7 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x00 r0x01 r0x02 r0x03 ] = call _do_rand [k2 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+                      00103 ; #     MOVF    r0x02, W
+000012 6EE5           00104         MOVWF   POSTDEC1
+000014 0E00           00105         MOVLW   HIGH(_next)
+000016 6EE5           00106         MOVWF   POSTDEC1
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000018 0E00           00107         MOVLW   LOW(_next)
+00001A 6EE5           00108         MOVWF   POSTDEC1
+00001C EC00 F000      00109         CALL    _do_rand
+000020 6E00           00110         MOVWF   r0x00
+000022 CFF3 F000      00111         MOVFF   PRODL, r0x01
+000026 CFF4 F000      00112         MOVFF   PRODH, r0x02
+00002A CFE9 F000      00113         MOVFF   FSR0L, r0x03
+00002E 0E03           00114         MOVLW   0x03
+000030 26E1           00115         ADDWF   FSR1L, F
+                      00116 ; ;ic:7:        ret iTemp2 [k7 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x00 r0x01 r0x02 r0x03 ]
+000032 C000 FFE9      00117         MOVFF   r0x03, FSR0L
+000036 C000 FFF4      00118         MOVFF   r0x02, PRODH
+00003A C000 FFF3      00119         MOVFF   r0x01, PRODL
+00003E 5000           00120         MOVF    r0x00, W
+                      00121 ; ;ic:8:  _return($1) :
+                      00122 ; ;ic:9:        eproc _rand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( ) fixed}
+000040 CFE4 F000      00123         MOVFF   PREINC1, r0x03
+000044 CFE4 F000      00124         MOVFF   PREINC1, r0x02
+000048 CFE4 F000      00125         MOVFF   PREINC1, r0x01
+00004C CFE4 F000      00126         MOVFF   PREINC1, r0x00
+000050 0012           00127         RETURN  
+                      00128 
+                      00129 ; ; Starting pCode block
+                      00130 ; ;ic:1:  _entry($2) :
+                      00131 ; ;ic:2:        proc _rand_r [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+                      00132 S_rand__rand_r  code
+000000                00133 _rand_r:
+                      00134 ;       .line   40; stdlib/rand.c       long rand_r(unsigned long *ctx)
+000000 CFD9 FFE5      00135         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00136         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00137         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00138         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00139         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00140         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00141         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00142         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00143         MOVFF   r0x06, POSTDEC1
+                      00144 ; ;ic:3: iTemp0 [k2 lr3:10 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _rand_r_ctx_1_18}[r0x00 r0x01 r0x02 ] = recv _rand_r [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+000024 0E02           00145         MOVLW   0x02
+000026 CFDB F000      00146         MOVFF   PLUSW2, r0x00
+00002A 0E03           00147         MOVLW   0x03
+00002C CFDB F000      00148         MOVFF   PLUSW2, r0x01
+000030 0E04           00149         MOVLW   0x04
+000032 CFDB F000      00150         MOVFF   PLUSW2, r0x02
+                      00151 ; ;ic:4:        _rand_r_val_1_19 [k4 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int fixed} = @[iTemp0 [k2 lr3:10 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _rand_r_ctx_1_18}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+                      00152 ;       .line   42; stdlib/rand.c       unsigned long val = (unsigned long) *ctx;
+000036 C000 FFE9      00153         MOVFF   r0x00, FSR0L
+00003A C000 FFF3      00154         MOVFF   r0x01, PRODL
+00003E 5000           00155         MOVF    r0x02, W
+000040 EC00 F000      00156         CALL    __gptrget4
+000044 0100           00157         BANKSEL _rand_r_val_1_19
+000046 6F00           00158         MOVWF   _rand_r_val_1_19, B
+000048 CFF3 F000      00159         MOVFF   PRODL, (_rand_r_val_1_19 + 1)
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00004C CFF4 F000      00160         MOVFF   PRODH, (_rand_r_val_1_19 + 2)
+000050 CFE9 F000      00161         MOVFF   FSR0L, (_rand_r_val_1_19 + 3)
+                      00162 ; ;ic:5:        iTemp4 [k9 lr5:6 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-long-int near* fixed}[remat] = &[_rand_r_val_1_19 [k4 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int fixed}]
+                      00163 ; ;ic:6:        iTemp5 [k10 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}[r0x03 r0x04 r0x05 ] = (unsigned-long-int generic* fixed)iTemp4 [k9 lr5:6 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-long-int near* fixed}[remat]
+                      00164 ;       .line   44; stdlib/rand.c       *ctx = do_rand(&val);
+000054 0E80           00165         MOVLW   0x80
+                      00166 ; #     MOVWF   r0x05
+                      00167 ; #;;ic:7:      send iTemp5 [k10 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}[r0x03 r0x04 r0x05 ]{argreg = 1}
+                      00168 ; #;;ic:8:      iTemp6 [k12 lr8:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x03 r0x04 r0x05 r0x06 ] = call _do_rand [k8 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+                      00169 ; #     MOVF    r0x05, W
+000056 6EE5           00170         MOVWF   POSTDEC1
+000058 0E00           00171         MOVLW   HIGH(_rand_r_val_1_19)
+00005A 6EE5           00172         MOVWF   POSTDEC1
+00005C 0E00           00173         MOVLW   LOW(_rand_r_val_1_19)
+00005E 6EE5           00174         MOVWF   POSTDEC1
+000060 EC00 F000      00175         CALL    _do_rand
+000064 6E00           00176         MOVWF   r0x03
+000066 CFF3 F000      00177         MOVFF   PRODL, r0x04
+00006A CFF4 F000      00178         MOVFF   PRODH, r0x05
+00006E CFE9 F000      00179         MOVFF   FSR0L, r0x06
+000072 0E03           00180         MOVLW   0x03
+000074 26E1           00181         ADDWF   FSR1L, F
+                      00182 ; ;ic:9:        *(iTemp0 [k2 lr3:10 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _rand_r_ctx_1_18}[r0x00 r0x01 r0x02 ]) := iTemp6 [k12 lr8:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x03 r0x04 r0x05 r0x06 ]
+000076 C000 FFE5      00183         MOVFF   r0x03, POSTDEC1
+00007A C000 FFF4      00184         MOVFF   r0x04, PRODH
+00007E C000 FFF6      00185         MOVFF   r0x05, TBLPTRL
+000082 C000 FFF7      00186         MOVFF   r0x06, TBLPTRH
+000086 C000 FFE9      00187         MOVFF   r0x00, FSR0L
+00008A C000 FFF3      00188         MOVFF   r0x01, PRODL
+00008E 5000           00189         MOVF    r0x02, W
+000090 EC00 F000      00190         CALL    __gptrput4
+                      00191 ; ;ic:10:       iTemp8 [k14 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x00 r0x01 r0x02 r0x03 ] = @[iTemp0 [k2 lr3:10 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _rand_r_ctx_1_18}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+                      00192 ;       .line   45; stdlib/rand.c       return (long) *ctx;
+000094 C000 FFE9      00193         MOVFF   r0x00, FSR0L
+000098 C000 FFF3      00194         MOVFF   r0x01, PRODL
+00009C 5000           00195         MOVF    r0x02, W
+00009E EC00 F000      00196         CALL    __gptrget4
+0000A2 CFF3 F000      00197         MOVFF   PRODL, r0x01
+0000A6 CFF4 F000      00198         MOVFF   PRODH, r0x02
+0000AA CFE9 F000      00199         MOVFF   FSR0L, r0x03
+                      00200 ; ;ic:11:       iTemp9 [k15 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x00 r0x01 r0x02 r0x03 ] = (long-int fixed)iTemp8 [k14 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x00 r0x01 r0x02 r0x03 ]
+                      00201 ; ;ic:12:       ret iTemp9 [k15 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x00 r0x01 r0x02 r0x03 ]
+0000AE C000 FFE9      00202         MOVFF   r0x03, FSR0L
+0000B2 C000 FFF4      00203         MOVFF   r0x02, PRODH
+0000B6 C000 FFF3      00204         MOVFF   r0x01, PRODL
+                      00205 ; ;ic:13:  _return($1) :
+                      00206 ; ;ic:14:       eproc _rand_r [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+0000BA CFE4 F000      00207         MOVFF   PREINC1, r0x06
+0000BE CFE4 F000      00208         MOVFF   PREINC1, r0x05
+0000C2 CFE4 F000      00209         MOVFF   PREINC1, r0x04
+0000C6 CFE4 F000      00210         MOVFF   PREINC1, r0x03
+0000CA CFE4 F000      00211         MOVFF   PREINC1, r0x02
+0000CE CFE4 F000      00212         MOVFF   PREINC1, r0x01
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000D2 CFE4 F000      00213         MOVFF   PREINC1, r0x00
+0000D6 CFE4 FFD9      00214         MOVFF   PREINC1, FSR2L
+0000DA 0012           00215         RETURN  
+                      00216 
+                      00217 ; ; Starting pCode block
+                      00218 ; ;ic:1:  _entry($2) :
+                      00219 ; ;ic:2:        proc _do_rand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+                      00220 S_rand__do_rand code
+000000                00221 _do_rand:
+                      00222 ;       .line   35; stdlib/rand.c       static long do_rand(unsigned long *ctx)
+000000 CFD9 FFE5      00223         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00224         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00225         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00226         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00227         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00228         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00229         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00230         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00231         MOVFF   r0x06, POSTDEC1
+                      00232 ; ;ic:3: iTemp0 [k2 lr3:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _do_rand_ctx_1_16}[r0x00 r0x01 r0x02 ] = recv _do_rand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+000024 0E02           00233         MOVLW   0x02
+000026 CFDB F000      00234         MOVFF   PLUSW2, r0x00
+00002A 0E03           00235         MOVLW   0x03
+00002C CFDB F000      00236         MOVFF   PLUSW2, r0x01
+000030 0E04           00237         MOVLW   0x04
+000032 CFDB F000      00238         MOVFF   PLUSW2, r0x02
+                      00239 ; ;ic:4:        iTemp3 [k6 lr4:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ] = @[iTemp0 [k2 lr3:9 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _do_rand_ctx_1_16}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+                      00240 ;       .line   37; stdlib/rand.c       return ((*ctx = *ctx * 1103515245UL + 12345UL) % ((unsigned long)RAND_MAX + 1));
+000036 C000 FFE9      00241         MOVFF   r0x00, FSR0L
+00003A C000 FFF3      00242         MOVFF   r0x01, PRODL
+00003E 5000           00243         MOVF    r0x02, W
+000040 EC00 F000      00244         CALL    __gptrget4
+000044 6E00           00245         MOVWF   r0x03
+000046 CFF3 F000      00246         MOVFF   PRODL, r0x04
+00004A CFF4 F000      00247         MOVFF   PRODH, r0x05
+00004E CFE9 F000      00248         MOVFF   FSR0L, r0x06
+                      00249 ; ;ic:5:        send 0x41c64e6d {const-unsigned-long-int literal}{argreg = 1}
+                      00250 ; ;ic:6:        send iTemp3 [k6 lr4:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ]{argreg = 2}
+                      00251 ; ;ic:7:        iTemp4 [k7 lr7:8 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ] = call __mullong [k10 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( long-int fixed, long-int fixed) fixed}
+000052 5000           00252         MOVF    r0x06, W
+000054 6EE5           00253         MOVWF   POSTDEC1
+000056 5000           00254         MOVF    r0x05, W
+000058 6EE5           00255         MOVWF   POSTDEC1
+00005A 5000           00256         MOVF    r0x04, W
+00005C 6EE5           00257         MOVWF   POSTDEC1
+00005E 5000           00258         MOVF    r0x03, W
+000060 6EE5           00259         MOVWF   POSTDEC1
+000062 0E41           00260         MOVLW   0x41
+000064 6EE5           00261         MOVWF   POSTDEC1
+000066 0EC6           00262         MOVLW   0xc6
+000068 6EE5           00263         MOVWF   POSTDEC1
+00006A 0E4E           00264         MOVLW   0x4e
+00006C 6EE5           00265         MOVWF   POSTDEC1
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00006E 0E6D           00266         MOVLW   0x6d
+000070 6EE5           00267         MOVWF   POSTDEC1
+000072 EC00 F000      00268         CALL    __mullong
+000076 6E00           00269         MOVWF   r0x03
+000078 CFF3 F000      00270         MOVFF   PRODL, r0x04
+00007C CFF4 F000      00271         MOVFF   PRODH, r0x05
+000080 CFE9 F000      00272         MOVFF   FSR0L, r0x06
+000084 0E08           00273         MOVLW   0x08
+000086 26E1           00274         ADDWF   FSR1L, F
+                      00275 ; ;ic:8:        iTemp5 [k8 lr8:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ] = iTemp4 [k7 lr7:8 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ] + 0x3039 {const-unsigned-long-int literal}
+000088 0E39           00276         MOVLW   0x39
+00008A 2600           00277         ADDWF   r0x03, F
+00008C 0E30           00278         MOVLW   0x30
+00008E 2200           00279         ADDWFC  r0x04, F
+000090 0E00           00280         MOVLW   0x00
+000092 2200           00281         ADDWFC  r0x05, F
+000094 2200           00282         ADDWFC  r0x06, F
+                      00283 ; ;ic:9:        *(iTemp0 [k2 lr3:9 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-long-int generic* fixed}{ sir@ _do_rand_ctx_1_16}[r0x00 r0x01 r0x02 ]) := iTemp5 [k8 lr8:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ]
+000096 C000 FFE5      00284         MOVFF   r0x03, POSTDEC1
+00009A C000 FFF4      00285         MOVFF   r0x04, PRODH
+00009E C000 FFF6      00286         MOVFF   r0x05, TBLPTRL
+0000A2 C000 FFF7      00287         MOVFF   r0x06, TBLPTRH
+0000A6 C000 FFE9      00288         MOVFF   r0x00, FSR0L
+0000AA C000 FFF3      00289         MOVFF   r0x01, PRODL
+0000AE 5000           00290         MOVF    r0x02, W
+0000B0 EC00 F000      00291         CALL    __gptrput4
+                      00292 ; ;ic:10:       iTemp6 [k9 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ] = iTemp5 [k8 lr8:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ] & 0x7fffffff {const-long-int literal}
+0000B4 9E00           00293         BCF     r0x06, 7
+                      00294 ; ;ic:11:       ret iTemp6 [k9 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int register}[r0x03 r0x04 r0x05 r0x06 ]
+0000B6 C000 FFE9      00295         MOVFF   r0x06, FSR0L
+0000BA C000 FFF4      00296         MOVFF   r0x05, PRODH
+0000BE C000 FFF3      00297         MOVFF   r0x04, PRODL
+0000C2 5000           00298         MOVF    r0x03, W
+                      00299 ; ;ic:12:  _return($1) :
+                      00300 ; ;ic:13:       eproc _do_rand [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int function ( unsigned-long-int generic* fixed) fixed}
+0000C4 CFE4 F000      00301         MOVFF   PREINC1, r0x06
+0000C8 CFE4 F000      00302         MOVFF   PREINC1, r0x05
+0000CC CFE4 F000      00303         MOVFF   PREINC1, r0x04
+0000D0 CFE4 F000      00304         MOVFF   PREINC1, r0x03
+0000D4 CFE4 F000      00305         MOVFF   PREINC1, r0x02
+0000D8 CFE4 F000      00306         MOVFF   PREINC1, r0x01
+0000DC CFE4 F000      00307         MOVFF   PREINC1, r0x00
+0000E0 CFE4 FFD9      00308         MOVFF   PREINC1, FSR2L
+0000E4 0012           00309         RETURN  
+                      00310 
+                      00311 
+                      00312 
+                      00313 ; Statistics:
+                      00314 ; code size:      570 (0x023a) bytes ( 0.43%)
+                      00315 ;                 285 (0x011d) words
+                      00316 ; udata size:       4 (0x0004) bytes ( 0.31%)
+                      00317 ; access size:      7 (0x0007) bytes
+                      00318 
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00319 
+                      00320         end
+gpasm-0.14.1 (Aug 18 2017)   rand.asm           8-18-2017  19:21:59          PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODH                             00000FF4
+PRODL                             00000FF3
+TBLPTRH                           00000FF7
+TBLPTRL                           00000FF6
+WREG                              00000FE8
+__18F452                          00000001
+__gptrget4                        00000000
+__gptrput4                        00000000
+__mullong                         00000000
+_do_rand                          00000000
+_next                             00000000
+_rand                             00000000
+_rand_r                           00000000
+_rand_r_val_1_19                  00000000
+_srand                            00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

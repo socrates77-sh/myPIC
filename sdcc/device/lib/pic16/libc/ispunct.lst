@@ -1,0 +1,191 @@
+gpasm-0.14.1 (Aug 18 2017)   ispunct.asm        8-18-2017  19:21:26          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:26 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _ispunct
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _isdigit
+                      00021         extern  _islower
+                      00022         extern  _isupper
+                      00023         extern  _isprint
+                      00024         extern  _isspace
+                      00025 
+                      00026 ;--------------------------------------------------------
+                      00027 ;       Equates to used internal registers
+                      00028 ;--------------------------------------------------------
+  00000FD8            00029 STATUS  equ     0xfd8
+  00000FE8            00030 WREG    equ     0xfe8
+  00000FE1            00031 FSR1L   equ     0xfe1
+  00000FD9            00032 FSR2L   equ     0xfd9
+  00000FE6            00033 POSTINC1        equ     0xfe6
+  00000FE5            00034 POSTDEC1        equ     0xfe5
+  00000FE4            00035 PREINC1 equ     0xfe4
+  00000FDB            00036 PLUSW2  equ     0xfdb
+                      00037 
+                      00038 
+                      00039 ; Internal registers
+                      00040 .registers      udata_ovr       0x0000
+000000                00041 r0x00   res     1
+000001                00042 r0x01   res     1
+                      00043 
+                      00044 ;--------------------------------------------------------
+                      00045 ; global & static initialisations
+                      00046 ;--------------------------------------------------------
+                      00047 ; I code from now on!
+                      00048 ; ; Starting pCode block
+                      00049 ; ;ic:1:  _entry($8) :
+                      00050 ; ;ic:2:        proc _ispunct [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00051 S_ispunct__ispunct      code
+000000                00052 _ispunct:
+                      00053 ;       .line   31; ctype/ispunct.c     char ispunct (unsigned char c)
+gpasm-0.14.1 (Aug 18 2017)   ispunct.asm        8-18-2017  19:21:26          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000000 CFD9 FFE5      00054         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00055         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00056         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00057         MOVFF   r0x01, POSTDEC1
+                      00058 ; ;ic:3: iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _ispunct_c_1_10}[r0x00 ] = recv _ispunct [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+000010 0E02           00059         MOVLW   0x02
+000012 CFDB F000      00060         MOVFF   PLUSW2, r0x00
+                      00061 ; ;ic:4:        send iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _ispunct_c_1_10}[r0x00 ]{argreg = 1}
+                      00062 ; ;ic:5:        iTemp1 [k6 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] = call _isprint [k4 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00063 ;       .line   33; ctype/ispunct.c     if ( isprint (c) &&
+000016 5000           00064         MOVF    r0x00, W
+000018 6EE5           00065         MOVWF   POSTDEC1
+00001A EC00 F000      00066         CALL    _isprint
+00001E 6E00           00067         MOVWF   r0x01
+000020 52E6           00068         MOVF    POSTINC1, F
+                      00069 ; ;ic:6:        if iTemp1 [k6 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] == 0 goto _iffalse_0($2)
+000022 5000           00070         MOVF    r0x01, W
+000024 E000           00071         BZ      _00106_DS_
+                      00072 ; ;ic:7:        send iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _ispunct_c_1_10}[r0x00 ]{argreg = 1}
+                      00073 ; ;ic:8:        iTemp2 [k9 lr8:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] = call _islower [k7 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00074 ;       .line   34; ctype/ispunct.c     !islower(c) &&
+000026 5000           00075         MOVF    r0x00, W
+000028 6EE5           00076         MOVWF   POSTDEC1
+00002A EC00 F000      00077         CALL    _islower
+00002E 6E00           00078         MOVWF   r0x01
+000030 52E6           00079         MOVF    POSTINC1, F
+                      00080 ; ;ic:9:        if iTemp2 [k9 lr8:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] != 0 goto _iffalse_0($2)
+000032 5000           00081         MOVF    r0x01, W
+000034 E100           00082         BNZ     _00106_DS_
+                      00083 ; ;ic:10:       send iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _ispunct_c_1_10}[r0x00 ]{argreg = 1}
+                      00084 ; ;ic:11:       iTemp3 [k12 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] = call _isupper [k10 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00085 ;       .line   35; ctype/ispunct.c     !isupper(c) &&
+000036 5000           00086         MOVF    r0x00, W
+000038 6EE5           00087         MOVWF   POSTDEC1
+00003A EC00 F000      00088         CALL    _isupper
+00003E 6E00           00089         MOVWF   r0x01
+000040 52E6           00090         MOVF    POSTINC1, F
+                      00091 ; ;ic:12:       if iTemp3 [k12 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] != 0 goto _iffalse_0($2)
+000042 5000           00092         MOVF    r0x01, W
+000044 E100           00093         BNZ     _00106_DS_
+                      00094 ; ;ic:13:       send iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _ispunct_c_1_10}[r0x00 ]{argreg = 1}
+                      00095 ; ;ic:14:       iTemp4 [k15 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] = call _isspace [k13 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00096 ;       .line   36; ctype/ispunct.c     !isspace(c) &&
+000046 5000           00097         MOVF    r0x00, W
+000048 6EE5           00098         MOVWF   POSTDEC1
+00004A EC00 F000      00099         CALL    _isspace
+00004E 6E00           00100         MOVWF   r0x01
+000050 52E6           00101         MOVF    POSTINC1, F
+                      00102 ; ;ic:15:       if iTemp4 [k15 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x01 ] != 0 goto _iffalse_0($2)
+000052 5000           00103         MOVF    r0x01, W
+000054 E100           00104         BNZ     _00106_DS_
+                      00105 ; ;ic:16:       send iTemp0 [k2 lr3:16 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _ispunct_c_1_10}[r0x00 ]{argreg = 1}
+                      00106 ; ;ic:17:       iTemp5 [k18 lr17:18 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x00 ] = call _isdigit [k16 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+gpasm-0.14.1 (Aug 18 2017)   ispunct.asm        8-18-2017  19:21:26          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ;       .line   37; ctype/ispunct.c     !isdigit(c) )
+000056 5000           00108         MOVF    r0x00, W
+000058 6EE5           00109         MOVWF   POSTDEC1
+00005A EC00 F000      00110         CALL    _isdigit
+00005E 6E00           00111         MOVWF   r0x00
+000060 52E6           00112         MOVF    POSTINC1, F
+                      00113 ; ;ic:18:       if iTemp5 [k18 lr17:18 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x00 ] != 0 goto _iffalse_0($2)
+000062 5000           00114         MOVF    r0x00, W
+000064 E100           00115         BNZ     _00106_DS_
+                      00116 ; ;ic:19:       ret 0x1 {const-unsigned-char literal}
+                      00117 ;       .line   38; ctype/ispunct.c     return 1;
+000066 0E01           00118         MOVLW   0x01
+000068 D000           00119         BRA     _00111_DS_
+                      00120 ; ;ic:20:  _iffalse_0($2) :
+                      00121 ; ;ic:21:       ret 0x0 {const-unsigned-char literal}
+00006A                00122 _00106_DS_:
+                      00123 ;       .line   39; ctype/ispunct.c     return 0;
+00006A 6AE8           00124         CLRF    WREG
+                      00125 ; ;ic:22:  _return($7) :
+                      00126 ; ;ic:23:       eproc _ispunct [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+00006C                00127 _00111_DS_:
+00006C CFE4 F000      00128         MOVFF   PREINC1, r0x01
+000070 CFE4 F000      00129         MOVFF   PREINC1, r0x00
+000074 CFE4 FFD9      00130         MOVFF   PREINC1, FSR2L
+000078 0012           00131         RETURN  
+                      00132 
+                      00133 
+                      00134 
+                      00135 ; Statistics:
+                      00136 ; code size:      122 (0x007a) bytes ( 0.09%)
+                      00137 ;                  61 (0x003d) words
+                      00138 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00139 ; access size:      2 (0x0002) bytes
+                      00140 
+                      00141 
+                      00142         end
+gpasm-0.14.1 (Aug 18 2017)   ispunct.asm        8-18-2017  19:21:26          PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+POSTINC1                          00000FE6
+PREINC1                           00000FE4
+STATUS                            00000FD8
+WREG                              00000FE8
+_00106_DS_                        0000006A
+_00111_DS_                        0000006C
+__18F452                          00000001
+_isdigit                          00000000
+_islower                          00000000
+_isprint                          00000000
+_ispunct                          00000000
+_isspace                          00000000
+_isupper                          00000000
+r0x00                             00000000
+r0x01                             00000001
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,522 @@
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:58 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  __initHeap
+                      00016         global  __mergeHeapBlock
+                      00017 
+                      00018 ;--------------------------------------------------------
+                      00019 ;       Equates to used internal registers
+                      00020 ;--------------------------------------------------------
+  00000FD8            00021 STATUS  equ     0xfd8
+  00000FE8            00022 WREG    equ     0xfe8
+  00000FE9            00023 FSR0L   equ     0xfe9
+  00000FEA            00024 FSR0H   equ     0xfea
+  00000FE1            00025 FSR1L   equ     0xfe1
+  00000FD9            00026 FSR2L   equ     0xfd9
+  00000FEF            00027 INDF0   equ     0xfef
+  00000FE5            00028 POSTDEC1        equ     0xfe5
+  00000FE4            00029 PREINC1 equ     0xfe4
+  00000FDB            00030 PLUSW2  equ     0xfdb
+  00000FF3            00031 PRODL   equ     0xff3
+                      00032 
+                      00033 
+                      00034 ; Internal registers
+                      00035 .registers      udata_ovr       0x0000
+000000                00036 r0x00   res     1
+000001                00037 r0x01   res     1
+000002                00038 r0x02   res     1
+000003                00039 r0x03   res     1
+000004                00040 r0x04   res     1
+000005                00041 r0x05   res     1
+000006                00042 r0x06   res     1
+000007                00043 r0x07   res     1
+000008                00044 r0x08   res     1
+000009                00045 r0x09   res     1
+                      00046 
+                      00047 ;--------------------------------------------------------
+                      00048 ; global & static initialisations
+                      00049 ;--------------------------------------------------------
+                      00050 ; I code from now on!
+                      00051 ; ; Starting pCode block
+                      00052 ; ;ic:1:  _entry($16) :
+                      00053 ; ;ic:2:        proc __mergeHeapBlock [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{struct __00000000 near* function ( struct __00000000 near* fixed, unsigned-char fixed) data}
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 S_memmisc___mergeHeapBlock      code
+000000                00055 __mergeHeapBlock:
+                      00056 ;       .line   60; stdlib/memmisc.c    _malloc_rec _MALLOC_SPEC *_mergeHeapBlock(_malloc_rec _MALLOC_SPEC *sBlock, unsigned char bSize)
+000000 CFD9 FFE5      00057         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00058         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00059         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00060         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00061         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00062         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00063         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00064         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00065         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00066         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00067         MOVFF   r0x08, POSTDEC1
+00002C C000 FFE5      00068         MOVFF   r0x09, POSTDEC1
+                      00069 ; ;ic:3: iTemp0 [k2 lr3:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_sBlock_1_12}[r0x00 r0x01 ] = recv __mergeHeapBlock [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{struct __00000000 near* function ( struct __00000000 near* fixed, unsigned-char fixed) data}
+000030 0E02           00070         MOVLW   0x02
+000032 CFDB F000      00071         MOVFF   PLUSW2, r0x00
+000036 0E03           00072         MOVLW   0x03
+000038 CFDB F000      00073         MOVFF   PLUSW2, r0x01
+                      00074 ; ;ic:4: iTemp1 [k4 lr4:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_bSize_1_12}[r0x02 ] = recv __mergeHeapBlock [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{struct __00000000 near* function ( struct __00000000 near* fixed, unsigned-char fixed) data}
+00003C 0E04           00075         MOVLW   0x04
+00003E CFDB F000      00076         MOVFF   PLUSW2, r0x02
+                      00077 ; ;ic:5:        iTemp5 [k12 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x03 r0x04 ] := iTemp0 [k2 lr3:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_sBlock_1_12}[r0x00 r0x01 ]
+                      00078 ;       .line   67; stdlib/memmisc.c    bLen = sBlock->bits.count;
+000042 C000 F000      00079         MOVFF   r0x00, r0x03
+000046 C000 F000      00080         MOVFF   r0x01, r0x04
+                      00081 ; ;ic:6:        iTemp6 [k13 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ __mergeHeapBlock_bLen_1_13}[r0x03 ] = @[iTemp5 [k12 lr5:6 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x03 r0x04 ] + 0x0 {const-unsigned-char literal}]
+00004A C000 FFE9      00082         MOVFF   r0x03, FSR0L
+00004E C000 FFEA      00083         MOVFF   r0x04, FSR0H
+000052 50EF           00084         MOVF    INDF0, W
+000054 0B7F           00085         ANDLW   0x7f
+000056 6E00           00086         MOVWF   r0x03
+                      00087 ; ;ic:7:        iTemp2 [k6 lr7:13 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_bLen_1_13}[r0x03 ] := iTemp6 [k13 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ __mergeHeapBlock_bLen_1_13}[r0x03 ]
+                      00088 ; ;ic:8:        iTemp8 [k16 lr8:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] = (unsigned-int fixed)iTemp0 [k2 lr3:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_sBlock_1_12}[r0x00 r0x01 ]
+                      00089 ;       .line   71; stdlib/memmisc.c    temp = (_malloc_rec _MALLOC_SPEC *)((unsigned int)sBlock + bLen);       //sBlock->bits.count);
+000058 5000           00090         MOVF    r0x00, W
+00005A 6E00           00091         MOVWF   r0x04
+00005C 5000           00092         MOVF    r0x01, W
+00005E 6E00           00093         MOVWF   r0x05
+                      00094 ; ;ic:9:        iTemp9 [k17 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x06 r0x07 ] = (int fixed)iTemp2 [k6 lr7:13 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_bLen_1_13}[r0x03 ]
+000060 C000 F000      00095         MOVFF   r0x03, r0x06
+000064 6A00           00096         CLRF    r0x07
+                      00097 ; ;ic:10:       iTemp10 [k18 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = (unsigned-int fixed)iTemp9 [k17 lr9:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x06 r0x07 ]
+                      00098 ; ;ic:11:       iTemp11 [k19 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] = iTemp8 [k16 lr8:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] + iTemp10 [k18 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ]
+000066 5000           00099         MOVF    r0x06, W
+000068 2600           00100         ADDWF   r0x04, F
+00006A 5000           00101         MOVF    r0x07, W
+00006C 2200           00102         ADDWFC  r0x05, F
+                      00103 ; ;ic:12:       iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ] = (struct __00000000 near* fixed)iTemp11 [k19 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ]
+                      00104 ; ;ic:13:       iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] := iTemp2 [k6 lr7:13 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_bLen_1_13}[r0x03 ]
+                      00105 ; ;ic:15:  _whilecontinue_1($3) :
+                      00106 ; ;ic:16:       iTemp16 [k26 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}[r0x06 ] = @[iTemp7 [k14 lr12:56 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ] + 0x0 {const-unsigned-char literal}]
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00006E                00107 _00130_DS_:
+                      00108 ;       .line   73; stdlib/memmisc.c    while((temp->datum) && (!temp->bits.alloc) && (eLen <= bSize)) {
+00006E C000 FFE9      00109         MOVFF   r0x04, FSR0L
+000072 C000 FFEA      00110         MOVFF   r0x05, FSR0H
+000076 CFEF F000      00111         MOVFF   INDF0, r0x06
+                      00112 ; ;ic:17:       if iTemp16 [k26 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}[r0x06 ] == 0 goto _whilebreak_1($5)
+00007A 5000           00113         MOVF    r0x06, W
+00007C E000           00114         BZ      _00132_DS_
+                      00115 ; ;ic:18:       iTemp19 [k31 lr18:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} near* fixed}[r0x06 r0x07 ] := iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ]
+00007E C000 F000      00116         MOVFF   r0x04, r0x06
+000082 C000 F000      00117         MOVFF   r0x05, r0x07
+                      00118 ; ;ic:19:       iTemp20 [k32 lr19:20 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} fixed}[r0x06 ] = @[iTemp19 [k31 lr18:19 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} near* fixed}[r0x06 r0x07 ] + 0x0 {const-unsigned-char literal}]
+000086 6AE8           00119         CLRF    WREG
+000088 C000 FFE9      00120         MOVFF   r0x06, FSR0L
+00008C C000 FFEA      00121         MOVFF   r0x07, FSR0H
+000090 BEEF           00122         BTFSC   INDF0, 7
+000092 2AE8           00123         INCF    WREG, F
+000094 6E00           00124         MOVWF   r0x06
+                      00125 ; ;ic:20:       if iTemp20 [k32 lr19:20 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} fixed}[r0x06 ] != 0 goto _whilebreak_1($5)
+000096 5000           00126         MOVF    r0x06, W
+000098 E100           00127         BNZ     _00132_DS_
+                      00128 ; ;ic:21:       iTemp21 [k33 lr21:22 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] > iTemp1 [k4 lr4:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_bSize_1_12}[r0x02 ]
+00009A 5000           00129         MOVF    r0x03, W
+00009C 5C00           00130         SUBWF   r0x02, W
+00009E E300           00131         BNC     _00132_DS_
+                      00132 ; ;ic:22:       if iTemp21 [k33 lr21:22 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _whilebreak_1($5)
+                      00133 ; ;ic:23:       iTemp25 [k40 lr23:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x06 r0x07 ] := iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ]
+                      00134 ;       .line   74; stdlib/memmisc.c    eLen += (dat=temp->bits.count);
+0000A0 C000 F000      00135         MOVFF   r0x04, r0x06
+0000A4 C000 F000      00136         MOVFF   r0x05, r0x07
+                      00137 ; ;ic:24:       iTemp26 [k41 lr24:27 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ __mergeHeapBlock_dat_1_13}[r0x06 ] = @[iTemp25 [k40 lr23:24 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x06 r0x07 ] + 0x0 {const-unsigned-char literal}]
+0000A8 C000 FFE9      00138         MOVFF   r0x06, FSR0L
+0000AC C000 FFEA      00139         MOVFF   r0x07, FSR0H
+0000B0 50EF           00140         MOVF    INDF0, W
+0000B2 0B7F           00141         ANDLW   0x7f
+0000B4 6E00           00142         MOVWF   r0x06
+                      00143 ; ;ic:25:       iTemp22 [k34 lr25:30 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x07 ] := iTemp26 [k41 lr24:27 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ __mergeHeapBlock_dat_1_13}[r0x06 ]
+0000B6 C000 F000      00144         MOVFF   r0x06, r0x07
+                      00145 ; ;ic:26:       iTemp27 [k42 lr26:28 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x08 ] = (char fixed)iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ]
+0000BA 5000           00146         MOVF    r0x03, W
+0000BC 6E00           00147         MOVWF   r0x08
+                      00148 ; ;ic:27:       iTemp28 [k43 lr27:28 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x06 ] = (char fixed)iTemp26 [k41 lr24:27 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ __mergeHeapBlock_dat_1_13}[r0x06 ]
+                      00149 ; ;ic:28:       iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] = iTemp27 [k42 lr26:28 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x08 ] + iTemp28 [k43 lr27:28 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x06 ]
+0000BE 5000           00150         MOVF    r0x06, W
+0000C0 2400           00151         ADDWF   r0x08, W
+0000C2 6E00           00152         MOVWF   r0x03
+                      00153 ; ;ic:29:       iTemp30 [k45 lr29:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x08 ] = (unsigned-int fixed)iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ]
+                      00154 ;       .line   75; stdlib/memmisc.c    temp = (_malloc_rec _MALLOC_SPEC *)((unsigned int)temp + dat);
+0000C4 5000           00155         MOVF    r0x04, W
+0000C6 6E00           00156         MOVWF   r0x06
+0000C8 5000           00157         MOVF    r0x05, W
+0000CA 6E00           00158         MOVWF   r0x08
+                      00159 ; ;ic:30:       iTemp31 [k46 lr30:31 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x07 r0x09 ] = (int fixed)iTemp22 [k34 lr25:30 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x07 ]
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000CC 6A00           00160         CLRF    r0x09
+                      00161 ; ;ic:31:       iTemp32 [k47 lr31:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x07 r0x09 ] = (unsigned-int fixed)iTemp31 [k46 lr30:31 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x07 r0x09 ]
+                      00162 ; ;ic:32:       iTemp33 [k48 lr32:33 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x08 ] = iTemp30 [k45 lr29:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x08 ] + iTemp32 [k47 lr31:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x07 r0x09 ]
+0000CE 5000           00163         MOVF    r0x07, W
+0000D0 2600           00164         ADDWF   r0x06, F
+0000D2 5000           00165         MOVF    r0x09, W
+0000D4 2200           00166         ADDWFC  r0x08, F
+                      00167 ; ;ic:33:       iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ] = (struct __00000000 near* fixed)iTemp33 [k48 lr32:33 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x08 ]
+0000D6 5000           00168         MOVF    r0x06, W
+0000D8 6E00           00169         MOVWF   r0x04
+0000DA 5000           00170         MOVF    r0x08, W
+0000DC 6E00           00171         MOVWF   r0x05
+                      00172 ; ;ic:34:        goto _whilecontinue_1($3)
+0000DE D000           00173         BRA     _00130_DS_
+                      00174 ; ;ic:35:  _whilebreak_1($5) :
+                      00175 ; ;ic:36:       iTemp35 [k50 lr36:37 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] > iTemp1 [k4 lr4:36 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_bSize_1_12}[r0x02 ]
+0000E0                00176 _00132_DS_:
+                      00177 ;       .line   78; stdlib/memmisc.c    if(eLen > bSize) {
+0000E0 5000           00178         MOVF    r0x03, W
+0000E2 5C00           00179         SUBWF   r0x02, W
+0000E4 E200           00180         BC      _00140_DS_
+                      00181 ; ;ic:37:       if iTemp35 [k50 lr36:37 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_3($13)
+                      00182 ; ;ic:38:       iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ] := iTemp0 [k2 lr3:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_sBlock_1_12}[r0x00 r0x01 ]
+                      00183 ;       .line   82; stdlib/memmisc.c    temp = sBlock;
+0000E6 C000 F000      00184         MOVFF   r0x00, r0x04
+0000EA C000 F000      00185         MOVFF   r0x01, r0x05
+                      00186 ; ;ic:40:  _whilecontinue_2($9) :
+                      00187 ; ;ic:41:       if iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] == 0 goto _whilebreak_2($11)
+0000EE                00188 _00136_DS_:
+                      00189 ;       .line   83; stdlib/memmisc.c    while(eLen > 0) {
+0000EE 5000           00190         MOVF    r0x03, W
+0000F0 E000           00191         BZ      _00138_DS_
+                      00192 ; ;ic:42:       iTemp36 [k51 lr42:43 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] > 0x7f {const-unsigned-char literal}
+                      00193 ;       .line   84; stdlib/memmisc.c    if(eLen > MAX_BLOCK_SIZE)i = MAX_BLOCK_SIZE;
+0000F2 0E80           00194         MOVLW   0x80
+0000F4 5C00           00195         SUBWF   r0x03, W
+0000F6 E300           00196         BNC     _00134_DS_
+                      00197 ; ;ic:43:       if iTemp36 [k51 lr42:43 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_2($7)
+                      00198 ; ;ic:44:       iTemp37 [k52 lr44:55 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_i_2_15}[r0x02 ] := 0x7f {const-unsigned-char literal}
+0000F8 0E7F           00199         MOVLW   0x7f
+0000FA 6E00           00200         MOVWF   r0x02
+                      00201 ; ;ic:45:        goto _ifend_2($8)
+0000FC D000           00202         BRA     _00135_DS_
+                      00203 ; ;ic:46:  _iffalse_2($7) :
+                      00204 ; ;ic:47:       iTemp37 [k52 lr44:55 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_i_2_15}[r0x02 ] := iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ]
+0000FE                00205 _00134_DS_:
+                      00206 ;       .line   85; stdlib/memmisc.c    else i = eLen;
+0000FE C000 F000      00207         MOVFF   r0x03, r0x02
+                      00208 ; ;ic:48:  _ifend_2($8) :
+                      00209 ; ;ic:49:       *(iTemp7 [k14 lr12:56 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ]) := iTemp37 [k52 lr44:55 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_i_2_15}[r0x02 ]
+000102                00210 _00135_DS_:
+                      00211 ;       .line   86; stdlib/memmisc.c    temp->datum = i;
+000102 C000 FFE9      00212         MOVFF   r0x04, FSR0L
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000106 C000 FFEA      00213         MOVFF   r0x05, FSR0H
+00010A C000 FFEF      00214         MOVFF   r0x02, INDF0
+                      00215 ; ;ic:50:       iTemp40 [k57 lr50:53 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = (unsigned-int fixed)iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ]
+                      00216 ;       .line   87; stdlib/memmisc.c    temp = (_malloc_rec _MALLOC_SPEC *)((unsigned int)temp + i);
+00010E 5000           00217         MOVF    r0x04, W
+000110 6E00           00218         MOVWF   r0x06
+000112 5000           00219         MOVF    r0x05, W
+000114 6E00           00220         MOVWF   r0x07
+                      00221 ; ;ic:51:       iTemp41 [k58 lr51:52 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x08 r0x09 ] = (int fixed)iTemp37 [k52 lr44:55 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_i_2_15}[r0x02 ]
+000116 C000 F000      00222         MOVFF   r0x02, r0x08
+00011A 6A00           00223         CLRF    r0x09
+                      00224 ; ;ic:52:       iTemp42 [k59 lr52:53 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x08 r0x09 ] = (unsigned-int fixed)iTemp41 [k58 lr51:52 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x08 r0x09 ]
+                      00225 ; ;ic:53:       iTemp43 [k60 lr53:54 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = iTemp40 [k57 lr50:53 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] + iTemp42 [k59 lr52:53 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x08 r0x09 ]
+00011C 5000           00226         MOVF    r0x08, W
+00011E 2600           00227         ADDWF   r0x06, F
+000120 5000           00228         MOVF    r0x09, W
+000122 2200           00229         ADDWFC  r0x07, F
+                      00230 ; ;ic:54:       iTemp7 [k14 lr12:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_temp_1_13}[r0x04 r0x05 ] = (struct __00000000 near* fixed)iTemp43 [k60 lr53:54 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ]
+000124 5000           00231         MOVF    r0x06, W
+000126 6E00           00232         MOVWF   r0x04
+000128 5000           00233         MOVF    r0x07, W
+00012A 6E00           00234         MOVWF   r0x05
+                      00235 ; ;ic:55:       iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] = iTemp13 [k21 lr13:56 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_eLen_1_13}[r0x03 ] - iTemp37 [k52 lr44:55 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ __mergeHeapBlock_i_2_15}[r0x02 ]
+                      00236 ;       .line   88; stdlib/memmisc.c    eLen -= i;
+00012C 5000           00237         MOVF    r0x02, W
+00012E 5E00           00238         SUBWF   r0x03, F
+                      00239 ; ;ic:56:        goto _whilecontinue_2($9)
+000130 D000           00240         BRA     _00136_DS_
+                      00241 ; ;ic:57:  _whilebreak_2($11) :
+                      00242 ; ;ic:58:       ret iTemp0 [k2 lr3:58 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __mergeHeapBlock_sBlock_1_12}[r0x00 r0x01 ]
+000132                00243 _00138_DS_:
+                      00244 ;       .line   92; stdlib/memmisc.c    return (sBlock);
+000132 C000 FFF3      00245         MOVFF   r0x01, PRODL
+000136 5000           00246         MOVF    r0x00, W
+000138 D000           00247         BRA     _00142_DS_
+                      00248 ; ;ic:59:  _iffalse_3($13) :
+                      00249 ; ;ic:60:       ret 0x0 {struct __00000000 near* literal}
+00013A                00250 _00140_DS_:
+                      00251 ;       .line   96; stdlib/memmisc.c    return ((_malloc_rec _MALLOC_SPEC *)0);
+00013A 6AF3           00252         CLRF    PRODL
+00013C 6AE8           00253         CLRF    WREG
+                      00254 ; ;ic:61:  _return($15) :
+                      00255 ; ;ic:62:       eproc __mergeHeapBlock [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{struct __00000000 near* function ( struct __00000000 near* fixed, unsigned-char fixed) data}
+00013E                00256 _00142_DS_:
+00013E CFE4 F000      00257         MOVFF   PREINC1, r0x09
+000142 CFE4 F000      00258         MOVFF   PREINC1, r0x08
+000146 CFE4 F000      00259         MOVFF   PREINC1, r0x07
+00014A CFE4 F000      00260         MOVFF   PREINC1, r0x06
+00014E CFE4 F000      00261         MOVFF   PREINC1, r0x05
+000152 CFE4 F000      00262         MOVFF   PREINC1, r0x04
+000156 CFE4 F000      00263         MOVFF   PREINC1, r0x03
+00015A CFE4 F000      00264         MOVFF   PREINC1, r0x02
+00015E CFE4 F000      00265         MOVFF   PREINC1, r0x01
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000162 CFE4 F000      00266         MOVFF   PREINC1, r0x00
+000166 CFE4 FFD9      00267         MOVFF   PREINC1, FSR2L
+00016A 0012           00268         RETURN  
+                      00269 
+                      00270 ; ; Starting pCode block
+                      00271 ; ;ic:1:  _entry($9) :
+                      00272 ; ;ic:2:        proc __initHeap [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-char near* fixed, unsigned-int fixed) fixed}
+                      00273 S_memmisc___initHeap    code
+000000                00274 __initHeap:
+                      00275 ;       .line   31; stdlib/memmisc.c    void _initHeap(unsigned char _MALLOC_SPEC *dheap, unsigned int heapsize)
+000000 CFD9 FFE5      00276         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00277         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00278         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00279         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00280         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00281         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00282         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00283         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00284         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00285         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00286         MOVFF   r0x08, POSTDEC1
+00002C C000 FFE5      00287         MOVFF   r0x09, POSTDEC1
+                      00288 ; ;ic:3: iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char near* fixed}{ sir@ __initHeap_dheap_1_9}[r0x00 r0x01 ] = recv __initHeap [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-char near* fixed, unsigned-int fixed) fixed}
+000030 0E02           00289         MOVLW   0x02
+000032 CFDB F000      00290         MOVFF   PLUSW2, r0x00
+000036 0E03           00291         MOVLW   0x03
+000038 CFDB F000      00292         MOVFF   PLUSW2, r0x01
+                      00293 ; ;ic:4: iTemp1 [k4 lr4:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_heapsize_1_9}[r0x02 r0x03 ] = recv __initHeap [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-char near* fixed, unsigned-int fixed) fixed}
+00003C 0E04           00294         MOVLW   0x04
+00003E CFDB F000      00295         MOVFF   PLUSW2, r0x02
+000042 0E05           00296         MOVLW   0x05
+000044 CFDB F000      00297         MOVFF   PLUSW2, r0x03
+                      00298 ; ;ic:5:        iTemp2 [k6 lr5:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_hsize_1_10}[r0x04 r0x05 ] := 0x0 {unsigned-int literal}
+                      00299 ;       .line   34; stdlib/memmisc.c    unsigned int hsize=0;
+000048 6A00           00300         CLRF    r0x04
+00004A 6A00           00301         CLRF    r0x05
+                      00302 ; ;ic:6:        iTemp3 [k8 lr6:29 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __initHeap_pHeap_1_10}[r0x00 r0x01 ] = (struct __00000000 near* fixed)iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char near* fixed}{ sir@ __initHeap_dheap_1_9}[r0x00 r0x01 ]
+                      00303 ; ;ic:7:        if iTemp1 [k4 lr4:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_heapsize_1_9}[r0x02 r0x03 ] != 0 goto _iffalse_0($2)
+                      00304 ;       .line   38; stdlib/memmisc.c    if (heapsize == 0) return;
+00004C 5000           00305         MOVF    r0x02, W
+                      00306 ; #     IORWF   r0x03, W
+                      00307 ; #     BTFSS   STATUS, 2
+                      00308 ; #     GOTO    _00106_DS_
+                      00309 ; #;;ic:8:      ret
+                      00310 ; #     GOTO    _00112_DS_
+                      00311 ; #;;ic:9:  _iffalse_0($2) :
+                      00312 ; #;;ic:10:     iTemp1 [k4 lr4:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_heapsize_1_9}[r0x02 r0x03 ] = iTemp1 [k4 lr4:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_heapsize_1_9}[r0x02 r0x03 ] - 0x1 {const-unsigned-char literal}
+                      00313 ; #     MOVLW   0xff
+                      00314 ;       .line   40; stdlib/memmisc.c    heapsize--;
+00004E 1000           00315         IORWF   r0x03, W
+000050 E000           00316         BZ      _00112_DS_
+000052 0EFF           00317         MOVLW   0xff
+000054 2600           00318         ADDWF   r0x02, F
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000056 2200           00319         ADDWFC  r0x03, F
+                      00320 ; ;ic:12:  _whilecontinue_0($5) :
+                      00321 ; ;ic:13:       iTemp7 [k13 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp2 [k6 lr5:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_hsize_1_10}[r0x04 r0x05 ] < iTemp1 [k4 lr4:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_heapsize_1_9}[r0x02 r0x03 ]
+000058                00322 _00109_DS_:
+                      00323 ;       .line   42; stdlib/memmisc.c    while (hsize < heapsize) {
+000058 5000           00324         MOVF    r0x03, W
+00005A 5C00           00325         SUBWF   r0x05, W
+00005C E100           00326         BNZ     _00122_DS_
+00005E 5000           00327         MOVF    r0x02, W
+000060 5C00           00328         SUBWF   r0x04, W
+000062                00329 _00122_DS_:
+000062 E200           00330         BC      _00111_DS_
+                      00331 ; ;ic:14:       if iTemp7 [k13 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _whilebreak_0($7)
+                      00332 ; ;ic:15:       iTemp8 [k14 lr15:23 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ __initHeap_bsize_1_10}[r0x06 r0x07 ] = iTemp1 [k4 lr4:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_heapsize_1_9}[r0x02 r0x03 ] - iTemp2 [k6 lr5:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_hsize_1_10}[r0x04 r0x05 ]
+                      00333 ;       .line   44; stdlib/memmisc.c    bsize = (heapsize - hsize); /* thus: bsize > 0 */
+000064 5000           00334         MOVF    r0x04, W
+000066 5C00           00335         SUBWF   r0x02, W
+000068 6E00           00336         MOVWF   r0x06
+00006A 5000           00337         MOVF    r0x05, W
+00006C 5800           00338         SUBWFB  r0x03, W
+                      00339 ; #     MOVWF   r0x07
+                      00340 ; #;;ic:16:     iTemp10 [k17 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp8 [k14 lr15:23 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ __initHeap_bsize_1_10}[r0x06 r0x07 ] > 0x7f {int literal}
+                      00341 ; #     MOVF    r0x07, W
+                      00342 ;       .line   45; stdlib/memmisc.c    if(bsize > MAX_BLOCK_SIZE) bsize = MAX_BLOCK_SIZE;
+00006E 6E00           00343         MOVWF   r0x07
+000070 0F80           00344         ADDLW   0x80
+000072 0F80           00345         ADDLW   0x80
+000074 E100           00346         BNZ     _00123_DS_
+000076 0E80           00347         MOVLW   0x80
+000078 5C00           00348         SUBWF   r0x06, W
+00007A                00349 _00123_DS_:
+00007A E300           00350         BNC     _00108_DS_
+                      00351 ; ;ic:17:       if iTemp10 [k17 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_1($4)
+                      00352 ; ;ic:18:       iTemp8 [k14 lr15:23 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ __initHeap_bsize_1_10}[r0x06 r0x07 ] := 0x7f {int literal}
+00007C 0E7F           00353         MOVLW   0x7f
+00007E 6E00           00354         MOVWF   r0x06
+000080 6A00           00355         CLRF    r0x07
+                      00356 ; ;ic:19:  _iffalse_1($4) :
+                      00357 ; ;ic:20:       iTemp13 [k21 lr20:21 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}[r0x08 ] = (volatile-unsigned-char fixed)iTemp8 [k14 lr15:23 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ __initHeap_bsize_1_10}[r0x06 r0x07 ]
+000082                00358 _00108_DS_:
+                      00359 ;       .line   48; stdlib/memmisc.c    pHeap->datum = bsize;
+000082 5000           00360         MOVF    r0x06, W
+000084 6E00           00361         MOVWF   r0x08
+                      00362 ; ;ic:21:       *(iTemp3 [k8 lr6:29 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __initHeap_pHeap_1_10}[r0x00 r0x01 ]) := iTemp13 [k21 lr20:21 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}[r0x08 ]
+000086 C000 FFE9      00363         MOVFF   r0x00, FSR0L
+00008A C000 FFEA      00364         MOVFF   r0x01, FSR0H
+00008E C000 FFEF      00365         MOVFF   r0x08, INDF0
+                      00366 ; ;ic:22:       iTemp14 [k22 lr22:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x08 r0x09 ] = (unsigned-int fixed)iTemp3 [k8 lr6:29 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __initHeap_pHeap_1_10}[r0x00 r0x01 ]
+                      00367 ;       .line   49; stdlib/memmisc.c    pHeap = (_malloc_rec _MALLOC_SPEC *)((unsigned int)pHeap + bsize);
+000092 5000           00368         MOVF    r0x00, W
+000094 6E00           00369         MOVWF   r0x08
+000096 5000           00370         MOVF    r0x01, W
+000098 6E00           00371         MOVWF   r0x09
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00372 ; ;ic:23:       iTemp15 [k23 lr23:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = (unsigned-int fixed)iTemp8 [k14 lr15:23 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ __initHeap_bsize_1_10}[r0x06 r0x07 ]
+                      00373 ; ;ic:24:       iTemp16 [k24 lr24:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x08 r0x09 ] = iTemp14 [k22 lr22:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x08 r0x09 ] + iTemp15 [k23 lr23:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ]
+00009A 5000           00374         MOVF    r0x06, W
+00009C 2600           00375         ADDWF   r0x08, F
+00009E 5000           00376         MOVF    r0x07, W
+0000A0 2200           00377         ADDWFC  r0x09, F
+                      00378 ; ;ic:25:       iTemp3 [k8 lr6:29 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __initHeap_pHeap_1_10}[r0x00 r0x01 ] = (struct __00000000 near* fixed)iTemp16 [k24 lr24:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x08 r0x09 ]
+0000A2 5000           00379         MOVF    r0x08, W
+0000A4 6E00           00380         MOVWF   r0x00
+0000A6 5000           00381         MOVF    r0x09, W
+0000A8 6E00           00382         MOVWF   r0x01
+                      00383 ; ;ic:26:       iTemp2 [k6 lr5:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_hsize_1_10}[r0x04 r0x05 ] = iTemp2 [k6 lr5:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ __initHeap_hsize_1_10}[r0x04 r0x05 ] + iTemp15 [k23 lr23:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ]
+                      00384 ;       .line   51; stdlib/memmisc.c    hsize += bsize;
+0000AA 5000           00385         MOVF    r0x06, W
+0000AC 2600           00386         ADDWF   r0x04, F
+0000AE 5000           00387         MOVF    r0x07, W
+0000B0 2200           00388         ADDWFC  r0x05, F
+                      00389 ; ;ic:27:        goto _whilecontinue_0($5)
+0000B2 D000           00390         BRA     _00109_DS_
+                      00391 ; ;ic:28:  _whilebreak_0($7) :
+                      00392 ; ;ic:29:       *(iTemp3 [k8 lr6:29 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ __initHeap_pHeap_1_10}[r0x00 r0x01 ]) := 0x0 {const-unsigned-char literal}
+0000B4                00393 _00111_DS_:
+                      00394 ;       .line   55; stdlib/memmisc.c    pHeap->datum = 0;
+0000B4 C000 FFE9      00395         MOVFF   r0x00, FSR0L
+0000B8 C000 FFEA      00396         MOVFF   r0x01, FSR0H
+0000BC 0E00           00397         MOVLW   0x00
+0000BE 6AEF           00398         CLRF    INDF0
+                      00399 ; ;ic:30:  _return($8) :
+                      00400 ; ;ic:31:       eproc __initHeap [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-char near* fixed, unsigned-int fixed) fixed}
+0000C0                00401 _00112_DS_:
+0000C0 CFE4 F000      00402         MOVFF   PREINC1, r0x09
+0000C4 CFE4 F000      00403         MOVFF   PREINC1, r0x08
+0000C8 CFE4 F000      00404         MOVFF   PREINC1, r0x07
+0000CC CFE4 F000      00405         MOVFF   PREINC1, r0x06
+0000D0 CFE4 F000      00406         MOVFF   PREINC1, r0x05
+0000D4 CFE4 F000      00407         MOVFF   PREINC1, r0x04
+0000D8 CFE4 F000      00408         MOVFF   PREINC1, r0x03
+0000DC CFE4 F000      00409         MOVFF   PREINC1, r0x02
+0000E0 CFE4 F000      00410         MOVFF   PREINC1, r0x01
+0000E4 CFE4 F000      00411         MOVFF   PREINC1, r0x00
+0000E8 CFE4 FFD9      00412         MOVFF   PREINC1, FSR2L
+0000EC 0012           00413         RETURN  
+                      00414 
+                      00415 
+                      00416 
+                      00417 ; Statistics:
+                      00418 ; code size:      602 (0x025a) bytes ( 0.46%)
+                      00419 ;                 301 (0x012d) words
+                      00420 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00421 ; access size:     10 (0x000a) bytes
+                      00422 
+                      00423 
+                      00424         end
+gpasm-0.14.1 (Aug 18 2017)   memmisc.asm        8-18-2017  19:21:58          PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0H                             00000FEA
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+INDF0                             00000FEF
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00108_DS_                        00000082
+_00109_DS_                        00000058
+_00111_DS_                        000000B4
+_00112_DS_                        000000C0
+_00122_DS_                        00000062
+_00123_DS_                        0000007A
+_00130_DS_                        0000006E
+_00132_DS_                        000000E0
+_00134_DS_                        000000FE
+_00135_DS_                        00000102
+_00136_DS_                        000000EE
+_00138_DS_                        00000132
+_00140_DS_                        0000013A
+_00142_DS_                        0000013E
+__18F452                          00000001
+__initHeap                        00000000
+__mergeHeapBlock                  00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+r0x09                             00000009
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

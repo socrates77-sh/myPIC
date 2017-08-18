@@ -1,0 +1,344 @@
+gpasm-0.14.1 (Aug 18 2017)   utils/cvtdec.S     8-18-2017  19:22:33          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------------------------
+                      00002 ;  cvtdec.S - convert a 16-bit binary word to 5 BCD bytes
+                      00003 ;
+                      00004 ;  Copyright (C) 2004, George Gallant <ggallant571 AT verizon.net>
+                      00005 ;
+                      00006 ;  This library is free software; you can redistribute it and/or modify it
+                      00007 ;  under the terms of the GNU General Public License as published by the
+                      00008 ;  Free Software Foundation; either version 2, or (at your option) any
+                      00009 ;  later version.
+                      00010 ;
+                      00011 ;  This library is distributed in the hope that it will be useful,
+                      00012 ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                      00013 ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                      00014 ;  GNU General Public License for more details.
+                      00015 ;
+                      00016 ;  You should have received a copy of the GNU General Public License 
+                      00017 ;  along with this library; see the file COPYING. If not, write to the
+                      00018 ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                      00019 ;   MA 02110-1301, USA.
+                      00020 ;
+                      00021 ;  As a special exception, if you link this library with other files,
+                      00022 ;  some of which are compiled with SDCC, to produce an executable,
+                      00023 ;  this library does not by itself cause the resulting executable to
+                      00024 ;  be covered by the GNU General Public License. This exception does
+                      00025 ;  not however invalidate any other reasons why the executable file
+                      00026 ;  might be covered by the GNU General Public License.
+                      00027 ;--------------------------------------------------------------------------
+                      00028 
+                      00029 ;--
+                      00030 ;
+                      00031 ;       File:   cvtdec.asm
+                      00032 ;       Author: George Gallant
+                      00033 ;       Date:   19OCT04
+                      00034 ;       
+                      00035 ;       This routine is based on the code and algorithm by
+                      00036 ;       Nikolai Golovchenko and Scott Dattalo presented in
+                      00037 ;       the piclist webb site on radix conversion methods.
+                      00038 ;       Modified to support integers from 0 to 65535 and coded
+                      00039 ;       for the pic18 chip set.
+                      00040 ;
+                      00041 ;                          Digit
+                      00042 ;       BIT  Weight  4   3   2   1   0
+                      00043 ;       ---  ------ --- --- --- --- ---
+                      00044 ;        0      1    0   0   0   0   1
+                      00045 ;        1      2    0   0   0   0   2
+                      00046 ;        2      4    0   0   0   0   4
+                      00047 ;        3      8    0   0   0   0   8
+                      00048 ;       
+                      00049 ;        4     16    0   0   0   1   6
+                      00050 ;        5     32    0   0   0   3   2
+                      00051 ;        6     64    0   0   0   6   4
+                      00052 ;        7    128    0   0   1   2   8
+                      00053 ;
+gpasm-0.14.1 (Aug 18 2017)   utils/cvtdec.S     8-18-2017  19:22:33          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ;        8    256    0   0   2   5   6
+                      00055 ;        9    512    0   0   5   1   2
+                      00056 ;       10   1024    0   1   0   2   4
+                      00057 ;       11   2048    0   2   0   4   8
+                      00058 ;
+                      00059 ;       12   4096    0   4   0   9   6
+                      00060 ;       13   8192    0   8   1   9   2
+                      00061 ;       14  16384    1   6   3   8   4
+                      00062 ;       15  32768    3   2   7   6   8
+                      00063 ;
+                      00064 ;--
+                      00033                 list    r=dec, n=96, st=off, mm=off
+                      00034 
+                      00113                 list
+                      00114 #endif
+                      00067                 list
+                      00068 
+                      00069                 udata
+                      00070 
+                      00071                 global  digits
+                      00072 
+000000                00073 digits:         res     6
+                      00074 
+                      00075                 code
+                      00076 
+                      00077                 global  cvt_dec_word
+                      00078 
+                      00079 ;--
+                      00080 ;
+                      00081 ;       Convert a 16-bit binary word to 5 BCD bytes
+                      00082 ;
+                      00083 ;       On Call
+                      00084 ;               PROD    16 bit word
+                      00085 ;               FSR0    pointer to ascii buffer
+                      00086 ;
+                      00087 ;       On Return
+                      00088 ;               digits[4:0] contain the BCD integers
+                      00089 ;
+                      00090 ;       Notes:  1. strip leading zeros
+                      00091 ;               2. only positive integers on input
+                      00092 ;               3. FSR0, PROD & W are modified and not preserved
+                      00093 ;
+                      00094 ;--
+000000 6AE8           00095 cvt_dec_word:   clrw                            ;calculate digit 0 - lsd
+                      00096 
+000002 B0F3           00097                 btfsc   PRODL,0                 ;bit0
+000004 0F01           00098                 addlw   1
+                      00099 
+000006 B2F3           00100                 btfsc   PRODL,1                 ;bit1
+000008 0F02           00101                 addlw   2
+                      00102 
+00000A B4F3           00103                 btfsc   PRODL,2                 ;bit2
+00000C 0F04           00104                 addlw   4
+                      00105 
+00000E B6F3           00106                 btfsc   PRODL,3                 ;bit3
+000010 0F08           00107                 addlw   8
+                      00108 
+000012 B8F3           00109                 btfsc   PRODL,4                 ;bit4
+000014 0F06           00110                 addlw   6
+                      00111 
+000016 BAF3           00112                 btfsc   PRODL,5                 ;bit5
+000018 0F02           00113                 addlw   2
+                      00114 
+00001A BCF3           00115                 btfsc   PRODL,6                 ;bit6
+00001C 0F04           00116                 addlw   4
+                      00117 
+00001E BEF3           00118                 btfsc   PRODL,7                 ;bit7
+000020 0F08           00119                 addlw   8
+                      00120 
+000022 B0F4           00121                 btfsc   PRODH,0                 ;bit8
+000024 0F06           00122                 addlw   6
+                      00123 
+000026 B2F4           00124                 btfsc   PRODH,1                 ;bit9
+000028 0F02           00125                 addlw   2
+                      00126 
+00002A B4F4           00127                 btfsc   PRODH,2                 ;bit10
+00002C 0F04           00128                 addlw   4
+                      00129 
+00002E B6F4           00130                 btfsc   PRODH,3                 ;bit11
+000030 0F08           00131                 addlw   8
+                      00132 
+000032 B8F4           00133                 btfsc   PRODH,4                 ;bit12
+000034 0F06           00134                 addlw   6
+                      00135 
+000036 BAF4           00136                 btfsc   PRODH,5                 ;bit13
+000038 0F02           00137                 addlw   2
+                      00138 
+00003A BCF4           00139                 btfsc   PRODH,6                 ;bit14
+00003C 0F04           00140                 addlw   4
+                      00141 
+gpasm-0.14.1 (Aug 18 2017)   utils/cvtdec.S     8-18-2017  19:22:33          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00003E BEF4           00142                 btfsc   PRODH,7                 ;bit15
+000040 0F08           00143                 addlw   8
+                      00144 
+000042 6A00           00145                 clrf    digits+1                ;setup for carry in 10's
+000044 0FF6           00146 @1:             addlw   -10
+000046 E300           00147                 bnc     @2
+000048 2A00           00148                 incf    digits+1,f
+00004A D000           00149                 bra     @1
+                      00150 
+00004C 0F0A           00151 @2:             addlw   10
+00004E 6E00           00152                 movwf   digits+0
+                      00153 
+                      00154 ;       calculate digit 1
+                      00155 
+000050 5000           00156                 movf    digits+1,w
+                      00157 
+000052 B8F3           00158                 btfsc   PRODL,4                 ;bit4
+000054 0F01           00159                 addlw   1
+                      00160 
+000056 BAF3           00161                 btfsc   PRODL,5                 ;bit5
+000058 0F03           00162                 addlw   3
+                      00163 
+00005A BCF3           00164                 btfsc   PRODL,6                 ;bit6
+00005C 0F06           00165                 addlw   6
+                      00166 
+00005E BEF3           00167                 btfsc   PRODL,7                 ;bit7
+000060 0F02           00168                 addlw   2
+                      00169 
+000062 B0F4           00170                 btfsc   PRODH,0                 ;bit8
+000064 0F05           00171                 addlw   5
+                      00172 
+000066 B2F4           00173                 btfsc   PRODH,1                 ;bit9
+000068 0F01           00174                 addlw   1
+                      00175 
+00006A B4F4           00176                 btfsc   PRODH,2                 ;bit10
+00006C 0F02           00177                 addlw   2
+                      00178 
+00006E B6F4           00179                 btfsc   PRODH,3                 ;bit11
+000070 0F04           00180                 addlw   4
+                      00181 
+000072 B8F4           00182                 btfsc   PRODH,4                 ;bit12
+000074 0F09           00183                 addlw   9
+                      00184 
+000076 BAF4           00185                 btfsc   PRODH,5                 ;bit13
+000078 0F09           00186                 addlw   9
+                      00187 
+00007A BCF4           00188                 btfsc   PRODH,6                 ;bit14
+00007C 0F08           00189                 addlw   8
+                      00190 
+00007E BEF4           00191                 btfsc   PRODH,7                 ;bit15
+000080 0F06           00192                 addlw   6
+                      00193 
+000082 6A00           00194                 clrf    digits+2                ;setup for carry into 100's
+000084 0FF6           00195 @3:             addlw   -10
+000086 E300           00196                 bnc     @4
+000088 2A00           00197                 incf    digits+2,f
+00008A D000           00198                 bra     @3
+                      00199 
+00008C 0F0A           00200 @4:             addlw   10
+00008E 6E00           00201                 movwf   digits+1
+                      00202 
+                      00203 ;       calculate digit 2
+                      00204 
+000090 5000           00205                 movf    digits+2,w
+                      00206 
+000092 BEF3           00207                 btfsc   PRODL,7                 ;bit7
+000094 0F01           00208                 addlw   1
+                      00209 
+000096 B0F4           00210                 btfsc   PRODH,0                 ;bit8
+000098 0F02           00211                 addlw   2
+                      00212 
+00009A B2F4           00213                 btfsc   PRODH,1                 ;bit9
+00009C 0F05           00214                 addlw   5
+                      00215 
+00009E BAF4           00216                 btfsc   PRODH,5                 ;bit13
+0000A0 0F01           00217                 addlw   1
+                      00218 
+0000A2 BCF4           00219                 btfsc   PRODH,6                 ;bit14
+0000A4 0F03           00220                 addlw   3
+                      00221 
+0000A6 BEF4           00222                 btfsc   PRODH,7                 ;bit15
+0000A8 0F07           00223                 addlw   7
+                      00224 
+0000AA 6A00           00225                 clrf    digits+3                ;setup for carry into 1000's
+0000AC 0FF6           00226 @5:             addlw   -10
+0000AE E300           00227                 bnc     @6
+0000B0 2A00           00228                 incf    digits+3,f
+0000B2 D000           00229                 bra     @5
+0000B4 0F0A           00230 @6:             addlw   10
+                      00231 
+gpasm-0.14.1 (Aug 18 2017)   utils/cvtdec.S     8-18-2017  19:22:33          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000B6 6E00           00232                 movwf   digits+2
+                      00233 
+                      00234 ;       calculate digit 3
+                      00235 
+0000B8 5000           00236                 movf    digits+3,w
+                      00237 
+0000BA B4F4           00238                 btfsc   PRODH,2                 ;bit10
+0000BC 0F01           00239                 addlw   1
+                      00240 
+0000BE B6F4           00241                 btfsc   PRODH,3                 ;bit11
+0000C0 0F02           00242                 addlw   2
+                      00243 
+0000C2 B8F4           00244                 btfsc   PRODH,4                 ;bit12
+0000C4 0F04           00245                 addlw   4
+                      00246 
+0000C6 BAF4           00247                 btfsc   PRODH,5                 ;bit13
+0000C8 0F08           00248                 addlw   8
+                      00249 
+0000CA BCF4           00250                 btfsc   PRODH,6                 ;bit14
+0000CC 0F06           00251                 addlw   6
+                      00252 
+0000CE BEF4           00253                 btfsc   PRODH,7                 ;bit15
+0000D0 0F02           00254                 addlw   2
+                      00255 
+0000D2 6A00           00256                 clrf    digits+4                ;setup for carry into 10000's
+0000D4 0FF6           00257 @7:             addlw   -10
+0000D6 E300           00258                 bnc     @8
+0000D8 2A00           00259                 incf    digits+4,f
+0000DA D000           00260                 bra     @7
+                      00261 
+0000DC 0F0A           00262 @8:             addlw   10
+0000DE 6E00           00263                 movwf   digits+3
+                      00264 
+                      00265 ;       calculate digit 4
+                      00266 
+0000E0 5000           00267                 movf    digits+4,w
+                      00268 
+0000E2 BCF4           00269                 btfsc   PRODH,6                 ;bit14
+0000E4 0F01           00270                 addlw   1
+                      00271 
+0000E6 BEF4           00272                 btfsc   PRODH,7                 ;bit15
+0000E8 0F03           00273                 addlw   3
+                      00274 
+0000EA 0FF6           00275 @9:             addlw   -10
+0000EC E200           00276                 bc      @9
+                      00277 
+0000EE 0F0A           00278                 addlw   10
+                      00279 ;               movwf   digits+4
+                      00280 
+                      00281 ;               movf    digits+4,w
+0000F0 E100           00282                 bnz     @11
+0000F2 5000           00283                 movf    digits+3,w
+0000F4 E100           00284                 bnz     @12
+0000F6 5000           00285                 movf    digits+2,w
+0000F8 E100           00286                 bnz     @13
+0000FA 5000           00287                 movf    digits+1,w
+0000FC E100           00288                 bnz     @14
+0000FE D000           00289                 bra     @15
+                      00290 
+000100 0F30           00291 @11:            addlw   0x30
+000102 6EEE           00292                 movwf   POSTINC0
+                      00293 
+000104 5000           00294                 movf    digits+3,w
+000106 0F30           00295 @12:            addlw   0x30
+000108 6EEE           00296                 movwf   POSTINC0
+                      00297 
+00010A 5000           00298                 movf    digits+2,w
+00010C 0F30           00299 @13:            addlw   0x30
+00010E 6EEE           00300                 movwf   POSTINC0
+                      00301 
+000110 5000           00302                 movf    digits+1,w
+000112 0F30           00303 @14:            addlw   0x30
+000114 6EEE           00304                 movwf   POSTINC0
+                      00305 
+000116 5000           00306 @15:            movf    digits+0,w
+000118 0F30           00307                 addlw   0x30
+00011A 6EEE           00308                 movwf   POSTINC0
+                      00309 
+00011C 0012           00310                 return
+                      00311 
+                      00312                 end
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

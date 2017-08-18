@@ -1,0 +1,378 @@
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:27:36 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f2220
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _adc_read
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _PORTAbits
+                      00021         extern  _PORTBbits
+                      00022         extern  _PORTCbits
+                      00023         extern  _LATAbits
+                      00024         extern  _LATBbits
+                      00025         extern  _LATCbits
+                      00026         extern  _TRISAbits
+                      00027         extern  _TRISBbits
+                      00028         extern  _TRISCbits
+                      00029         extern  _OSCTUNEbits
+                      00030         extern  _PIE1bits
+                      00031         extern  _PIR1bits
+                      00032         extern  _IPR1bits
+                      00033         extern  _PIE2bits
+                      00034         extern  _PIR2bits
+                      00035         extern  _IPR2bits
+                      00036         extern  _EECON1bits
+                      00037         extern  _RCSTAbits
+                      00038         extern  _TXSTAbits
+                      00039         extern  _T3CONbits
+                      00040         extern  _CMCONbits
+                      00041         extern  _CVRCONbits
+                      00042         extern  _CCP2CONbits
+                      00043         extern  _CCP1CONbits
+                      00044         extern  _ADCON2bits
+                      00045         extern  _ADCON1bits
+                      00046         extern  _ADCON0bits
+                      00047         extern  _SSPCON2bits
+                      00048         extern  _SSPCON1bits
+                      00049         extern  _SSPSTATbits
+                      00050         extern  _T2CONbits
+                      00051         extern  _T1CONbits
+                      00052         extern  _RCONbits
+                      00053         extern  _WDTCONbits
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054         extern  _LVDCONbits
+                      00055         extern  _OSCCONbits
+                      00056         extern  _T0CONbits
+                      00057         extern  _STATUSbits
+                      00058         extern  _INTCON3bits
+                      00059         extern  _INTCON2bits
+                      00060         extern  _INTCONbits
+                      00061         extern  _STKPTRbits
+                      00062         extern  _PORTA
+                      00063         extern  _PORTB
+                      00064         extern  _PORTC
+                      00065         extern  _LATA
+                      00066         extern  _LATB
+                      00067         extern  _LATC
+                      00068         extern  _TRISA
+                      00069         extern  _TRISB
+                      00070         extern  _TRISC
+                      00071         extern  _OSCTUNE
+                      00072         extern  _PIE1
+                      00073         extern  _PIR1
+                      00074         extern  _IPR1
+                      00075         extern  _PIE2
+                      00076         extern  _PIR2
+                      00077         extern  _IPR2
+                      00078         extern  _EECON1
+                      00079         extern  _EECON2
+                      00080         extern  _EEDATA
+                      00081         extern  _EEADR
+                      00082         extern  _RCSTA
+                      00083         extern  _TXSTA
+                      00084         extern  _TXREG
+                      00085         extern  _RCREG
+                      00086         extern  _SPBRG
+                      00087         extern  _T3CON
+                      00088         extern  _TMR3L
+                      00089         extern  _TMR3H
+                      00090         extern  _CMCON
+                      00091         extern  _CVRCON
+                      00092         extern  _CCP2CON
+                      00093         extern  _CCPR2L
+                      00094         extern  _CCPR2H
+                      00095         extern  _CCP1CON
+                      00096         extern  _CCPR1L
+                      00097         extern  _CCPR1H
+                      00098         extern  _ADCON2
+                      00099         extern  _ADCON1
+                      00100         extern  _ADCON0
+                      00101         extern  _ADRESL
+                      00102         extern  _ADRESH
+                      00103         extern  _SSPCON2
+                      00104         extern  _SSPCON1
+                      00105         extern  _SSPSTAT
+                      00106         extern  _SSPADD
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107         extern  _SSPBUF
+                      00108         extern  _T2CON
+                      00109         extern  _PR2
+                      00110         extern  _TMR2
+                      00111         extern  _T1CON
+                      00112         extern  _TMR1L
+                      00113         extern  _TMR1H
+                      00114         extern  _RCON
+                      00115         extern  _WDTCON
+                      00116         extern  _LVDCON
+                      00117         extern  _OSCCON
+                      00118         extern  _T0CON
+                      00119         extern  _TMR0L
+                      00120         extern  _TMR0H
+                      00121         extern  _STATUS
+                      00122         extern  _FSR2L
+                      00123         extern  _FSR2H
+                      00124         extern  _PLUSW2
+                      00125         extern  _PREINC2
+                      00126         extern  _POSTDEC2
+                      00127         extern  _POSTINC2
+                      00128         extern  _INDF2
+                      00129         extern  _BSR
+                      00130         extern  _FSR1L
+                      00131         extern  _FSR1H
+                      00132         extern  _PLUSW1
+                      00133         extern  _PREINC1
+                      00134         extern  _POSTDEC1
+                      00135         extern  _POSTINC1
+                      00136         extern  _INDF1
+                      00137         extern  _WREG
+                      00138         extern  _FSR0L
+                      00139         extern  _FSR0H
+                      00140         extern  _PLUSW0
+                      00141         extern  _PREINC0
+                      00142         extern  _POSTDEC0
+                      00143         extern  _POSTINC0
+                      00144         extern  _INDF0
+                      00145         extern  _INTCON3
+                      00146         extern  _INTCON2
+                      00147         extern  _INTCON
+                      00148         extern  _PRODL
+                      00149         extern  _PRODH
+                      00150         extern  _TABLAT
+                      00151         extern  _TBLPTRL
+                      00152         extern  _TBLPTRH
+                      00153         extern  _TBLPTRU
+                      00154         extern  _PCL
+                      00155         extern  _PCLATH
+                      00156         extern  _PCLATU
+                      00157         extern  _STKPTR
+                      00158         extern  _TOSL
+                      00159         extern  _TOSH
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160         extern  _TOSU
+                      00161 
+                      00162 ;--------------------------------------------------------
+                      00163 ; global & static initialisations
+                      00164 ;--------------------------------------------------------
+                      00165 ; I code from now on!
+                      00166 ; ; Starting pCode block
+                      00167 ; ;ic:1:  _entry($2) :
+                      00168 ; ;ic:2:        proc _adc_read [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( ) fixed}
+                      00169 S_adcread__adc_read     code
+000000                00170 _adc_read:
+                      00171 ; ;ic:3: inline
+000000 C000 F000      00172         movff _ADRESH, _PRODL
+000004 5000           00173         movf _ADRESL, w
+000006 0012           00174         return
+                      00175         
+                      00176 ; ;ic:4:  _return($1) :
+                      00177 ; ;ic:5:        eproc _adc_read [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int function ( ) fixed}
+                      00178 
+                      00179 
+                      00180 ; Statistics:
+                      00181 ; code size:        8 (0x0008) bytes ( 0.01%)
+                      00182 ;                   4 (0x0004) words
+                      00183 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00184 ; access size:      0 (0x0000) bytes
+                      00185 
+                      00186 
+                      00187         end
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+_ADCON0                           00000000
+_ADCON0bits                       00000000
+_ADCON1                           00000000
+_ADCON1bits                       00000000
+_ADCON2                           00000000
+_ADCON2bits                       00000000
+_ADRESH                           00000000
+_ADRESL                           00000000
+_BSR                              00000000
+_CCP1CON                          00000000
+_CCP1CONbits                      00000000
+_CCP2CON                          00000000
+_CCP2CONbits                      00000000
+_CCPR1H                           00000000
+_CCPR1L                           00000000
+_CCPR2H                           00000000
+_CCPR2L                           00000000
+_CMCON                            00000000
+_CMCONbits                        00000000
+_CVRCON                           00000000
+_CVRCONbits                       00000000
+_EEADR                            00000000
+_EECON1                           00000000
+_EECON1bits                       00000000
+_EECON2                           00000000
+_EEDATA                           00000000
+_FSR0H                            00000000
+_FSR0L                            00000000
+_FSR1H                            00000000
+_FSR1L                            00000000
+_FSR2H                            00000000
+_FSR2L                            00000000
+_INDF0                            00000000
+_INDF1                            00000000
+_INDF2                            00000000
+_INTCON                           00000000
+_INTCON2                          00000000
+_INTCON2bits                      00000000
+_INTCON3                          00000000
+_INTCON3bits                      00000000
+_INTCONbits                       00000000
+_IPR1                             00000000
+_IPR1bits                         00000000
+_IPR2                             00000000
+_IPR2bits                         00000000
+_LATA                             00000000
+_LATAbits                         00000000
+_LATB                             00000000
+_LATBbits                         00000000
+_LATC                             00000000
+_LATCbits                         00000000
+_LVDCON                           00000000
+_LVDCONbits                       00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  6
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_OSCCON                           00000000
+_OSCCONbits                       00000000
+_OSCTUNE                          00000000
+_OSCTUNEbits                      00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCLATU                           00000000
+_PIE1                             00000000
+_PIE1bits                         00000000
+_PIE2                             00000000
+_PIE2bits                         00000000
+_PIR1                             00000000
+_PIR1bits                         00000000
+_PIR2                             00000000
+_PIR2bits                         00000000
+_PLUSW0                           00000000
+_PLUSW1                           00000000
+_PLUSW2                           00000000
+_PORTA                            00000000
+_PORTAbits                        00000000
+_PORTB                            00000000
+_PORTBbits                        00000000
+_PORTC                            00000000
+_PORTCbits                        00000000
+_POSTDEC0                         00000000
+_POSTDEC1                         00000000
+_POSTDEC2                         00000000
+_POSTINC0                         00000000
+_POSTINC1                         00000000
+_POSTINC2                         00000000
+_PR2                              00000000
+_PREINC0                          00000000
+_PREINC1                          00000000
+_PREINC2                          00000000
+_PRODH                            00000000
+_PRODL                            00000000
+_RCON                             00000000
+_RCONbits                         00000000
+_RCREG                            00000000
+_RCSTA                            00000000
+_RCSTAbits                        00000000
+_SPBRG                            00000000
+_SSPADD                           00000000
+_SSPBUF                           00000000
+_SSPCON1                          00000000
+_SSPCON1bits                      00000000
+_SSPCON2                          00000000
+_SSPCON2bits                      00000000
+_SSPSTAT                          00000000
+_SSPSTATbits                      00000000
+_STATUS                           00000000
+_STATUSbits                       00000000
+_STKPTR                           00000000
+gpasm-0.14.1 (Aug 18 2017)   libio18f2220_a-adcread.asm8-18-2017  19:27:36          PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_STKPTRbits                       00000000
+_T0CON                            00000000
+_T0CONbits                        00000000
+_T1CON                            00000000
+_T1CONbits                        00000000
+_T2CON                            00000000
+_T2CONbits                        00000000
+_T3CON                            00000000
+_T3CONbits                        00000000
+_TABLAT                           00000000
+_TBLPTRH                          00000000
+_TBLPTRL                          00000000
+_TBLPTRU                          00000000
+_TMR0H                            00000000
+_TMR0L                            00000000
+_TMR1H                            00000000
+_TMR1L                            00000000
+_TMR2                             00000000
+_TMR3H                            00000000
+_TMR3L                            00000000
+_TOSH                             00000000
+_TOSL                             00000000
+_TOSU                             00000000
+_TRISA                            00000000
+_TRISAbits                        00000000
+_TRISB                            00000000
+_TRISBbits                        00000000
+_TRISC                            00000000
+_TRISCbits                        00000000
+_TXREG                            00000000
+_TXSTA                            00000000
+_TXSTAbits                        00000000
+_WDTCON                           00000000
+_WDTCONbits                       00000000
+_WREG                             00000000
+__18F2220                         00000001
+_adc_read                         00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

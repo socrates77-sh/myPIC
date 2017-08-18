@@ -1,0 +1,134 @@
+gpasm-0.14.1 (Aug 18 2017)   delay/delay1mtcy.S 8-18-2017  19:21:33          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------------------------
+                      00002 ;  delay1mtcy.S
+                      00003 ;
+                      00004 ;  Copyright (C) 2005, Vangelis Rokas <vrokas at otenet.gr>
+                      00005 ;
+                      00006 ;  This library is free software; you can redistribute it and/or modify it
+                      00007 ;  under the terms of the GNU General Public License as published by the
+                      00008 ;  Free Software Foundation; either version 2, or (at your option) any
+                      00009 ;  later version.
+                      00010 ;
+                      00011 ;  This library is distributed in the hope that it will be useful,
+                      00012 ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                      00013 ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                      00014 ;  GNU General Public License for more details.
+                      00015 ;
+                      00016 ;  You should have received a copy of the GNU General Public License 
+                      00017 ;  along with this library; see the file COPYING. If not, write to the
+                      00018 ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                      00019 ;   MA 02110-1301, USA.
+                      00020 ;
+                      00021 ;  As a special exception, if you link this library with other files,
+                      00022 ;  some of which are compiled with SDCC, to produce an executable,
+                      00023 ;  this library does not by itself cause the resulting executable to
+                      00024 ;  be covered by the GNU General Public License. This exception does
+                      00025 ;  not however invalidate any other reasons why the executable file
+                      00026 ;  might be covered by the GNU General Public License.
+                      00027 ;--------------------------------------------------------------------------
+                      00028 
+                      00029         include <p18fxxx.inc>
+                      00001 ;--------------------------------------------------------------------------
+                      00002 ;  p18fxxx.inc
+                      00003 ;
+                      00004 ;  Copyright (C) 2005, Vangelis Rokas <vrokas AT otenet.gr>
+                      00005 ;
+                      00006 ;  This library is free software; you can redistribute it and/or modify it
+                      00007 ;  under the terms of the GNU General Public License as published by the
+                      00008 ;  Free Software Foundation; either version 2, or (at your option) any
+                      00009 ;  later version.
+                      00010 ;
+                      00011 ;  This library is distributed in the hope that it will be useful,
+                      00012 ;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+                      00013 ;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+                      00014 ;  GNU General Public License for more details.
+                      00015 ;
+                      00016 ;  You should have received a copy of the GNU General Public License 
+                      00017 ;  along with this library; see the file COPYING. If not, write to the
+                      00018 ;  Free Software Foundation, 51 Franklin Street, Fifth Floor, Boston,
+                      00019 ;   MA 02110-1301, USA.
+                      00020 ;
+                      00021 ;  As a special exception, if you link this library with other files,
+                      00022 ;  some of which are compiled with SDCC, to produce an executable,
+                      00023 ;  this library does not by itself cause the resulting executable to
+                      00024 ;  be covered by the GNU General Public License. This exception does
+gpasm-0.14.1 (Aug 18 2017)   delay/delay1mtcy.S 8-18-2017  19:21:33          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00025 ;  not however invalidate any other reasons why the executable file
+                      00026 ;  might be covered by the GNU General Public License.
+                      00027 ;--------------------------------------------------------------------------
+                      00028 
+                      00029 #ifndef __P18FXXX__
+                      00030 #define __P18FXXX__     1
+                      00031 
+                      00032 
+                      00033                 list    r=dec, n=96, st=off, mm=off
+                      00034 
+                      00113                 list
+                      00114 #endif
+                      00030 
+                      00031         extern  _delay10tcy
+                      00032         extern  _delay100tcy
+                      00033         extern  _delay10ktcy
+                      00034 
+                      00035         global  _delay1mtcy
+                      00036     
+                      00037         code
+                      00038 
+000000                00039 _delay1mtcy:
+                      00040         ; polynomial for 1mtcy delay is f(x) = 100000 * (x-1) + 100000
+000000 06E8           00041         decf    WREG, f
+                      00042     
+000002 6EE5           00043         movwf   POSTDEC1
+000004 0E63           00044         movlw   99
+000006 EC00 F000      00045         call    _delay10ktcy
+                      00046 
+00000A 0E63           00047         movlw   99
+00000C EC00 F000      00048         call    _delay100tcy
+                      00049         
+000010 0E09           00050         movlw   9
+000012 EC00 F000      00051         call    _delay10tcy
+                      00052 
+000016 50E4           00053         movf    PREINC1, w
+                      00054  
+000018 E000           00055         bz      @delay1m_end
+00001A D000           00056         bra     $+2
+                      00057     
+00001C                00058 @delay1m_loop:
+00001C 6EE5           00059         movwf    POSTDEC1
+                      00060 
+00001E 0E63           00061         movlw   99
+000020 EC00 F000      00062         call    _delay10ktcy
+                      00063         
+000024 0E63           00064         movlw   99
+000026 EC00 F000      00065         call    _delay100tcy
+                      00066         
+00002A 0E09           00067         movlw   9
+00002C EC00 F000      00068         call    _delay10tcy
+                      00069 
+000030 D000           00070         bra     $+2
+000032 D000           00071         bra     $+2
+000034 0000           00072         nop                         
+000036 50E4           00073         movf    PREINC1, w
+000038 2EE8           00074         decfsz  WREG, f
+00003A D000           00075         bra     @delay1m_loop
+                      00076 
+00003C                00077 @delay1m_end:
+00003C 0012           00078         return
+                      00079 
+                      00080         end
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

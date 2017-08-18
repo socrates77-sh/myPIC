@@ -1,0 +1,260 @@
+gpasm-0.14.1 (Aug 18 2017)   memcpy.asm         8-18-2017  19:22:06          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:22:06 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _memcpy
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  __gptrget1
+                      00021         extern  __gptrput1
+                      00022 
+                      00023 ;--------------------------------------------------------
+                      00024 ;       Equates to used internal registers
+                      00025 ;--------------------------------------------------------
+  00000FD8            00026 STATUS  equ     0xfd8
+  00000FE8            00027 WREG    equ     0xfe8
+  00000FE9            00028 FSR0L   equ     0xfe9
+  00000FE1            00029 FSR1L   equ     0xfe1
+  00000FD9            00030 FSR2L   equ     0xfd9
+  00000FE5            00031 POSTDEC1        equ     0xfe5
+  00000FE4            00032 PREINC1 equ     0xfe4
+  00000FDB            00033 PLUSW2  equ     0xfdb
+  00000FF3            00034 PRODL   equ     0xff3
+  00000FF4            00035 PRODH   equ     0xff4
+                      00036 
+                      00037 
+                      00038 ; Internal registers
+                      00039 .registers      udata_ovr       0x0000
+000000                00040 r0x00   res     1
+000001                00041 r0x01   res     1
+000002                00042 r0x02   res     1
+000003                00043 r0x03   res     1
+000004                00044 r0x04   res     1
+000005                00045 r0x05   res     1
+000006                00046 r0x06   res     1
+000007                00047 r0x07   res     1
+000008                00048 r0x08   res     1
+000009                00049 r0x09   res     1
+00000A                00050 r0x0a   res     1
+00000B                00051 r0x0b   res     1
+00000C                00052 r0x0c   res     1
+                      00053 
+gpasm-0.14.1 (Aug 18 2017)   memcpy.asm         8-18-2017  19:22:06          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ;--------------------------------------------------------
+                      00055 ; global & static initialisations
+                      00056 ;--------------------------------------------------------
+                      00057 ; I code from now on!
+                      00058 ; ; Starting pCode block
+                      00059 ; ;ic:1:  _entry($5) :
+                      00060 ; ;ic:2:        proc _memcpy [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void generic* function ( void generic* fixed, void generic* fixed, unsigned-int fixed) fixed}
+                      00061 S_memcpy__memcpy        code
+000000                00062 _memcpy:
+                      00063 ;       .line   32; string/memcpy.c     memcpy (void *dst, void *src, size_t acount) 
+000000 CFD9 FFE5      00064         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00065         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00066         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00067         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00068         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00069         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00070         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00071         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00072         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00073         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00074         MOVFF   r0x08, POSTDEC1
+00002C C000 FFE5      00075         MOVFF   r0x09, POSTDEC1
+000030 C000 FFE5      00076         MOVFF   r0x0a, POSTDEC1
+000034 C000 FFE5      00077         MOVFF   r0x0b, POSTDEC1
+000038 C000 FFE5      00078         MOVFF   r0x0c, POSTDEC1
+                      00079 ; ;ic:3: iTemp0 [k2 lr3:19 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{void generic* fixed}{ sir@ _memcpy_dst_1_28}[r0x00 r0x01 r0x02 ] = recv _memcpy [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void generic* function ( void generic* fixed, void generic* fixed, unsigned-int fixed) fixed}
+00003C 0E02           00080         MOVLW   0x02
+00003E CFDB F000      00081         MOVFF   PLUSW2, r0x00
+000042 0E03           00082         MOVLW   0x03
+000044 CFDB F000      00083         MOVFF   PLUSW2, r0x01
+000048 0E04           00084         MOVLW   0x04
+00004A CFDB F000      00085         MOVFF   PLUSW2, r0x02
+                      00086 ; ;ic:4: iTemp1 [k4 lr4:7 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{void generic* fixed}{ sir@ _memcpy_src_1_28}[r0x03 r0x04 r0x05 ] = recv _memcpy [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void generic* function ( void generic* fixed, void generic* fixed, unsigned-int fixed) fixed}
+00004E 0E05           00087         MOVLW   0x05
+000050 CFDB F000      00088         MOVFF   PLUSW2, r0x03
+000054 0E06           00089         MOVLW   0x06
+000056 CFDB F000      00090         MOVFF   PLUSW2, r0x04
+00005A 0E07           00091         MOVLW   0x07
+00005C CFDB F000      00092         MOVFF   PLUSW2, r0x05
+                      00093 ; ;ic:5: iTemp8 [k15 lr5:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = recv _memcpy [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void generic* function ( void generic* fixed, void generic* fixed, unsigned-int fixed) fixed}
+000060 0E08           00094         MOVLW   0x08
+000062 CFDB F000      00095         MOVFF   PLUSW2, r0x06
+000066 0E09           00096         MOVLW   0x09
+000068 CFDB F000      00097         MOVFF   PLUSW2, r0x07
+                      00098 ; ;ic:6:        iTemp10 [k17 lr6:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x08 r0x09 r0x0a ] = (char generic* fixed)iTemp0 [k2 lr3:19 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{void generic* fixed}{ sir@ _memcpy_dst_1_28}[r0x00 r0x01 r0x02 ]
+                      00099 ;       .line   34; string/memcpy.c     char *d = dst;
+00006C 5000           00100         MOVF    r0x02, W
+00006E 6E00           00101         MOVWF   r0x0a
+000070 5000           00102         MOVF    r0x01, W
+000072 6E00           00103         MOVWF   r0x09
+000074 5000           00104         MOVF    r0x00, W
+                      00105 ;       .line   35; string/memcpy.c     char *s = src;
+000076 6E00           00106         MOVWF   r0x08
+gpasm-0.14.1 (Aug 18 2017)   memcpy.asm         8-18-2017  19:22:06          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ; ;ic:7:        iTemp12 [k19 lr7:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] = (char generic* fixed)iTemp1 [k4 lr4:7 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{void generic* fixed}{ sir@ _memcpy_src_1_28}[r0x03 r0x04 r0x05 ]
+                      00108 ; #     MOVF    r0x05, W
+                      00109 ; #     MOVWF   r0x05
+                      00110 ; #     MOVF    r0x05, W
+                      00111 ; #     MOVF    r0x04, W
+                      00112 ; #     MOVF    r0x04, W
+                      00113 ; #     MOVWF   r0x04
+                      00114 ; #     MOVF    r0x04, W
+                      00115 ; #     MOVF    r0x03, W
+                      00116 ; #     MOVF    r0x03, W
+                      00117 ; #     MOVWF   r0x03
+                      00118 ; #;;ic:9:  _whilecontinue_0($1) :
+                      00119 ; #;;ic:10:     iTemp7 [k14 lr10:12 so:0]{ ia0 a2p0 re0 rm0 nos1 ru0 dp0}{unsigned-int fixed}[r0x0b r0x0c ] := iTemp8 [k15 lr5:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ]
+000078                00120 _00105_DS_:
+                      00121 ;       .line   40; string/memcpy.c     while (acount--)
+000078 C000 F000      00122         MOVFF   r0x06, r0x0b
+00007C C000 F000      00123         MOVFF   r0x07, r0x0c
+                      00124 ; ;ic:11:       iTemp8 [k15 lr5:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] = iTemp8 [k15 lr5:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x06 r0x07 ] - 0x1 {const-unsigned-char literal}
+000080 0EFF           00125         MOVLW   0xff
+000082 2600           00126         ADDWF   r0x06, F
+000084 2200           00127         ADDWFC  r0x07, F
+                      00128 ; ;ic:12:       if iTemp7 [k14 lr10:12 so:0]{ ia0 a2p0 re0 rm0 nos1 ru0 dp0}{unsigned-int fixed}[r0x0b r0x0c ] == 0 goto _whilebreak_0($3)
+000086 5000           00129         MOVF    r0x0b, W
+000088 1000           00130         IORWF   r0x0c, W
+00008A E000           00131         BZ      _00107_DS_
+                      00132 ; ;ic:13:       iTemp13 [k20 lr13:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0b ] = @[iTemp12 [k19 lr7:17 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] + 0x0 {const-unsigned-char literal}]
+                      00133 ;       .line   41; string/memcpy.c     *d++ = *s++;
+00008C C000 FFE9      00134         MOVFF   r0x03, FSR0L
+000090 C000 FFF3      00135         MOVFF   r0x04, PRODL
+000094 5000           00136         MOVF    r0x05, W
+000096 EC00 F000      00137         CALL    __gptrget1
+00009A 6E00           00138         MOVWF   r0x0b
+                      00139 ; ;ic:14:       iTemp12 [k19 lr7:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] = iTemp12 [k19 lr7:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x03 r0x04 r0x05 ] + 0x1 {const-unsigned-char literal}
+00009C 2A00           00140         INCF    r0x03, F
+00009E E300           00141         BNC     _00115_DS_
+0000A0 4A00           00142         INFSNZ  r0x04, F
+0000A2 2A00           00143         INCF    r0x05, F
+                      00144 ; ;ic:15:       *(iTemp10 [k17 lr6:17 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x08 r0x09 r0x0a ]) := iTemp13 [k20 lr13:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0b ]
+0000A4                00145 _00115_DS_:
+0000A4 C000 FFE5      00146         MOVFF   r0x0b, POSTDEC1
+0000A8 C000 FFE9      00147         MOVFF   r0x08, FSR0L
+0000AC C000 FFF3      00148         MOVFF   r0x09, PRODL
+0000B0 5000           00149         MOVF    r0x0a, W
+0000B2 EC00 F000      00150         CALL    __gptrput1
+                      00151 ; ;ic:16:       iTemp10 [k17 lr6:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x08 r0x09 r0x0a ] = iTemp10 [k17 lr6:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* fixed}[r0x08 r0x09 r0x0a ] + 0x1 {const-unsigned-char literal}
+0000B6 2A00           00152         INCF    r0x08, F
+0000B8 E300           00153         BNC     _00105_DS_
+0000BA 4A00           00154         INFSNZ  r0x09, F
+0000BC 2A00           00155         INCF    r0x0a, F
+                      00156 ; ;ic:17:        goto _whilecontinue_0($1)
+0000BE                00157 _00116_DS_:
+0000BE D000           00158         BRA     _00105_DS_
+                      00159 ; ;ic:18:  _whilebreak_0($3) :
+gpasm-0.14.1 (Aug 18 2017)   memcpy.asm         8-18-2017  19:22:06          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160 ; ;ic:19:       ret iTemp0 [k2 lr3:19 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{void generic* fixed}{ sir@ _memcpy_dst_1_28}[r0x00 r0x01 r0x02 ]
+0000C0                00161 _00107_DS_:
+                      00162 ;       .line   43; string/memcpy.c     return dst;
+0000C0 C000 FFF4      00163         MOVFF   r0x02, PRODH
+0000C4 C000 FFF3      00164         MOVFF   r0x01, PRODL
+0000C8 5000           00165         MOVF    r0x00, W
+                      00166 ; ;ic:20:  _return($4) :
+                      00167 ; ;ic:21:       eproc _memcpy [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void generic* function ( void generic* fixed, void generic* fixed, unsigned-int fixed) fixed}
+0000CA CFE4 F000      00168         MOVFF   PREINC1, r0x0c
+0000CE CFE4 F000      00169         MOVFF   PREINC1, r0x0b
+0000D2 CFE4 F000      00170         MOVFF   PREINC1, r0x0a
+0000D6 CFE4 F000      00171         MOVFF   PREINC1, r0x09
+0000DA CFE4 F000      00172         MOVFF   PREINC1, r0x08
+0000DE CFE4 F000      00173         MOVFF   PREINC1, r0x07
+0000E2 CFE4 F000      00174         MOVFF   PREINC1, r0x06
+0000E6 CFE4 F000      00175         MOVFF   PREINC1, r0x05
+0000EA CFE4 F000      00176         MOVFF   PREINC1, r0x04
+0000EE CFE4 F000      00177         MOVFF   PREINC1, r0x03
+0000F2 CFE4 F000      00178         MOVFF   PREINC1, r0x02
+0000F6 CFE4 F000      00179         MOVFF   PREINC1, r0x01
+0000FA CFE4 F000      00180         MOVFF   PREINC1, r0x00
+0000FE CFE4 FFD9      00181         MOVFF   PREINC1, FSR2L
+000102 0012           00182         RETURN  
+                      00183 
+                      00184 
+                      00185 
+                      00186 ; Statistics:
+                      00187 ; code size:      260 (0x0104) bytes ( 0.20%)
+                      00188 ;                 130 (0x0082) words
+                      00189 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00190 ; access size:     13 (0x000d) bytes
+                      00191 
+                      00192 
+                      00193         end
+gpasm-0.14.1 (Aug 18 2017)   memcpy.asm         8-18-2017  19:22:06          PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODH                             00000FF4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00105_DS_                        00000078
+_00107_DS_                        000000C0
+_00115_DS_                        000000A4
+_00116_DS_                        000000BE
+__18F452                          00000001
+__gptrget1                        00000000
+__gptrput1                        00000000
+_memcpy                           00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+r0x09                             00000009
+r0x0a                             0000000A
+r0x0b                             0000000B
+r0x0c                             0000000C
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

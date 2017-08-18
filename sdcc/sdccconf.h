@@ -108,7 +108,7 @@
 #define OPT_DISABLE_AVR 1
 
 /* XXX */
-#define OPT_DISABLE_DEVICE_LIB 1
+#define OPT_DISABLE_DEVICE_LIB 0
 
 /* XXX */
 #define OPT_DISABLE_DS390 1
@@ -126,10 +126,10 @@
 #define OPT_DISABLE_MCS51 1
 
 /* XXX */
-#define OPT_DISABLE_PACKIHX 0
+#define OPT_DISABLE_PACKIHX 1
 
 /* XXX */
-#define OPT_DISABLE_PIC14 0
+#define OPT_DISABLE_PIC14 1
 
 /* XXX */
 #define OPT_DISABLE_PIC16 0
@@ -147,7 +147,7 @@
 #define OPT_DISABLE_SDBINUTILS 1
 
 /* XXX */
-#define OPT_DISABLE_SDCDB 0
+#define OPT_DISABLE_SDCDB 1
 
 /* XXX */
 #define OPT_DISABLE_SDCPP 0

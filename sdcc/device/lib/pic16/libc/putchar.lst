@@ -1,0 +1,86 @@
+gpasm-0.14.1 (Aug 18 2017)   putchar.asm        8-18-2017  19:21:38          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:37 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _putchar
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _stdin
+                      00021         extern  _stdout
+                      00022 
+                      00023 ;--------------------------------------------------------
+                      00024 ;       Equates to used internal registers
+                      00025 ;--------------------------------------------------------
+  00000FE1            00026 FSR1L   equ     0xfe1
+  00000FD9            00027 FSR2L   equ     0xfd9
+  00000FE5            00028 POSTDEC1        equ     0xfe5
+  00000FE4            00029 PREINC1 equ     0xfe4
+                      00030 
+                      00031 ;--------------------------------------------------------
+                      00032 ; global & static initialisations
+                      00033 ;--------------------------------------------------------
+                      00034 ; I code from now on!
+                      00035 ; ; Starting pCode block
+                      00036 ; ;ic:1:  _entry($2) :
+                      00037 ; ;ic:2:        proc _putchar [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+                      00038 S_putchar__putchar      code
+000000                00039 _putchar:
+                      00040 ; ;ic:3:  _return($1) :
+                      00041 ; ;ic:4:        eproc _putchar [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+                      00042 ;       .line   36; stdio/putchar.c     (void)c;
+000000 0012           00043         RETURN  
+                      00044 
+                      00045 
+                      00046 
+                      00047 ; Statistics:
+                      00048 ; code size:        2 (0x0002) bytes ( 0.00%)
+                      00049 ;                   1 (0x0001) words
+                      00050 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00051 ; access size:      0 (0x0000) bytes
+                      00052 
+                      00053 
+gpasm-0.14.1 (Aug 18 2017)   putchar.asm        8-18-2017  19:21:38          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054         end
+gpasm-0.14.1 (Aug 18 2017)   putchar.asm        8-18-2017  19:21:38          PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+__18F452                          00000001
+_putchar                          00000000
+_stdin                            00000000
+_stdout                           00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,52 @@
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-dummy.asm8-18-2017  19:26:55          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:26:54 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f14k50
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015 
+                      00016 udata_dummy_0   udata
+000000                00017 ___foo  res     2
+                      00018 
+                      00019 ;--------------------------------------------------------
+                      00020 ; global & static initialisations
+                      00021 ;--------------------------------------------------------
+                      00022 ; I code from now on!
+                      00023 
+                      00024 
+                      00025 ; Statistics:
+                      00026 ; code size:        0 (0x0000) bytes ( 0.00%)
+                      00027 ;                   0 (0x0000) words
+                      00028 ; udata size:       2 (0x0002) bytes ( 0.39%)
+                      00029 ; access size:      0 (0x0000) bytes
+                      00030 
+                      00031 
+                      00032         end
+gpasm-0.14.1 (Aug 18 2017)   libio18f14k50_a-dummy.asm8-18-2017  19:26:55          PAGE  2
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+__18F14K50                        00000001
+___foo                            00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

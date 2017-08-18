@@ -1,0 +1,99 @@
+elf.lo: elf.c sysdep.h config.h ../include/ansidecl.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stddef.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdio.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/_mingw.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stdarg.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/types.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/stat.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/errno.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/string.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/strings.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdlib.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/time.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/time.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/unistd.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/io.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/process.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stdint.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdint.h \
+ ../include/getopt.h ../include/fopen-bin.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/fcntl.h \
+ ../include/filenames.h bfd.h ../include/symcat.h ../include/bfdlink.h \
+ libbfd.h ../include/hashtab.h ../include/ansidecl.h elf-bfd.h \
+ ../include/elf/common.h ../include/elf/external.h \
+ ../include/elf/internal.h ../include/libiberty.h ../include/safe-ctype.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/ctype.h
+
+sysdep.h:
+
+config.h:
+
+../include/ansidecl.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stddef.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdio.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/_mingw.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stdarg.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/types.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/stat.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/errno.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/string.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/strings.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdlib.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/time.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/time.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/unistd.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/io.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/process.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stdint.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdint.h:
+
+../include/getopt.h:
+
+../include/fopen-bin.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/fcntl.h:
+
+../include/filenames.h:
+
+bfd.h:
+
+../include/symcat.h:
+
+../include/bfdlink.h:
+
+libbfd.h:
+
+../include/hashtab.h:
+
+../include/ansidecl.h:
+
+elf-bfd.h:
+
+../include/elf/common.h:
+
+../include/elf/external.h:
+
+../include/elf/internal.h:
+
+../include/libiberty.h:
+
+../include/safe-ctype.h:
+
+c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/ctype.h:

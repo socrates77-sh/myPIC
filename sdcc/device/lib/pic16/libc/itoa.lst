@@ -1,0 +1,237 @@
+gpasm-0.14.1 (Aug 18 2017)   itoa.asm           8-18-2017  19:21:53          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:53 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _uitoa
+                      00016         global  _itoa
+                      00017 
+                      00018 ;--------------------------------------------------------
+                      00019 ; extern variables in this module
+                      00020 ;--------------------------------------------------------
+                      00021         extern  _ultoa
+                      00022         extern  _ltoa
+                      00023 
+                      00024 ;--------------------------------------------------------
+                      00025 ;       Equates to used internal registers
+                      00026 ;--------------------------------------------------------
+  00000FE8            00027 WREG    equ     0xfe8
+  00000FE1            00028 FSR1L   equ     0xfe1
+  00000FD9            00029 FSR2L   equ     0xfd9
+  00000FE5            00030 POSTDEC1        equ     0xfe5
+  00000FE4            00031 PREINC1 equ     0xfe4
+  00000FDB            00032 PLUSW2  equ     0xfdb
+                      00033 
+                      00034 
+                      00035 ; Internal registers
+                      00036 .registers      udata_ovr       0x0000
+000000                00037 r0x00   res     1
+000001                00038 r0x01   res     1
+000002                00039 r0x02   res     1
+000003                00040 r0x03   res     1
+000004                00041 r0x04   res     1
+000005                00042 r0x05   res     1
+000006                00043 r0x06   res     1
+                      00044 
+                      00045 ;--------------------------------------------------------
+                      00046 ; global & static initialisations
+                      00047 ;--------------------------------------------------------
+                      00048 ; I code from now on!
+                      00049 ; ; Starting pCode block
+                      00050 ; ;ic:1:  _entry($2) :
+                      00051 ; ;ic:2:        proc _itoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( int fixed, char near* fixed, unsigned-char fixed) fixed}
+                      00052 S_itoa__itoa    code
+000000                00053 _itoa:
+gpasm-0.14.1 (Aug 18 2017)   itoa.asm           8-18-2017  19:21:53          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ;       .line   36; stdlib/itoa.c       void itoa (int value, __data char *str, unsigned char radix)
+000000 CFD9 FFE5      00055         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00056         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00057         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00058         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00059         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00060         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00061         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00062         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00063         MOVFF   r0x06, POSTDEC1
+                      00064 ; ;ic:3: iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _itoa_value_1_18}[r0x00 r0x01 ] = recv _itoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( int fixed, char near* fixed, unsigned-char fixed) fixed}
+000024 0E02           00065         MOVLW   0x02
+000026 CFDB F000      00066         MOVFF   PLUSW2, r0x00
+00002A 0E03           00067         MOVLW   0x03
+00002C CFDB F000      00068         MOVFF   PLUSW2, r0x01
+                      00069 ; ;ic:4: iTemp1 [k4 lr4:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* fixed}{ sir@ _itoa_str_1_18}[r0x02 r0x03 ] = recv _itoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( int fixed, char near* fixed, unsigned-char fixed) fixed}
+000030 0E04           00070         MOVLW   0x04
+000032 CFDB F000      00071         MOVFF   PLUSW2, r0x02
+000036 0E05           00072         MOVLW   0x05
+000038 CFDB F000      00073         MOVFF   PLUSW2, r0x03
+                      00074 ; ;ic:5: iTemp2 [k6 lr5:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _itoa_radix_1_18}[r0x04 ] = recv _itoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( int fixed, char near* fixed, unsigned-char fixed) fixed}
+00003C 0E06           00075         MOVLW   0x06
+00003E CFDB F000      00076         MOVFF   PLUSW2, r0x04
+                      00077 ; ;ic:6:        iTemp3 [k9 lr6:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x00 r0x01 r0x05 r0x06 ] = (long-int fixed)iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{int fixed}{ sir@ _itoa_value_1_18}[r0x00 r0x01 ]
+                      00078 ;       .line   38; stdlib/itoa.c       ltoa (value, str, radix);
+000042 6AE8           00079         CLRF    WREG
+000044 BE00           00080         BTFSC   r0x01, 7
+000046 0EFF           00081         MOVLW   0xff
+000048 6E00           00082         MOVWF   r0x05
+00004A 6E00           00083         MOVWF   r0x06
+                      00084 ; ;ic:7:        send iTemp3 [k9 lr6:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int fixed}[r0x00 r0x01 r0x05 r0x06 ]{argreg = 1}
+                      00085 ; ;ic:8:        send iTemp1 [k4 lr4:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* fixed}{ sir@ _itoa_str_1_18}[r0x02 r0x03 ]{argreg = 2}
+                      00086 ; ;ic:9:        send iTemp2 [k6 lr5:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _itoa_radix_1_18}[r0x04 ]{argreg = 3}
+                      00087 ; ;ic:10:       iTemp4 [k13 lr10:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _ltoa [k8 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( long-int fixed, char near* fixed, unsigned-char fixed) fixed}
+00004C 5000           00088         MOVF    r0x04, W
+00004E 6EE5           00089         MOVWF   POSTDEC1
+000050 5000           00090         MOVF    r0x03, W
+000052 6EE5           00091         MOVWF   POSTDEC1
+000054 5000           00092         MOVF    r0x02, W
+000056 6EE5           00093         MOVWF   POSTDEC1
+000058 5000           00094         MOVF    r0x06, W
+00005A 6EE5           00095         MOVWF   POSTDEC1
+00005C 5000           00096         MOVF    r0x05, W
+00005E 6EE5           00097         MOVWF   POSTDEC1
+000060 5000           00098         MOVF    r0x01, W
+000062 6EE5           00099         MOVWF   POSTDEC1
+000064 5000           00100         MOVF    r0x00, W
+000066 6EE5           00101         MOVWF   POSTDEC1
+000068 EC00 F000      00102         CALL    _ltoa
+00006C 0E07           00103         MOVLW   0x07
+00006E 26E1           00104         ADDWF   FSR1L, F
+                      00105 ; ;ic:11:  _return($1) :
+                      00106 ; ;ic:12:       eproc _itoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( int fixed, char near* fixed, unsigned-char fixed) fixed}
+gpasm-0.14.1 (Aug 18 2017)   itoa.asm           8-18-2017  19:21:53          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000070 CFE4 F000      00107         MOVFF   PREINC1, r0x06
+000074 CFE4 F000      00108         MOVFF   PREINC1, r0x05
+000078 CFE4 F000      00109         MOVFF   PREINC1, r0x04
+00007C CFE4 F000      00110         MOVFF   PREINC1, r0x03
+000080 CFE4 F000      00111         MOVFF   PREINC1, r0x02
+000084 CFE4 F000      00112         MOVFF   PREINC1, r0x01
+000088 CFE4 F000      00113         MOVFF   PREINC1, r0x00
+00008C CFE4 FFD9      00114         MOVFF   PREINC1, FSR2L
+000090 0012           00115         RETURN  
+                      00116 
+                      00117 ; ; Starting pCode block
+                      00118 ; ;ic:1:  _entry($2) :
+                      00119 ; ;ic:2:        proc _uitoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed, char near* fixed, unsigned-char fixed) fixed}
+                      00120 S_itoa__uitoa   code
+000000                00121 _uitoa:
+                      00122 ;       .line   31; stdlib/itoa.c       void uitoa (unsigned int value, __data char *str, unsigned char radix)
+000000 CFD9 FFE5      00123         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00124         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00125         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00126         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00127         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00128         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00129         MOVFF   r0x04, POSTDEC1
+                      00130 ; ;ic:3: iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _uitoa_value_1_16}[r0x00 r0x01 ] = recv _uitoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed, char near* fixed, unsigned-char fixed) fixed}
+00001C 0E02           00131         MOVLW   0x02
+00001E CFDB F000      00132         MOVFF   PLUSW2, r0x00
+000022 0E03           00133         MOVLW   0x03
+000024 CFDB F000      00134         MOVFF   PLUSW2, r0x01
+                      00135 ; ;ic:4: iTemp1 [k4 lr4:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* fixed}{ sir@ _uitoa_str_1_16}[r0x02 r0x03 ] = recv _uitoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed, char near* fixed, unsigned-char fixed) fixed}
+000028 0E04           00136         MOVLW   0x04
+00002A CFDB F000      00137         MOVFF   PLUSW2, r0x02
+00002E 0E05           00138         MOVLW   0x05
+000030 CFDB F000      00139         MOVFF   PLUSW2, r0x03
+                      00140 ; ;ic:5: iTemp2 [k6 lr5:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _uitoa_radix_1_16}[r0x04 ] = recv _uitoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed, char near* fixed, unsigned-char fixed) fixed}
+000034 0E06           00141         MOVLW   0x06
+000036 CFDB F000      00142         MOVFF   PLUSW2, r0x04
+                      00143 ; ;ic:6:        iTemp3 [k9 lr6:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int fixed}[r0x00 r0x01 r0x05 r0x06 ] = (unsigned-long-int fixed)iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _uitoa_value_1_16}[r0x00 r0x01 ]
+                      00144 ; ;ic:7:        send iTemp3 [k9 lr6:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-long-int fixed}[r0x00 r0x01 r0x05 r0x06 ]{argreg = 1}
+                      00145 ; ;ic:8:        send iTemp1 [k4 lr4:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* fixed}{ sir@ _uitoa_str_1_16}[r0x02 r0x03 ]{argreg = 2}
+                      00146 ; ;ic:9:        send iTemp2 [k6 lr5:9 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _uitoa_radix_1_16}[r0x04 ]{argreg = 3}
+                      00147 ; ;ic:10:       iTemp4 [k13 lr10:10 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _ultoa [k8 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-long-int fixed, char near* fixed, unsigned-char fixed) fixed}
+                      00148 ;       .line   33; stdlib/itoa.c       ultoa (value, str, radix);
+00003A 5000           00149         MOVF    r0x04, W
+00003C 6EE5           00150         MOVWF   POSTDEC1
+00003E 5000           00151         MOVF    r0x03, W
+000040 6EE5           00152         MOVWF   POSTDEC1
+000042 5000           00153         MOVF    r0x02, W
+000044 6EE5           00154         MOVWF   POSTDEC1
+000046 6AE5           00155         CLRF    POSTDEC1
+000048 6AE5           00156         CLRF    POSTDEC1
+00004A 5000           00157         MOVF    r0x01, W
+00004C 6EE5           00158         MOVWF   POSTDEC1
+00004E 5000           00159         MOVF    r0x00, W
+gpasm-0.14.1 (Aug 18 2017)   itoa.asm           8-18-2017  19:21:53          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000050 6EE5           00160         MOVWF   POSTDEC1
+000052 EC00 F000      00161         CALL    _ultoa
+000056 0E07           00162         MOVLW   0x07
+000058 26E1           00163         ADDWF   FSR1L, F
+                      00164 ; ;ic:11:  _return($1) :
+                      00165 ; ;ic:12:       eproc _uitoa [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( unsigned-int fixed, char near* fixed, unsigned-char fixed) fixed}
+00005A CFE4 F000      00166         MOVFF   PREINC1, r0x04
+00005E CFE4 F000      00167         MOVFF   PREINC1, r0x03
+000062 CFE4 F000      00168         MOVFF   PREINC1, r0x02
+000066 CFE4 F000      00169         MOVFF   PREINC1, r0x01
+00006A CFE4 F000      00170         MOVFF   PREINC1, r0x00
+00006E CFE4 FFD9      00171         MOVFF   PREINC1, FSR2L
+000072 0012           00172         RETURN  
+                      00173 
+                      00174 
+                      00175 
+                      00176 ; Statistics:
+                      00177 ; code size:      262 (0x0106) bytes ( 0.20%)
+                      00178 ;                 131 (0x0083) words
+                      00179 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00180 ; access size:      7 (0x0007) bytes
+                      00181 
+                      00182 
+                      00183         end
+gpasm-0.14.1 (Aug 18 2017)   itoa.asm           8-18-2017  19:21:53          PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+WREG                              00000FE8
+__18F452                          00000001
+_itoa                             00000000
+_ltoa                             00000000
+_uitoa                            00000000
+_ultoa                            00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

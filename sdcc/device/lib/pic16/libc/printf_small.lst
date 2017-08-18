@@ -1,0 +1,999 @@
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:35 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _printf_small
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  __gptrget1
+                      00021         extern  __gptrget3
+                      00022         extern  __gptrget4
+                      00023         extern  __gptrget2
+                      00024         extern  _stdin
+                      00025         extern  _stdout
+                      00026         extern  _putchar
+                      00027         extern  _ltoa
+                      00028         extern  _x_ftoa
+                      00029 
+                      00030 ;--------------------------------------------------------
+                      00031 ;       Equates to used internal registers
+                      00032 ;--------------------------------------------------------
+  00000FD8            00033 STATUS  equ     0xfd8
+  00000FE8            00034 WREG    equ     0xfe8
+  00000FE9            00035 FSR0L   equ     0xfe9
+  00000FEA            00036 FSR0H   equ     0xfea
+  00000FE1            00037 FSR1L   equ     0xfe1
+  00000FD9            00038 FSR2L   equ     0xfd9
+  00000FDA            00039 FSR2H   equ     0xfda
+  00000FEF            00040 INDF0   equ     0xfef
+  00000FE5            00041 POSTDEC1        equ     0xfe5
+  00000FE4            00042 PREINC1 equ     0xfe4
+  00000FDB            00043 PLUSW2  equ     0xfdb
+  00000FF3            00044 PRODL   equ     0xff3
+  00000FF4            00045 PRODH   equ     0xff4
+                      00046 
+                      00047 
+                      00048 ; Internal registers
+                      00049 .registers      udata_ovr       0x0000
+000000                00050 r0x00   res     1
+000001                00051 r0x01   res     1
+000002                00052 r0x02   res     1
+000003                00053 r0x03   res     1
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000004                00054 r0x04   res     1
+000005                00055 r0x05   res     1
+000006                00056 r0x06   res     1
+000007                00057 r0x07   res     1
+000008                00058 r0x08   res     1
+000009                00059 r0x09   res     1
+00000A                00060 r0x0a   res     1
+00000B                00061 r0x0b   res     1
+00000C                00062 r0x0c   res     1
+00000D                00063 r0x0d   res     1
+00000E                00064 r0x0e   res     1
+                      00065 
+                      00066 udata_printf_small_0    udata
+000000                00067 _printf_small_buffer_1_32       res     16
+                      00068 
+                      00069 ;--------------------------------------------------------
+                      00070 ; global & static initialisations
+                      00071 ;--------------------------------------------------------
+                      00072 ; I code from now on!
+                      00073 ; ; Starting pCode block
+                      00074 ; ;ic:1:  _entry($60) :
+                      00075 ; ;ic:2:        proc _printf_small [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( const-char generic* auto) __reentrant fixed}
+                      00076 S_printf_small__printf_small    code
+000000                00077 _printf_small:
+                      00078 ;       .line   59; stdio/printf_small.c        printf_small (const char *fmt, ...)
+000000 CFD9 FFE5      00079         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00080         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00081         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00082         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00083         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00084         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00085         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00086         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00087         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00088         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00089         MOVFF   r0x08, POSTDEC1
+00002C C000 FFE5      00090         MOVFF   r0x09, POSTDEC1
+000030 C000 FFE5      00091         MOVFF   r0x0a, POSTDEC1
+000034 C000 FFE5      00092         MOVFF   r0x0b, POSTDEC1
+000038 C000 FFE5      00093         MOVFF   r0x0c, POSTDEC1
+00003C C000 FFE5      00094         MOVFF   r0x0d, POSTDEC1
+000040 C000 FFE5      00095         MOVFF   r0x0e, POSTDEC1
+                      00096 ; ;ic:3:        iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] := fmt [k4 lr0:0 so:2]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* auto}
+                      00097 ;       .line   75; stdio/printf_small.c        ch = fmt;
+000044 0E02           00098         MOVLW   0x02
+000046 CFDB F000      00099         MOVFF   PLUSW2, r0x00
+00004A 0E03           00100         MOVLW   0x03
+00004C CFDB F000      00101         MOVFF   PLUSW2, r0x01
+000050 0E04           00102         MOVLW   0x04
+000052 CFDB F000      00103         MOVFF   PLUSW2, r0x02
+                      00104 ; ;ic:4:        iTemp2 [k7 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* near* auto}[r0x03 r0x04 ] = &[fmt [k4 lr0:0 so:2]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* auto}]
+                      00105 ;       .line   76; stdio/printf_small.c        va_start (ap, fmt);
+000056 0E02           00106         MOVLW   0x02
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000058 24D9           00107         ADDWF   FSR2L, W
+00005A 6E00           00108         MOVWF   r0x03
+00005C 0E00           00109         MOVLW   0x00
+00005E 20DA           00110         ADDWFC  FSR2H, W
+                      00111 ; #     MOVWF   r0x04
+                      00112 ; #;;ic:5:      iTemp3 [k8 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* fixed}[r0x03 r0x04 r0x05 ] = (unsigned-char generic* fixed)iTemp2 [k7 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char generic* near* auto}[r0x03 r0x04 ]
+                      00113 ; #     MOVF    r0x04, W
+                      00114 ; #     MOVWF   r0x04
+                      00115 ; #     MOVWF   r0x04
+000060 6E00           00116         MOVWF   r0x04
+                      00117 ; #     MOVF    r0x03, W
+                      00118 ; #     MOVWF   r0x03
+000062 0E80           00119         MOVLW   0x80
+000064 6E00           00120         MOVWF   r0x05
+                      00121 ; ;ic:6:        iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] = iTemp3 [k8 lr5:6 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* fixed}[r0x03 r0x04 r0x05 ] + 0x3 {const-unsigned-char literal}
+000066 0E03           00122         MOVLW   0x03
+000068 2600           00123         ADDWF   r0x03, F
+00006A 0E00           00124         MOVLW   0x00
+00006C 2200           00125         ADDWFC  r0x04, F
+00006E 2200           00126         ADDWFC  r0x05, F
+                      00127 ; ;ic:7:        iTemp61 [k82 lr7:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat] = &[_printf_small_buffer_1_32 [k73 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char [16d] auto}]
+                      00128 ; ;ic:8:        iTemp72 [k93 lr8:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat] := iTemp61 [k82 lr7:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]
+                      00129 ; ;ic:9:        iTemp97 [k123 lr9:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat] := iTemp61 [k82 lr7:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]
+                      00130 ; ;ic:11:  _whilecontinue_0($56) :
+                      00131 ; ;ic:12:       iTemp6 [k11 lr12:168 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x06 ] = @[iTemp0 [k2 lr3:172 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+000070                00132 _00160_DS_:
+                      00133 ;       .line   78; stdio/printf_small.c        while (*ch) //for (; *fmt ; fmt++ )
+000070 C000 FFE9      00134         MOVFF   r0x00, FSR0L
+000074 C000 FFF3      00135         MOVFF   r0x01, PRODL
+000078 5000           00136         MOVF    r0x02, W
+00007A EC00 F000      00137         CALL    __gptrget1
+00007E 6E00           00138         MOVWF   r0x06
+                      00139 ; ;ic:13:       if iTemp6 [k11 lr12:168 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x06 ] == 0 goto _return($59)
+000080 5000           00140         MOVF    r0x06, W
+000082 B4D8           00141         BTFSC   STATUS, 2
+000084 D000           00142         BRA     _00163_DS_
+                      00143 ; ;ic:14:       iTemp9 [k14 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp6 [k11 lr12:168 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x06 ] == 0x25 {const-char literal}
+                      00144 ;       .line   80; stdio/printf_small.c        if (*ch == '%')
+000086 5000           00145         MOVF    r0x06, W
+000088 0A25           00146         XORLW   0x25
+00008A E000           00147         BZ      _00223_DS_
+00008C D000           00148         BRA     _00158_DS_
+                      00149 ; ;ic:15:       if iTemp9 [k14 lr14:15 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_13($54)
+                      00150 ; ;ic:16:       iTemp13 [k21 lr16:80 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_ffloat_1_32}[r0x07 ] := 0x0 {const-unsigned-char literal}
+00008E                00151 _00223_DS_:
+                      00152 ;       .line   82; stdio/printf_small.c        flong = fstr = fchar = ffloat = 0;
+00008E 6A00           00153         CLRF    r0x07
+                      00154 ; ;ic:17:       iTemp12 [k19 lr17:131 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_fchar_1_32}[r0x08 ] := 0x0 {const-unsigned-char literal}
+000090 6A00           00155         CLRF    r0x08
+                      00156 ; ;ic:18:       iTemp11 [k17 lr18:64 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_fstr_1_32}[r0x09 ] := 0x0 {const-unsigned-char literal}
+000092 6A00           00157         CLRF    r0x09
+                      00158 ; ;ic:19:       iTemp10 [k15 lr19:123 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_flong_1_32}[r0x0a ] := 0x0 {const-unsigned-char literal}
+000094 6A00           00159         CLRF    r0x0a
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160 ; ;ic:20:       iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ] := 0x0 {const-unsigned-char literal}
+                      00161 ;       .line   83; stdio/printf_small.c        radix = 0;
+000096 6A00           00162         CLRF    r0x0b
+                      00163 ; ;ic:21:       iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] = iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+                      00164 ;       .line   84; stdio/printf_small.c        ++ch;
+000098 2A00           00165         INCF    r0x00, F
+00009A E300           00166         BNC     _00224_DS_
+00009C 4A00           00167         INFSNZ  r0x01, F
+00009E 2A00           00168         INCF    r0x02, F
+                      00169 ; ;ic:22:       iTemp17 [k27 lr22:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] = @[iTemp0 [k2 lr3:172 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+0000A0                00170 _00224_DS_:
+                      00171 ;       .line   86; stdio/printf_small.c        if (*ch == 'l')
+0000A0 C000 FFE9      00172         MOVFF   r0x00, FSR0L
+0000A4 C000 FFF3      00173         MOVFF   r0x01, PRODL
+0000A8 5000           00174         MOVF    r0x02, W
+0000AA EC00 F000      00175         CALL    __gptrget1
+                      00176 ; #     MOVWF   r0x0c
+                      00177 ; #;;ic:23:     iTemp18 [k28 lr23:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp17 [k27 lr22:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x6c {const-char literal}
+                      00178 ; #     MOVF    r0x0c, W
+0000AE 6E00           00179         MOVWF   r0x0c
+0000B0 0A6C           00180         XORLW   0x6c
+0000B2 E100           00181         BNZ     _00108_DS_
+                      00182 ; ;ic:24:       if iTemp18 [k28 lr23:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_1($4)
+                      00183 ; ;ic:25:       iTemp10 [k15 lr19:123 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_flong_1_32}[r0x0a ] := 0x1 {const-unsigned-char literal}
+                      00184 ;       .line   88; stdio/printf_small.c        flong = 1;
+0000B4 0E01           00185         MOVLW   0x01
+0000B6 6E00           00186         MOVWF   r0x0a
+                      00187 ; ;ic:26:       iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] = iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+                      00188 ;       .line   89; stdio/printf_small.c        ++ch;
+0000B8 2A00           00189         INCF    r0x00, F
+0000BA E300           00190         BNC     _00227_DS_
+0000BC 4A00           00191         INFSNZ  r0x01, F
+0000BE 2A00           00192         INCF    r0x02, F
+                      00193 ; ;ic:27:        goto _ifend_1($5)
+0000C0                00194 _00227_DS_:
+0000C0 D000           00195         BRA     _00109_DS_
+                      00196 ; ;ic:28:  _iffalse_1($4) :
+                      00197 ; ;ic:29:       iTemp22 [k32 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp17 [k27 lr22:29 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x68 {const-char literal}
+0000C2                00198 _00108_DS_:
+                      00199 ;       .line   91; stdio/printf_small.c        else if (*ch == 'h')
+0000C2 5000           00200         MOVF    r0x0c, W
+0000C4 0A68           00201         XORLW   0x68
+0000C6 E100           00202         BNZ     _00109_DS_
+                      00203 ; ;ic:30:       if iTemp22 [k32 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _ifend_1($5)
+                      00204 ; ;ic:31:       iTemp12 [k19 lr17:131 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_fchar_1_32}[r0x08 ] := 0x1 {const-unsigned-char literal}
+                      00205 ;       .line   93; stdio/printf_small.c        fchar = 1;
+0000C8 0E01           00206         MOVLW   0x01
+0000CA 6E00           00207         MOVWF   r0x08
+                      00208 ; ;ic:32:       iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] = iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+                      00209 ;       .line   94; stdio/printf_small.c        ++ch;
+0000CC 2A00           00210         INCF    r0x00, F
+0000CE E300           00211         BNC     _00109_DS_
+0000D0 4A00           00212         INFSNZ  r0x01, F
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000D2 2A00           00213         INCF    r0x02, F
+                      00214 ; ;ic:33:  _ifend_1($5) :
+                      00215 ; ;ic:34:       iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] = @[iTemp0 [k2 lr3:172 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+0000D4                00216 _00230_DS_:
+0000D4                00217 _00109_DS_:
+                      00218 ;       .line   97; stdio/printf_small.c        if (*ch == 's')
+0000D4 C000 FFE9      00219         MOVFF   r0x00, FSR0L
+0000D8 C000 FFF3      00220         MOVFF   r0x01, PRODL
+0000DC 5000           00221         MOVF    r0x02, W
+0000DE EC00 F000      00222         CALL    __gptrget1
+                      00223 ; #     MOVWF   r0x0c
+                      00224 ; #;;ic:35:     iTemp26 [k36 lr35:36 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x73 {const-char literal}
+                      00225 ; #     MOVF    r0x0c, W
+0000E2 6E00           00226         MOVWF   r0x0c
+0000E4 0A73           00227         XORLW   0x73
+0000E6 E100           00228         BNZ     _00125_DS_
+                      00229 ; ;ic:36:       if iTemp26 [k36 lr35:36 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_7($21)
+                      00230 ; ;ic:37:       iTemp11 [k17 lr18:64 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_fstr_1_32}[r0x09 ] := 0x1 {const-unsigned-char literal}
+                      00231 ;       .line   98; stdio/printf_small.c        fstr = 1;
+0000E8 0E01           00232         MOVLW   0x01
+0000EA 6E00           00233         MOVWF   r0x09
+                      00234 ; ;ic:38:        goto _ifend_7($22)
+0000EC D000           00235         BRA     _00126_DS_
+                      00236 ; ;ic:39:  _iffalse_7($21) :
+                      00237 ; ;ic:40:       iTemp29 [k39 lr40:41 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x66 {const-char literal}
+0000EE                00238 _00125_DS_:
+                      00239 ;       .line   99; stdio/printf_small.c        else if (*ch == 'f')
+0000EE 5000           00240         MOVF    r0x0c, W
+0000F0 0A66           00241         XORLW   0x66
+0000F2 E100           00242         BNZ     _00122_DS_
+                      00243 ; ;ic:41:       if iTemp29 [k39 lr40:41 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_6($18)
+                      00244 ; ;ic:42:       iTemp13 [k21 lr16:80 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_ffloat_1_32}[r0x07 ] := 0x1 {const-unsigned-char literal}
+                      00245 ;       .line   100; stdio/printf_small.c       ffloat = 1;
+0000F4 0E01           00246         MOVLW   0x01
+0000F6 6E00           00247         MOVWF   r0x07
+                      00248 ; ;ic:43:        goto _ifend_7($22)
+0000F8 D000           00249         BRA     _00126_DS_
+                      00250 ; ;ic:44:  _iffalse_6($18) :
+                      00251 ; ;ic:45:       iTemp32 [k42 lr45:46 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x64 {const-char literal}
+0000FA                00252 _00122_DS_:
+                      00253 ;       .line   101; stdio/printf_small.c       else if (*ch == 'd')
+0000FA 5000           00254         MOVF    r0x0c, W
+0000FC 0A64           00255         XORLW   0x64
+0000FE E100           00256         BNZ     _00119_DS_
+                      00257 ; ;ic:46:       if iTemp32 [k42 lr45:46 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_5($15)
+                      00258 ; ;ic:47:       iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ] := 0xa {const-unsigned-char literal}
+                      00259 ;       .line   102; stdio/printf_small.c       radix = 10;
+000100 0E0A           00260         MOVLW   0x0a
+000102 6E00           00261         MOVWF   r0x0b
+                      00262 ; ;ic:48:        goto _ifend_7($22)
+000104 D000           00263         BRA     _00126_DS_
+                      00264 ; ;ic:49:  _iffalse_5($15) :
+                      00265 ; ;ic:50:       iTemp35 [k45 lr50:51 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x78 {const-char literal}
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000106                00266 _00119_DS_:
+                      00267 ;       .line   103; stdio/printf_small.c       else if (*ch == 'x')
+000106 5000           00268         MOVF    r0x0c, W
+000108 0A78           00269         XORLW   0x78
+00010A E100           00270         BNZ     _00116_DS_
+                      00271 ; ;ic:51:       if iTemp35 [k45 lr50:51 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_4($12)
+                      00272 ; ;ic:52:       iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ] := 0x10 {const-unsigned-char literal}
+                      00273 ;       .line   104; stdio/printf_small.c       radix = 16;
+00010C 0E10           00274         MOVLW   0x10
+00010E 6E00           00275         MOVWF   r0x0b
+                      00276 ; ;ic:53:        goto _ifend_7($22)
+000110 D000           00277         BRA     _00126_DS_
+                      00278 ; ;ic:54:  _iffalse_4($12) :
+                      00279 ; ;ic:55:       iTemp38 [k48 lr55:56 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x63 {const-char literal}
+000112                00280 _00116_DS_:
+                      00281 ;       .line   105; stdio/printf_small.c       else if (*ch == 'c')
+000112 5000           00282         MOVF    r0x0c, W
+000114 0A63           00283         XORLW   0x63
+000116 E100           00284         BNZ     _00113_DS_
+                      00285 ; ;ic:56:       if iTemp38 [k48 lr55:56 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_3($9)
+                      00286 ; ;ic:57:       iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ] := 0x0 {const-unsigned-char literal}
+                      00287 ;       .line   106; stdio/printf_small.c       radix = 0;
+000118 6A00           00288         CLRF    r0x0b
+                      00289 ; ;ic:58:        goto _ifend_7($22)
+00011A D000           00290         BRA     _00126_DS_
+                      00291 ; ;ic:59:  _iffalse_3($9) :
+                      00292 ; ;ic:60:       iTemp41 [k51 lr60:61 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp25 [k35 lr34:60 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x0c ] == 0x6f {const-char literal}
+00011C                00293 _00113_DS_:
+                      00294 ;       .line   107; stdio/printf_small.c       else if (*ch == 'o')
+00011C 5000           00295         MOVF    r0x0c, W
+00011E 0A6F           00296         XORLW   0x6f
+000120 E100           00297         BNZ     _00126_DS_
+                      00298 ; ;ic:61:       if iTemp41 [k51 lr60:61 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _ifend_7($22)
+                      00299 ; ;ic:62:       iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ] := 0x8 {const-unsigned-char literal}
+                      00300 ;       .line   108; stdio/printf_small.c       radix = 8;
+000122 0E08           00301         MOVLW   0x08
+000124 6E00           00302         MOVWF   r0x0b
+                      00303 ; ;ic:63:  _ifend_7($22) :
+                      00304 ; ;ic:64:       if iTemp11 [k17 lr18:64 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_fstr_1_32}[r0x09 ] == 0 goto _iffalse_12($51)
+000126                00305 _00126_DS_:
+                      00306 ;       .line   110; stdio/printf_small.c       if (fstr)
+000126 5000           00307         MOVF    r0x09, W
+000128 E000           00308         BZ      _00155_DS_
+                      00309 ; ;ic:65:       iTemp43 [k54 lr65:67 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x09 r0x0c r0x0d ] = iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] + 0x3 {const-unsigned-char literal}
+                      00310 ;       .line   112; stdio/printf_small.c       str = va_arg (ap, char *);
+00012A 5000           00311         MOVF    r0x03, W
+00012C 0F03           00312         ADDLW   0x03
+00012E 6E00           00313         MOVWF   r0x09
+000130 0E00           00314         MOVLW   0x00
+000132 2000           00315         ADDWFC  r0x04, W
+000134 6E00           00316         MOVWF   r0x0c
+000136 0E00           00317         MOVLW   0x00
+000138 2000           00318         ADDWFC  r0x05, W
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00013A 6E00           00319         MOVWF   r0x0d
+                      00320 ; ;ic:66:       iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] := iTemp43 [k54 lr65:67 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x09 r0x0c r0x0d ]
+00013C C000 F000      00321         MOVFF   r0x09, r0x03
+000140 C000 F000      00322         MOVFF   r0x0c, r0x04
+000144 C000 F000      00323         MOVFF   r0x0d, r0x05
+                      00324 ; ;ic:67:       iTemp44 [k55 lr67:68 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x09 r0x0c r0x0d ] = iTemp43 [k54 lr65:67 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x09 r0x0c r0x0d ] - 0x3 {unsigned-char literal}
+000148 0EFD           00325         MOVLW   0xfd
+00014A 2600           00326         ADDWF   r0x09, F
+00014C 0EFF           00327         MOVLW   0xff
+00014E 2200           00328         ADDWFC  r0x0c, F
+000150 2200           00329         ADDWFC  r0x0d, F
+                      00330 ; ;ic:68:       iTemp45 [k56 lr68:69 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* generic* fixed}[r0x09 r0x0c r0x0d ] = (char generic* generic* fixed)iTemp44 [k55 lr67:68 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x09 r0x0c r0x0d ]
+                      00331 ; #     MOVF    r0x0d, W
+                      00332 ; #     MOVWF   r0x0d
+                      00333 ; #     MOVF    r0x0d, W
+                      00334 ; #     MOVF    r0x0c, W
+                      00335 ; #     MOVF    r0x0c, W
+                      00336 ; #     MOVWF   r0x0c
+                      00337 ; #     MOVF    r0x0c, W
+                      00338 ; #     MOVF    r0x09, W
+                      00339 ; #     MOVF    r0x09, W
+                      00340 ; #     MOVWF   r0x09
+                      00341 ; #;;ic:69:     iTemp50 [k62 lr69:78 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* auto}[r0x09 r0x0c r0x0d ] = @[iTemp45 [k56 lr68:69 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* generic* fixed}[r0x09 r0x0c r0x0d ] + 0x0 {const-unsigned-char literal}]
+000152 C000 FFE9      00342         MOVFF   r0x09, FSR0L
+000156 C000 FFF3      00343         MOVFF   r0x0c, PRODL
+00015A 5000           00344         MOVF    r0x0d, W
+00015C EC00 F000      00345         CALL    __gptrget3
+000160 6E00           00346         MOVWF   r0x09
+000162 CFF3 F000      00347         MOVFF   PRODL, r0x0c
+000166 CFF4 F000      00348         MOVFF   PRODH, r0x0d
+                      00349 ; ;ic:71:  _whilecontinue_1($23) :
+                      00350 ; ;ic:72:       iTemp48 [k59 lr72:74 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] = @[iTemp50 [k62 lr69:78 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* auto}[r0x09 r0x0c r0x0d ] + 0x0 {const-unsigned-char literal}]
+00016A                00351 _00127_DS_:
+                      00352 ;       .line   113; stdio/printf_small.c       while (*str)
+00016A C000 FFE9      00353         MOVFF   r0x09, FSR0L
+00016E C000 FFF3      00354         MOVFF   r0x0c, PRODL
+000172 5000           00355         MOVF    r0x0d, W
+000174 EC00 F000      00356         CALL    __gptrget1
+000178 6E00           00357         MOVWF   r0x0e
+                      00358 ; ;ic:73:       if iTemp48 [k59 lr72:74 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] == 0 goto _ifend_13($55)
+00017A 5000           00359         MOVF    r0x0e, W
+00017C B4D8           00360         BTFSC   STATUS, 2
+00017E D000           00361         BRA     _00159_DS_
+                      00362 ; ;ic:74:       iTemp51 [k63 lr74:76 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] := iTemp48 [k59 lr72:74 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ]
+                      00363 ; ;ic:75:       iTemp50 [k62 lr69:78 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* auto}[r0x09 r0x0c r0x0d ] = iTemp50 [k62 lr69:78 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char generic* auto}[r0x09 r0x0c r0x0d ] + 0x1 {const-unsigned-char literal}
+                      00364 ;       .line   114; stdio/printf_small.c       putchar (*str++);
+000180 2A00           00365         INCF    r0x09, F
+000182 E300           00366         BNC     _00243_DS_
+000184 4A00           00367         INFSNZ  r0x0c, F
+000186 2A00           00368         INCF    r0x0d, F
+                      00369 ; ;ic:76:       send iTemp51 [k63 lr74:76 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ]{argreg = 1}
+                      00370 ; ;ic:77:       iTemp52 [k65 lr77:77 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _putchar [k60 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+000188                00371 _00243_DS_:
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000188 5000           00372         MOVF    r0x0e, W
+00018A EC00 F000      00373         CALL    _putchar
+                      00374 ; ;ic:78:        goto _whilecontinue_1($23)
+00018E D000           00375         BRA     _00127_DS_
+                      00376 ; ;ic:79:  _iffalse_12($51) :
+                      00377 ; ;ic:80:       if iTemp13 [k21 lr16:80 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_ffloat_1_32}[r0x07 ] == 0 goto _iffalse_11($48)
+000190                00378 _00155_DS_:
+                      00379 ;       .line   116; stdio/printf_small.c       else if (ffloat)
+000190 5000           00380         MOVF    r0x07, W
+000192 B4D8           00381         BTFSC   STATUS, 2
+000194 D000           00382         BRA     _00152_DS_
+                      00383 ; ;ic:81:       iTemp54 [k68 lr81:83 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0c ] = iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] + 0x4 {const-unsigned-char literal}
+                      00384 ;       .line   118; stdio/printf_small.c       flt = va_arg (ap, float);
+000196 5000           00385         MOVF    r0x03, W
+000198 0F04           00386         ADDLW   0x04
+00019A 6E00           00387         MOVWF   r0x07
+00019C 0E00           00388         MOVLW   0x00
+00019E 2000           00389         ADDWFC  r0x04, W
+0001A0 6E00           00390         MOVWF   r0x09
+0001A2 0E00           00391         MOVLW   0x00
+0001A4 2000           00392         ADDWFC  r0x05, W
+0001A6 6E00           00393         MOVWF   r0x0c
+                      00394 ; ;ic:82:       iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] := iTemp54 [k68 lr81:83 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0c ]
+0001A8 C000 F000      00395         MOVFF   r0x07, r0x03
+0001AC C000 F000      00396         MOVFF   r0x09, r0x04
+0001B0 C000 F000      00397         MOVFF   r0x0c, r0x05
+                      00398 ; ;ic:83:       iTemp55 [k69 lr83:84 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0c ] = iTemp54 [k68 lr81:83 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0c ] - 0x4 {unsigned-char literal}
+0001B4 0EFC           00399         MOVLW   0xfc
+0001B6 2600           00400         ADDWF   r0x07, F
+0001B8 0EFF           00401         MOVLW   0xff
+0001BA 2200           00402         ADDWFC  r0x09, F
+0001BC 2200           00403         ADDWFC  r0x0c, F
+                      00404 ; ;ic:84:       iTemp56 [k70 lr84:85 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{float generic* fixed}[r0x07 r0x09 r0x0c ] = (float generic* fixed)iTemp55 [k69 lr83:84 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0c ]
+                      00405 ; #     MOVF    r0x0c, W
+                      00406 ; #     MOVWF   r0x0c
+                      00407 ; #     MOVF    r0x0c, W
+                      00408 ; #     MOVF    r0x09, W
+                      00409 ; #     MOVF    r0x09, W
+                      00410 ; #     MOVWF   r0x09
+                      00411 ; #     MOVF    r0x09, W
+                      00412 ; #     MOVF    r0x07, W
+                      00413 ; #     MOVF    r0x07, W
+                      00414 ; #     MOVWF   r0x07
+                      00415 ; #;;ic:85:     iTemp53 [k66 lr85:89 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{float auto}{ sir@ _printf_small_flt_1_32}[r0x07 r0x09 r0x0c r0x0d ] = @[iTemp56 [k70 lr84:85 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{float generic* fixed}[r0x07 r0x09 r0x0c ] + 0x0 {const-unsigned-char literal}]
+0001BE C000 FFE9      00416         MOVFF   r0x07, FSR0L
+0001C2 C000 FFF3      00417         MOVFF   r0x09, PRODL
+0001C6 5000           00418         MOVF    r0x0c, W
+0001C8 EC00 F000      00419         CALL    __gptrget4
+0001CC 6E00           00420         MOVWF   r0x07
+0001CE CFF3 F000      00421         MOVFF   PRODL, r0x09
+0001D2 CFF4 F000      00422         MOVFF   PRODH, r0x0c
+0001D6 CFE9 F000      00423         MOVFF   FSR0L, r0x0d
+                      00424 ; ;ic:86:       send iTemp53 [k66 lr85:89 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{float auto}{ sir@ _printf_small_flt_1_32}[r0x07 r0x09 r0x0c r0x0d ]{argreg = 1}
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00425 ; ;ic:87:       send iTemp61 [k82 lr7:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]{argreg = 2}
+                      00426 ; ;ic:88:       send 0x20 {const-unsigned-char literal}{argreg = 3}
+                      00427 ; ;ic:89:       send 0x6 {const-unsigned-char literal}{argreg = 4}
+                      00428 ; ;ic:90:       iTemp59 [k79 lr90:90 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = call _x_ftoa [k72 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( float fixed, char near* fixed, unsigned-char fixed, unsigned-char fixed) fixed}
+                      00429 ;       .line   119; stdio/printf_small.c       x_ftoa (flt, buffer, 32, 6);
+0001DA 0E06           00430         MOVLW   0x06
+0001DC 6EE5           00431         MOVWF   POSTDEC1
+0001DE 0E20           00432         MOVLW   0x20
+0001E0 6EE5           00433         MOVWF   POSTDEC1
+0001E2 0E00           00434         MOVLW   HIGH(_printf_small_buffer_1_32)
+0001E4 6EE5           00435         MOVWF   POSTDEC1
+0001E6 0E00           00436         MOVLW   LOW(_printf_small_buffer_1_32)
+0001E8 6EE5           00437         MOVWF   POSTDEC1
+0001EA 5000           00438         MOVF    r0x0d, W
+0001EC 6EE5           00439         MOVWF   POSTDEC1
+0001EE 5000           00440         MOVF    r0x0c, W
+0001F0 6EE5           00441         MOVWF   POSTDEC1
+0001F2 5000           00442         MOVF    r0x09, W
+0001F4 6EE5           00443         MOVWF   POSTDEC1
+0001F6 5000           00444         MOVF    r0x07, W
+0001F8 6EE5           00445         MOVWF   POSTDEC1
+0001FA EC00 F000      00446         CALL    _x_ftoa
+0001FE 0E08           00447         MOVLW   0x08
+000200 26E1           00448         ADDWF   FSR1L, F
+                      00449 ; ;ic:91:       iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ] := iTemp61 [k82 lr7:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]
+                      00450 ;       .line   120; stdio/printf_small.c       str1 = buffer;
+000202 0E00           00451         MOVLW   LOW(_printf_small_buffer_1_32)
+000204 6E00           00452         MOVWF   r0x07
+000206 0E00           00453         MOVLW   HIGH(_printf_small_buffer_1_32)
+000208 6E00           00454         MOVWF   r0x09
+                      00455 ; ;ic:92:       iTemp64 [k85 lr92:100 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] := iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ]
+                      00456 ;       .line   121; stdio/printf_small.c       while (*str1)
+00020A C000 F000      00457         MOVFF   r0x07, r0x0c
+00020E C000 F000      00458         MOVFF   r0x09, r0x0d
+                      00459 ; ;ic:94:  _whilecontinue_2($26) :
+                      00460 ; ;ic:95:       iTemp63 [k84 lr95:96 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] = @[iTemp64 [k85 lr92:100 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] + 0x0 {const-unsigned-char literal}]
+000212                00461 _00130_DS_:
+000212 C000 FFE9      00462         MOVFF   r0x0c, FSR0L
+000216 C000 FFEA      00463         MOVFF   r0x0d, FSR0H
+00021A CFEF F000      00464         MOVFF   INDF0, r0x0e
+                      00465 ; ;ic:96:       if iTemp63 [k84 lr95:96 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] == 0 goto _whilebreak_2($28)
+00021E 5000           00466         MOVF    r0x0e, W
+000220 E000           00467         BZ      _00132_DS_
+                      00468 ; ;ic:97:       iTemp64 [k85 lr92:100 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] = iTemp64 [k85 lr92:100 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] + 0x1 {const-unsigned-char literal}
+                      00469 ;       .line   122; stdio/printf_small.c       ++str1;
+000222 4A00           00470         INFSNZ  r0x0c, F
+000224 2A00           00471         INCF    r0x0d, F
+                      00472 ; ;ic:98:        goto _whilecontinue_2($26)
+000226 D000           00473         BRA     _00130_DS_
+                      00474 ; ;ic:99:  _whilebreak_2($28) :
+                      00475 ; ;ic:100:      iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ] = iTemp64 [k85 lr92:100 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] - 0x1 {const-unsigned-char literal}
+000228                00476 _00132_DS_:
+                      00477 ;       .line   123; stdio/printf_small.c       --str1;
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000228 5000           00478         MOVF    r0x0c, W
+00022A 0FFF           00479         ADDLW   0xff
+00022C 6E00           00480         MOVWF   r0x07
+00022E 0EFF           00481         MOVLW   0xff
+000230 2000           00482         ADDWFC  r0x0d, W
+000232 6E00           00483         MOVWF   r0x09
+                      00484 ; ;ic:101:      iTemp69 [k90 lr101:110 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] := iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ]
+                      00485 ;       .line   124; stdio/printf_small.c       while (*str1 == '0')
+000234 C000 F000      00486         MOVFF   r0x07, r0x0c
+000238 C000 F000      00487         MOVFF   r0x09, r0x0d
+                      00488 ; ;ic:103:  _whilecontinue_3($29) :
+                      00489 ; ;ic:104:      iTemp67 [k88 lr104:105 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] = @[iTemp69 [k90 lr101:110 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] + 0x0 {const-unsigned-char literal}]
+00023C                00490 _00133_DS_:
+00023C C000 FFE9      00491         MOVFF   r0x0c, FSR0L
+000240 C000 FFEA      00492         MOVFF   r0x0d, FSR0H
+000244 CFEF F000      00493         MOVFF   INDF0, r0x0e
+                      00494 ; ;ic:105:      iTemp68 [k89 lr105:106 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp67 [k88 lr104:105 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0e ] == 0x30 {const-char literal}
+000248 5000           00495         MOVF    r0x0e, W
+00024A 0A30           00496         XORLW   0x30
+00024C E100           00497         BNZ     _00135_DS_
+                      00498 ; ;ic:106:      if iTemp68 [k89 lr105:106 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _whilebreak_3($31)
+                      00499 ; ;ic:107:      iTemp69 [k90 lr101:110 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] = iTemp69 [k90 lr101:110 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] - 0x1 {const-unsigned-char literal}
+                      00500 ;       .line   125; stdio/printf_small.c       --str1;
+00024E 0EFF           00501         MOVLW   0xff
+000250 2600           00502         ADDWF   r0x0c, F
+000252 2200           00503         ADDWFC  r0x0d, F
+                      00504 ; ;ic:108:       goto _whilecontinue_3($29)
+000254 D000           00505         BRA     _00133_DS_
+                      00506 ; ;ic:109:  _whilebreak_3($31) :
+                      00507 ; ;ic:110:      iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ] = iTemp69 [k90 lr101:110 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x0c r0x0d ] + 0x1 {const-unsigned-char literal}
+000256                00508 _00135_DS_:
+                      00509 ;       .line   126; stdio/printf_small.c       ++str1;
+000256 5000           00510         MOVF    r0x0c, W
+000258 0F01           00511         ADDLW   0x01
+00025A 6E00           00512         MOVWF   r0x07
+00025C 0E00           00513         MOVLW   0x00
+00025E 2000           00514         ADDWFC  r0x0d, W
+000260 6E00           00515         MOVWF   r0x09
+                      00516 ; ;ic:111:      *(iTemp60 [k80 lr91:113 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ]) := 0x0 {const-unsigned-char literal}
+                      00517 ;       .line   127; stdio/printf_small.c       *str1 = 0;
+000262 C000 FFE9      00518         MOVFF   r0x07, FSR0L
+000266 C000 FFEA      00519         MOVFF   r0x09, FSR0H
+00026A 6AEF           00520         CLRF    INDF0
+                      00521 ; ;ic:112:      iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ] := iTemp72 [k93 lr8:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]
+                      00522 ;       .line   128; stdio/printf_small.c       str1 = buffer;
+00026C 0E00           00523         MOVLW   LOW(_printf_small_buffer_1_32)
+00026E 6E00           00524         MOVWF   r0x07
+000270 0E00           00525         MOVLW   HIGH(_printf_small_buffer_1_32)
+000272 6E00           00526         MOVWF   r0x09
+                      00527 ; ;ic:113:      iTemp76 [k97 lr113:121 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x07 r0x09 ] := iTemp60 [k80 lr91:113 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char near* auto}{ sir@ _printf_small_str1_1_32}[r0x07 r0x09 ]
+                      00528 ; ;ic:115:  _whilecontinue_4($32) :
+                      00529 ; ;ic:116:      iTemp74 [k95 lr116:119 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0c ] = @[iTemp76 [k97 lr113:121 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x07 r0x09 ] + 0x0 {const-unsigned-char literal}]
+000274                00530 _00136_DS_:
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00531 ;       .line   129; stdio/printf_small.c       while (*str1)
+000274 C000 FFE9      00532         MOVFF   r0x07, FSR0L
+000278 C000 FFEA      00533         MOVFF   r0x09, FSR0H
+00027C CFEF F000      00534         MOVFF   INDF0, r0x0c
+                      00535 ; ;ic:117:      if iTemp74 [k95 lr116:119 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0c ] == 0 goto _ifend_13($55)
+000280 5000           00536         MOVF    r0x0c, W
+000282 B4D8           00537         BTFSC   STATUS, 2
+000284 D000           00538         BRA     _00159_DS_
+                      00539 ; ;ic:118:      iTemp76 [k97 lr113:121 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x07 r0x09 ] = iTemp76 [k97 lr113:121 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x07 r0x09 ] + 0x1 {const-unsigned-char literal}
+                      00540 ;       .line   130; stdio/printf_small.c       putchar (*str1++);
+000286 4A00           00541         INFSNZ  r0x07, F
+000288 2A00           00542         INCF    r0x09, F
+                      00543 ; ;ic:119:      send iTemp74 [k95 lr116:119 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0c ]{argreg = 1}
+                      00544 ; ;ic:120:      iTemp78 [k99 lr120:120 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _putchar [k60 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+00028A 5000           00545         MOVF    r0x0c, W
+00028C EC00 F000      00546         CALL    _putchar
+                      00547 ; ;ic:121:       goto _whilecontinue_4($32)
+000290 D000           00548         BRA     _00136_DS_
+                      00549 ; ;ic:122:  _iffalse_11($48) :
+                      00550 ; ;ic:123:      if iTemp10 [k15 lr19:123 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_flong_1_32}[r0x0a ] == 0 goto _iffalse_9($39)
+000292                00551 _00152_DS_:
+                      00552 ;       .line   134; stdio/printf_small.c       if (flong)
+000292 5000           00553         MOVF    r0x0a, W
+000294 E000           00554         BZ      _00143_DS_
+                      00555 ; ;ic:124:      iTemp80 [k102 lr124:126 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0a ] = iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] + 0x4 {const-unsigned-char literal}
+                      00556 ;       .line   135; stdio/printf_small.c       val = va_arg (ap, long);
+000296 5000           00557         MOVF    r0x03, W
+000298 0F04           00558         ADDLW   0x04
+00029A 6E00           00559         MOVWF   r0x07
+00029C 0E00           00560         MOVLW   0x00
+00029E 2000           00561         ADDWFC  r0x04, W
+0002A0 6E00           00562         MOVWF   r0x09
+0002A2 0E00           00563         MOVLW   0x00
+0002A4 2000           00564         ADDWFC  r0x05, W
+0002A6 6E00           00565         MOVWF   r0x0a
+                      00566 ; ;ic:125:      iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] := iTemp80 [k102 lr124:126 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0a ]
+0002A8 C000 F000      00567         MOVFF   r0x07, r0x03
+0002AC C000 F000      00568         MOVFF   r0x09, r0x04
+0002B0 C000 F000      00569         MOVFF   r0x0a, r0x05
+                      00570 ; ;ic:126:      iTemp81 [k103 lr126:127 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0a ] = iTemp80 [k102 lr124:126 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0a ] - 0x4 {unsigned-char literal}
+0002B4 0EFC           00571         MOVLW   0xfc
+0002B6 2600           00572         ADDWF   r0x07, F
+0002B8 0EFF           00573         MOVLW   0xff
+0002BA 2200           00574         ADDWFC  r0x09, F
+0002BC 2200           00575         ADDWFC  r0x0a, F
+                      00576 ; ;ic:127:      iTemp82 [k104 lr127:128 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{long-int generic* fixed}[r0x07 r0x09 r0x0a ] = (long-int generic* fixed)iTemp81 [k103 lr126:127 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x07 r0x09 r0x0a ]
+                      00577 ; #     MOVF    r0x0a, W
+                      00578 ; #     MOVWF   r0x0a
+                      00579 ; #     MOVF    r0x0a, W
+                      00580 ; #     MOVF    r0x09, W
+                      00581 ; #     MOVF    r0x09, W
+                      00582 ; #     MOVWF   r0x09
+                      00583 ; #     MOVF    r0x09, W
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00584 ; #     MOVF    r0x07, W
+                      00585 ; #     MOVF    r0x07, W
+                      00586 ; #     MOVWF   r0x07
+                      00587 ; #;;ic:128:    iTemp79 [k100 lr128:163 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{long-int auto}{ sir@ _printf_small_val_1_32}[r0x07 r0x09 r0x0a r0x0c ] = @[iTemp82 [k104 lr127:128 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{long-int generic* fixed}[r0x07 r0x09 r0x0a ] + 0x0 {const-unsigned-char literal}]
+0002BE C000 FFE9      00588         MOVFF   r0x07, FSR0L
+0002C2 C000 FFF3      00589         MOVFF   r0x09, PRODL
+0002C6 5000           00590         MOVF    r0x0a, W
+0002C8 EC00 F000      00591         CALL    __gptrget4
+0002CC 6E00           00592         MOVWF   r0x07
+0002CE CFF3 F000      00593         MOVFF   PRODL, r0x09
+0002D2 CFF4 F000      00594         MOVFF   PRODH, r0x0a
+0002D6 CFE9 F000      00595         MOVFF   FSR0L, r0x0c
+                      00596 ; ;ic:129:       goto _ifend_9($40)
+0002DA D000           00597         BRA     _00144_DS_
+                      00598 ; ;ic:130:  _iffalse_9($39) :
+                      00599 ; ;ic:131:      if iTemp12 [k19 lr17:131 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_fchar_1_32}[r0x08 ] == 0 goto _iffalse_8($36)
+0002DC                00600 _00143_DS_:
+                      00601 ;       .line   136; stdio/printf_small.c       else if (fchar)
+0002DC 5000           00602         MOVF    r0x08, W
+0002DE E000           00603         BZ      _00140_DS_
+                      00604 ; ;ic:132:      iTemp84 [k106 lr132:134 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ] = iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] + 0x2 {const-unsigned-char literal}
+                      00605 ;       .line   137; stdio/printf_small.c       val = (char) va_arg (ap, int);  // FIXME: SDCC casts char arguments into ints
+0002E0 5000           00606         MOVF    r0x03, W
+0002E2 0F02           00607         ADDLW   0x02
+0002E4 6E00           00608         MOVWF   r0x08
+0002E6 0E00           00609         MOVLW   0x00
+0002E8 2000           00610         ADDWFC  r0x04, W
+0002EA 6E00           00611         MOVWF   r0x0d
+0002EC 0E00           00612         MOVLW   0x00
+0002EE 2000           00613         ADDWFC  r0x05, W
+0002F0 6E00           00614         MOVWF   r0x0e
+                      00615 ; ;ic:133:      iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] := iTemp84 [k106 lr132:134 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ]
+0002F2 C000 F000      00616         MOVFF   r0x08, r0x03
+0002F6 C000 F000      00617         MOVFF   r0x0d, r0x04
+0002FA C000 F000      00618         MOVFF   r0x0e, r0x05
+                      00619 ; ;ic:134:      iTemp85 [k107 lr134:135 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ] = iTemp84 [k106 lr132:134 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ] - 0x2 {unsigned-char literal}
+0002FE 0EFE           00620         MOVLW   0xfe
+000300 2600           00621         ADDWF   r0x08, F
+000302 0EFF           00622         MOVLW   0xff
+000304 2200           00623         ADDWFC  r0x0d, F
+000306 2200           00624         ADDWFC  r0x0e, F
+                      00625 ; ;ic:135:      iTemp86 [k108 lr135:136 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int generic* fixed}[r0x08 r0x0d r0x0e ] = (int generic* fixed)iTemp85 [k107 lr134:135 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ]
+                      00626 ; #     MOVF    r0x0e, W
+                      00627 ; #     MOVWF   r0x0e
+                      00628 ; #     MOVF    r0x0e, W
+                      00629 ; #     MOVF    r0x0d, W
+                      00630 ; #     MOVF    r0x0d, W
+                      00631 ; #     MOVWF   r0x0d
+                      00632 ; #     MOVF    r0x0d, W
+                      00633 ; #     MOVF    r0x08, W
+                      00634 ; #     MOVF    r0x08, W
+                      00635 ; #     MOVWF   r0x08
+                      00636 ; #;;ic:136:    iTemp87 [k109 lr136:137 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x08 r0x0d ] = @[iTemp86 [k108 lr135:136 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{int generic* fixed}[r0x08 r0x0d r0x0e ] + 0x0 {const-unsigned-char literal}]
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000308 C000 FFE9      00637         MOVFF   r0x08, FSR0L
+00030C C000 FFF3      00638         MOVFF   r0x0d, PRODL
+000310 5000           00639         MOVF    r0x0e, W
+000312 EC00 F000      00640         CALL    __gptrget2
+000316 6E00           00641         MOVWF   r0x08
+                      00642 ; ;ic:137:      iTemp88 [k110 lr137:138 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x08 ] = (char fixed)iTemp87 [k109 lr136:137 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x08 r0x0d ]
+                      00643 ; ;ic:138:      iTemp79 [k100 lr128:163 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{long-int auto}{ sir@ _printf_small_val_1_32}[r0x07 r0x09 r0x0a r0x0c ] = (long-int auto)iTemp88 [k110 lr137:138 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x08 ]
+000318 C000 F000      00644         MOVFF   r0x08, r0x07
+00031C 6AE8           00645         CLRF    WREG
+00031E BE00           00646         BTFSC   r0x08, 7
+000320 0EFF           00647         MOVLW   0xff
+000322 6E00           00648         MOVWF   r0x09
+000324 6E00           00649         MOVWF   r0x0a
+000326 6E00           00650         MOVWF   r0x0c
+                      00651 ; ;ic:139:       goto _ifend_9($40)
+000328 D000           00652         BRA     _00144_DS_
+                      00653 ; ;ic:140:  _iffalse_8($36) :
+                      00654 ; ;ic:141:      iTemp90 [k112 lr141:143 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ] = iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] + 0x2 {const-unsigned-char literal}
+00032A                00655 _00140_DS_:
+                      00656 ;       .line   140; stdio/printf_small.c       val = va_arg (ap, int);
+00032A 5000           00657         MOVF    r0x03, W
+00032C 0F02           00658         ADDLW   0x02
+00032E 6E00           00659         MOVWF   r0x08
+000330 0E00           00660         MOVLW   0x00
+000332 2000           00661         ADDWFC  r0x04, W
+000334 6E00           00662         MOVWF   r0x0d
+000336 0E00           00663         MOVLW   0x00
+000338 2000           00664         ADDWFC  r0x05, W
+00033A 6E00           00665         MOVWF   r0x0e
+                      00666 ; ;ic:142:      iTemp1 [k5 lr6:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}{ sir@ _printf_small_ap_1_32}[r0x03 r0x04 r0x05 ] := iTemp90 [k112 lr141:143 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ]
+00033C C000 F000      00667         MOVFF   r0x08, r0x03
+000340 C000 F000      00668         MOVFF   r0x0d, r0x04
+000344 C000 F000      00669         MOVFF   r0x0e, r0x05
+                      00670 ; ;ic:143:      iTemp91 [k113 lr143:144 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ] = iTemp90 [k112 lr141:143 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ] - 0x2 {unsigned-char literal}
+000348 0EFE           00671         MOVLW   0xfe
+00034A 2600           00672         ADDWF   r0x08, F
+00034C 0EFF           00673         MOVLW   0xff
+00034E 2200           00674         ADDWFC  r0x0d, F
+000350 2200           00675         ADDWFC  r0x0e, F
+                      00676 ; ;ic:144:      iTemp92 [k114 lr144:145 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int generic* fixed}[r0x08 r0x0d r0x0e ] = (int generic* fixed)iTemp91 [k113 lr143:144 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char generic* auto}[r0x08 r0x0d r0x0e ]
+                      00677 ; #     MOVF    r0x0e, W
+                      00678 ; #     MOVWF   r0x0e
+                      00679 ; #     MOVF    r0x0e, W
+                      00680 ; #     MOVF    r0x0d, W
+                      00681 ; #     MOVF    r0x0d, W
+                      00682 ; #     MOVWF   r0x0d
+                      00683 ; #     MOVF    r0x0d, W
+                      00684 ; #     MOVF    r0x08, W
+                      00685 ; #     MOVF    r0x08, W
+                      00686 ; #     MOVWF   r0x08
+                      00687 ; #;;ic:145:    iTemp93 [k115 lr145:146 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x08 r0x0d ] = @[iTemp92 [k114 lr144:145 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{int generic* fixed}[r0x08 r0x0d r0x0e ] + 0x0 {const-unsigned-char literal}]
+000352 C000 FFE9      00688         MOVFF   r0x08, FSR0L
+000356 C000 FFF3      00689         MOVFF   r0x0d, PRODL
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00035A 5000           00690         MOVF    r0x0e, W
+00035C EC00 F000      00691         CALL    __gptrget2
+000360 6E00           00692         MOVWF   r0x08
+000362 CFF3 F000      00693         MOVFF   PRODL, r0x0d
+                      00694 ; ;ic:146:      iTemp79 [k100 lr128:163 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{long-int auto}{ sir@ _printf_small_val_1_32}[r0x07 r0x09 r0x0a r0x0c ] = (long-int auto)iTemp93 [k115 lr145:146 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x08 r0x0d ]
+000366 C000 F000      00695         MOVFF   r0x08, r0x07
+00036A C000 F000      00696         MOVFF   r0x0d, r0x09
+00036E 6AE8           00697         CLRF    WREG
+000370 BE00           00698         BTFSC   r0x0d, 7
+000372 0EFF           00699         MOVLW   0xff
+000374 6E00           00700         MOVWF   r0x0a
+000376 6E00           00701         MOVWF   r0x0c
+                      00702 ; ;ic:147:  _ifend_9($40) :
+                      00703 ; ;ic:148:      if iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ] == 0 goto _iffalse_10($45)
+000378                00704 _00144_DS_:
+                      00705 ;       .line   143; stdio/printf_small.c       if (radix)
+000378 5000           00706         MOVF    r0x0b, W
+00037A E000           00707         BZ      _00149_DS_
+                      00708 ; ;ic:149:      send iTemp79 [k100 lr128:163 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{long-int auto}{ sir@ _printf_small_val_1_32}[r0x07 r0x09 r0x0a r0x0c ]{argreg = 1}
+                      00709 ; ;ic:150:      send iTemp61 [k82 lr7:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]{argreg = 2}
+                      00710 ; ;ic:151:      send iTemp14 [k23 lr20:151 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{char auto}{ sir@ _printf_small_radix_1_32}[r0x0b ]{argreg = 3}
+                      00711 ; ;ic:152:      iTemp96 [k122 lr152:152 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _ltoa [k117 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( long-int fixed, char near* fixed, unsigned-char fixed) fixed}
+                      00712 ;       .line   145; stdio/printf_small.c       ltoa (val, buffer, radix);
+00037C 5000           00713         MOVF    r0x0b, W
+00037E 6EE5           00714         MOVWF   POSTDEC1
+000380 0E00           00715         MOVLW   HIGH(_printf_small_buffer_1_32)
+000382 6EE5           00716         MOVWF   POSTDEC1
+000384 0E00           00717         MOVLW   LOW(_printf_small_buffer_1_32)
+000386 6EE5           00718         MOVWF   POSTDEC1
+000388 5000           00719         MOVF    r0x0c, W
+00038A 6EE5           00720         MOVWF   POSTDEC1
+00038C 5000           00721         MOVF    r0x0a, W
+00038E 6EE5           00722         MOVWF   POSTDEC1
+000390 5000           00723         MOVF    r0x09, W
+000392 6EE5           00724         MOVWF   POSTDEC1
+000394 5000           00725         MOVF    r0x07, W
+000396 6EE5           00726         MOVWF   POSTDEC1
+000398 EC00 F000      00727         CALL    _ltoa
+00039C 0E07           00728         MOVLW   0x07
+00039E 26E1           00729         ADDWF   FSR1L, F
+                      00730 ; ;ic:153:      iTemp101 [k127 lr153:161 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x08 r0x0b ] := iTemp97 [k123 lr9:172 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{char near* fixed}[remat]
+                      00731 ;       .line   147; stdio/printf_small.c       str1 = buffer;
+0003A0 0E00           00732         MOVLW   LOW(_printf_small_buffer_1_32)
+0003A2 6E00           00733         MOVWF   r0x08
+0003A4 0E00           00734         MOVLW   HIGH(_printf_small_buffer_1_32)
+0003A6 6E00           00735         MOVWF   r0x0b
+                      00736 ; ;ic:155:  _whilecontinue_5($41) :
+                      00737 ; ;ic:156:      iTemp99 [k125 lr156:159 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0d ] = @[iTemp101 [k127 lr153:161 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x08 r0x0b ] + 0x0 {const-unsigned-char literal}]
+0003A8                00738 _00145_DS_:
+                      00739 ;       .line   148; stdio/printf_small.c       while (*str1)
+0003A8 C000 FFE9      00740         MOVFF   r0x08, FSR0L
+0003AC C000 FFEA      00741         MOVFF   r0x0b, FSR0H
+0003B0 CFEF F000      00742         MOVFF   INDF0, r0x0d
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00743 ; ;ic:157:      if iTemp99 [k125 lr156:159 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0d ] == 0 goto _ifend_13($55)
+0003B4 5000           00744         MOVF    r0x0d, W
+0003B6 E000           00745         BZ      _00159_DS_
+                      00746 ; ;ic:158:      iTemp101 [k127 lr153:161 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x08 r0x0b ] = iTemp101 [k127 lr153:161 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char near* auto}[r0x08 r0x0b ] + 0x1 {const-unsigned-char literal}
+                      00747 ;       .line   150; stdio/printf_small.c       putchar (*str1++);
+0003B8 4A00           00748         INFSNZ  r0x08, F
+0003BA 2A00           00749         INCF    r0x0b, F
+                      00750 ; ;ic:159:      send iTemp99 [k125 lr156:159 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char register}[r0x0d ]{argreg = 1}
+                      00751 ; ;ic:160:      iTemp103 [k129 lr160:160 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _putchar [k60 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+0003BC 5000           00752         MOVF    r0x0d, W
+0003BE EC00 F000      00753         CALL    _putchar
+                      00754 ; ;ic:161:       goto _whilecontinue_5($41)
+0003C2 D000           00755         BRA     _00145_DS_
+                      00756 ; ;ic:162:  _iffalse_10($45) :
+                      00757 ; ;ic:163:      iTemp104 [k130 lr163:164 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x07 ] = (char fixed)iTemp79 [k100 lr128:163 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{long-int auto}{ sir@ _printf_small_val_1_32}[r0x07 r0x09 r0x0a r0x0c ]
+                      00758 ; ;ic:164:      send iTemp104 [k130 lr163:164 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed}[r0x07 ]{argreg = 1}
+                      00759 ; ;ic:165:      iTemp105 [k131 lr165:165 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _putchar [k60 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+0003C4                00760 _00149_DS_:
+                      00761 ;       .line   154; stdio/printf_small.c       putchar ((char) val);
+0003C4 5000           00762         MOVF    r0x07, W
+0003C6 EC00 F000      00763         CALL    _putchar
+                      00764 ; ;ic:166:       goto _ifend_13($55)
+0003CA D000           00765         BRA     _00159_DS_
+                      00766 ; ;ic:167:  _iffalse_13($54) :
+                      00767 ; ;ic:168:      send iTemp6 [k11 lr12:168 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{const-char register}[r0x06 ]{argreg = 1}
+                      00768 ; ;ic:169:      iTemp108 [k134 lr169:169 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void fixed} = call _putchar [k60 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( char fixed) fixed}
+0003CC                00769 _00158_DS_:
+                      00770 ;       .line   158; stdio/printf_small.c       putchar (*ch);
+0003CC 5000           00771         MOVF    r0x06, W
+0003CE EC00 F000      00772         CALL    _putchar
+                      00773 ; ;ic:170:  _ifend_13($55) :
+                      00774 ; ;ic:171:      iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] = iTemp0 [k2 lr3:172 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{const-char generic* auto}{ sir@ _printf_small_ch_1_32}[r0x00 r0x01 r0x02 ] + 0x1 {const-unsigned-char literal}
+0003D2                00775 _00159_DS_:
+                      00776 ;       .line   160; stdio/printf_small.c       ++ch;
+0003D2 2A00           00777         INCF    r0x00, F
+0003D4 E300           00778         BNC     _00246_DS_
+0003D6 4A00           00779         INFSNZ  r0x01, F
+0003D8 2A00           00780         INCF    r0x02, F
+                      00781 ; ;ic:172:       goto _whilecontinue_0($56)
+0003DA                00782 _00246_DS_:
+0003DA D000           00783         BRA     _00160_DS_
+                      00784 ; ;ic:173:  _return($59) :
+                      00785 ; ;ic:174:      eproc _printf_small [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{void function ( const-char generic* auto) __reentrant fixed}
+0003DC                00786 _00163_DS_:
+0003DC CFE4 F000      00787         MOVFF   PREINC1, r0x0e
+0003E0 CFE4 F000      00788         MOVFF   PREINC1, r0x0d
+0003E4 CFE4 F000      00789         MOVFF   PREINC1, r0x0c
+0003E8 CFE4 F000      00790         MOVFF   PREINC1, r0x0b
+0003EC CFE4 F000      00791         MOVFF   PREINC1, r0x0a
+0003F0 CFE4 F000      00792         MOVFF   PREINC1, r0x09
+0003F4 CFE4 F000      00793         MOVFF   PREINC1, r0x08
+0003F8 CFE4 F000      00794         MOVFF   PREINC1, r0x07
+0003FC CFE4 F000      00795         MOVFF   PREINC1, r0x06
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000400 CFE4 F000      00796         MOVFF   PREINC1, r0x05
+000404 CFE4 F000      00797         MOVFF   PREINC1, r0x04
+000408 CFE4 F000      00798         MOVFF   PREINC1, r0x03
+00040C CFE4 F000      00799         MOVFF   PREINC1, r0x02
+000410 CFE4 F000      00800         MOVFF   PREINC1, r0x01
+000414 CFE4 F000      00801         MOVFF   PREINC1, r0x00
+000418 CFE4 FFD9      00802         MOVFF   PREINC1, FSR2L
+00041C 0012           00803         RETURN  
+                      00804 
+                      00805 
+                      00806 
+                      00807 ; Statistics:
+                      00808 ; code size:     1054 (0x041e) bytes ( 0.80%)
+                      00809 ;                 527 (0x020f) words
+                      00810 ; udata size:      16 (0x0010) bytes ( 1.25%)
+                      00811 ; access size:     15 (0x000f) bytes
+                      00812 
+                      00813 
+                      00814         end
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 17
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0H                             00000FEA
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2H                             00000FDA
+FSR2L                             00000FD9
+INDF0                             00000FEF
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODH                             00000FF4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00108_DS_                        000000C2
+_00109_DS_                        000000D4
+_00113_DS_                        0000011C
+_00116_DS_                        00000112
+_00119_DS_                        00000106
+_00122_DS_                        000000FA
+_00125_DS_                        000000EE
+_00126_DS_                        00000126
+_00127_DS_                        0000016A
+_00130_DS_                        00000212
+_00132_DS_                        00000228
+_00133_DS_                        0000023C
+_00135_DS_                        00000256
+_00136_DS_                        00000274
+_00140_DS_                        0000032A
+_00143_DS_                        000002DC
+_00144_DS_                        00000378
+_00145_DS_                        000003A8
+_00149_DS_                        000003C4
+_00152_DS_                        00000292
+_00155_DS_                        00000190
+_00158_DS_                        000003CC
+_00159_DS_                        000003D2
+_00160_DS_                        00000070
+_00163_DS_                        000003DC
+_00223_DS_                        0000008E
+_00224_DS_                        000000A0
+_00227_DS_                        000000C0
+_00230_DS_                        000000D4
+_00243_DS_                        00000188
+_00246_DS_                        000003DA
+__18F452                          00000001
+__gptrget1                        00000000
+__gptrget2                        00000000
+__gptrget3                        00000000
+__gptrget4                        00000000
+_ltoa                             00000000
+_printf_small                     00000000
+_printf_small_buffer_1_32         00000000
+_putchar                          00000000
+gpasm-0.14.1 (Aug 18 2017)   printf_small.asm   8-18-2017  19:21:35          PAGE 18
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_stdin                            00000000
+_stdout                           00000000
+_x_ftoa                           00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+r0x09                             00000009
+r0x0a                             0000000A
+r0x0b                             0000000B
+r0x0c                             0000000C
+r0x0d                             0000000D
+r0x0e                             0000000E
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,121 @@
+gpasm-0.14.1 (Aug 18 2017)   islower.asm        8-18-2017  19:21:24          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:24 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _islower
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ;       Equates to used internal registers
+                      00019 ;--------------------------------------------------------
+  00000FD8            00020 STATUS  equ     0xfd8
+  00000FE8            00021 WREG    equ     0xfe8
+  00000FE1            00022 FSR1L   equ     0xfe1
+  00000FD9            00023 FSR2L   equ     0xfd9
+  00000FE5            00024 POSTDEC1        equ     0xfe5
+  00000FE4            00025 PREINC1 equ     0xfe4
+  00000FDB            00026 PLUSW2  equ     0xfdb
+                      00027 
+                      00028 
+                      00029 ; Internal registers
+                      00030 .registers      udata_ovr       0x0000
+000000                00031 r0x00   res     1
+                      00032 
+                      00033 ;--------------------------------------------------------
+                      00034 ; global & static initialisations
+                      00035 ;--------------------------------------------------------
+                      00036 ; I code from now on!
+                      00037 ; ; Starting pCode block
+                      00038 ; ;ic:1:  _entry($5) :
+                      00039 ; ;ic:2:        proc _islower [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+                      00040 S_islower__islower      code
+000000                00041 _islower:
+                      00042 ;       .line   33; ctype/islower.c     char islower (unsigned char c)
+000000 CFD9 FFE5      00043         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00044         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00045         MOVFF   r0x00, POSTDEC1
+                      00046 ; ;ic:3: iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _islower_c_1_10}[r0x00 ] = recv _islower [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+00000C 0E02           00047         MOVLW   0x02
+00000E CFDB F000      00048         MOVFF   PLUSW2, r0x00
+                      00049 ; ;ic:4:        iTemp1 [k4 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _islower_c_1_10}[r0x00 ] < 0x61 {unsigned-char literal}
+                      00050 ;       .line   35; ctype/islower.c     if  ( c >= UC('a') && c <= UC('z') )
+000012 0E61           00051         MOVLW   0x61
+000014 5C00           00052         SUBWF   r0x00, W
+000016 E300           00053         BNC     _00106_DS_
+gpasm-0.14.1 (Aug 18 2017)   islower.asm        8-18-2017  19:21:24          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ; ;ic:5:        if iTemp1 [k4 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _iffalse_0($2)
+                      00055 ; ;ic:6:        iTemp2 [k5 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:6 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _islower_c_1_10}[r0x00 ] > 0x7a {unsigned-char literal}
+000018 0E7B           00056         MOVLW   0x7b
+00001A 5C00           00057         SUBWF   r0x00, W
+00001C E200           00058         BC      _00106_DS_
+                      00059 ; ;ic:7:        if iTemp2 [k5 lr6:7 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _iffalse_0($2)
+                      00060 ; ;ic:8:        ret 0x1 {const-unsigned-char literal}
+                      00061 ;       .line   36; ctype/islower.c     return 1;
+00001E 0E01           00062         MOVLW   0x01
+000020 D000           00063         BRA     _00108_DS_
+                      00064 ; ;ic:9:  _iffalse_0($2) :
+                      00065 ; ;ic:10:       ret 0x0 {const-unsigned-char literal}
+000022                00066 _00106_DS_:
+                      00067 ;       .line   37; ctype/islower.c     return 0;
+000022 6AE8           00068         CLRF    WREG
+                      00069 ; ;ic:11:  _return($4) :
+                      00070 ; ;ic:12:       eproc _islower [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char function ( unsigned-char fixed) fixed}
+000024                00071 _00108_DS_:
+000024 CFE4 F000      00072         MOVFF   PREINC1, r0x00
+000028 CFE4 FFD9      00073         MOVFF   PREINC1, FSR2L
+00002C 0012           00074         RETURN  
+                      00075 
+                      00076 
+                      00077 
+                      00078 ; Statistics:
+                      00079 ; code size:       46 (0x002e) bytes ( 0.04%)
+                      00080 ;                  23 (0x0017) words
+                      00081 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00082 ; access size:      1 (0x0001) bytes
+                      00083 
+                      00084 
+                      00085         end
+gpasm-0.14.1 (Aug 18 2017)   islower.asm        8-18-2017  19:21:24          PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+STATUS                            00000FD8
+WREG                              00000FE8
+_00106_DS_                        00000022
+_00108_DS_                        00000024
+__18F452                          00000001
+_islower                          00000000
+r0x00                             00000000
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

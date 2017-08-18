@@ -1,0 +1,228 @@
+gpasm-0.14.1 (Aug 18 2017)   memfree.asm        8-18-2017  19:21:56          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:56 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _memfree
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _heap
+                      00021 
+                      00022 ;--------------------------------------------------------
+                      00023 ;       Equates to used internal registers
+                      00024 ;--------------------------------------------------------
+  00000FD8            00025 STATUS  equ     0xfd8
+  00000FE8            00026 WREG    equ     0xfe8
+  00000FE9            00027 FSR0L   equ     0xfe9
+  00000FEA            00028 FSR0H   equ     0xfea
+  00000FEF            00029 INDF0   equ     0xfef
+  00000FE5            00030 POSTDEC1        equ     0xfe5
+  00000FE4            00031 PREINC1 equ     0xfe4
+  00000FF3            00032 PRODL   equ     0xff3
+                      00033 
+                      00034 
+                      00035 ; Internal registers
+                      00036 .registers      udata_ovr       0x0000
+000000                00037 r0x00   res     1
+000001                00038 r0x01   res     1
+000002                00039 r0x02   res     1
+000003                00040 r0x03   res     1
+000004                00041 r0x04   res     1
+000005                00042 r0x05   res     1
+000006                00043 r0x06   res     1
+000007                00044 r0x07   res     1
+                      00045 
+                      00046 ;--------------------------------------------------------
+                      00047 ; global & static initialisations
+                      00048 ;--------------------------------------------------------
+                      00049 ; I code from now on!
+                      00050 ; ; Starting pCode block
+                      00051 ; ;ic:1:  _entry($7) :
+                      00052 ; ;ic:2:        proc _memfree [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int function ( ) fixed}
+                      00053 S_memfree__memfree      code
+gpasm-0.14.1 (Aug 18 2017)   memfree.asm        8-18-2017  19:21:56          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000000                00054 _memfree:
+                      00055 ;       .line   33; stdlib/memfree.c    unsigned int memfree(void)
+000000 C000 FFE5      00056         MOVFF   r0x00, POSTDEC1
+000004 C000 FFE5      00057         MOVFF   r0x01, POSTDEC1
+000008 C000 FFE5      00058         MOVFF   r0x02, POSTDEC1
+00000C C000 FFE5      00059         MOVFF   r0x03, POSTDEC1
+000010 C000 FFE5      00060         MOVFF   r0x04, POSTDEC1
+000014 C000 FFE5      00061         MOVFF   r0x05, POSTDEC1
+000018 C000 FFE5      00062         MOVFF   r0x06, POSTDEC1
+00001C C000 FFE5      00063         MOVFF   r0x07, POSTDEC1
+                      00064 ; ;ic:3:        iTemp0 [k2 lr3:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _memfree_hsize_1_10}[r0x00 r0x01 ] := 0x0 {unsigned-int literal}
+                      00065 ;       .line   36; stdlib/memfree.c    unsigned int hsize=0;
+000020 6A00           00066         CLRF    r0x00
+000022 6A00           00067         CLRF    r0x01
+                      00068 ; ;ic:4:        iTemp2 [k7 lr4:5 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-char near* near* fixed}[remat] = &[_heap [k6 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* fixed}]
+                      00069 ; ;ic:5:        iTemp1 [k4 lr5:25 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _memfree_pHeap_1_10}[r0x02 r0x03 ] = (struct __00000000 near* fixed)iTemp2 [k7 lr4:5 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-char near* near* fixed}[remat]
+                      00070 ;       .line   39; stdlib/memfree.c    pHeap = (_malloc_rec _MALLOC_SPEC *)&heap;
+000024 0E00           00071         MOVLW   LOW(_heap)
+000026 6E00           00072         MOVWF   r0x02
+000028 0E00           00073         MOVLW   HIGH(_heap)
+00002A 6E00           00074         MOVWF   r0x03
+                      00075 ; ;ic:7:  _whilecontinue_0($3) :
+                      00076 ; ;ic:8:        iTemp7 [k15 lr8:9 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x04 r0x05 ] := iTemp1 [k4 lr5:25 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _memfree_pHeap_1_10}[r0x02 r0x03 ]
+00002C                00077 _00107_DS_:
+                      00078 ;       .line   41; stdlib/memfree.c    while ((bLen = pHeap->bits.count)) {
+00002C C000 F000      00079         MOVFF   r0x02, r0x04
+000030 C000 F000      00080         MOVFF   r0x03, r0x05
+                      00081 ; ;ic:9:        iTemp8 [k16 lr9:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ _memfree_bLen_1_10}[r0x04 ] = @[iTemp7 [k15 lr8:9 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x04 r0x05 ] + 0x0 {const-unsigned-char literal}]
+000034 C000 FFE9      00082         MOVFF   r0x04, FSR0L
+000038 C000 FFEA      00083         MOVFF   r0x05, FSR0H
+00003C 50EF           00084         MOVF    INDF0, W
+00003E 0B7F           00085         ANDLW   0x7f
+000040 6E00           00086         MOVWF   r0x04
+                      00087 ; ;ic:10:       iTemp4 [k9 lr10:21 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x05 ] := iTemp8 [k16 lr9:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ _memfree_bLen_1_10}[r0x04 ]
+000042 C000 F000      00088         MOVFF   r0x04, r0x05
+                      00089 ; ;ic:11:       if iTemp8 [k16 lr9:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ _memfree_bLen_1_10}[r0x04 ] == 0 goto _whilebreak_0($5)
+000046 5000           00090         MOVF    r0x04, W
+000048 E000           00091         BZ      _00109_DS_
+                      00092 ; ;ic:12:       iTemp11 [k21 lr12:13 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} near* fixed}[r0x04 r0x06 ] := iTemp1 [k4 lr5:25 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _memfree_pHeap_1_10}[r0x02 r0x03 ]
+                      00093 ;       .line   42; stdlib/memfree.c    if(!pHeap->bits.alloc)
+00004A C000 F000      00094         MOVFF   r0x02, r0x04
+00004E C000 F000      00095         MOVFF   r0x03, r0x06
+                      00096 ; ;ic:13:       iTemp12 [k22 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} fixed}[r0x04 ] = @[iTemp11 [k21 lr12:13 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} near* fixed}[r0x04 r0x06 ] + 0x0 {const-unsigned-char literal}]
+000052 6AE8           00097         CLRF    WREG
+000054 C000 FFE9      00098         MOVFF   r0x04, FSR0L
+000058 C000 FFEA      00099         MOVFF   r0x06, FSR0H
+00005C BEEF           00100         BTFSC   INDF0, 7
+00005E 2AE8           00101         INCF    WREG, F
+000060 6E00           00102         MOVWF   r0x04
+                      00103 ; ;ic:14:       if iTemp12 [k22 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} fixed}[r0x04 ] != 0 goto _iffalse_0($2)
+000062 5000           00104         MOVF    r0x04, W
+000064 E100           00105         BNZ     _00106_DS_
+                      00106 ; ;ic:15:       iTemp13 [k23 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x04 r0x06 ] = (int fixed)iTemp4 [k9 lr10:21 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x05 ]
+gpasm-0.14.1 (Aug 18 2017)   memfree.asm        8-18-2017  19:21:56          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ;       .line   43; stdlib/memfree.c    hsize += bLen - 1;
+000066 C000 F000      00108         MOVFF   r0x05, r0x04
+00006A 6A00           00109         CLRF    r0x06
+                      00110 ; ;ic:16:       iTemp14 [k24 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x04 r0x06 ] = iTemp13 [k23 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x04 r0x06 ] - 0x1 {int literal}
+00006C 0EFF           00111         MOVLW   0xff
+00006E 2600           00112         ADDWF   r0x04, F
+000070 2200           00113         ADDWFC  r0x06, F
+                      00114 ; ;ic:17:       iTemp15 [k25 lr17:18 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int register}[r0x04 r0x06 ] = (unsigned-int register)iTemp14 [k24 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int register}[r0x04 r0x06 ]
+                      00115 ; ;ic:18:       iTemp0 [k2 lr3:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _memfree_hsize_1_10}[r0x00 r0x01 ] = iTemp0 [k2 lr3:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _memfree_hsize_1_10}[r0x00 r0x01 ] + iTemp15 [k25 lr17:18 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int register}[r0x04 r0x06 ]
+000072 5000           00116         MOVF    r0x04, W
+000074 2600           00117         ADDWF   r0x00, F
+000076 5000           00118         MOVF    r0x06, W
+000078 2200           00119         ADDWFC  r0x01, F
+                      00120 ; ;ic:19:  _iffalse_0($2) :
+                      00121 ; ;ic:20:       iTemp17 [k27 lr20:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x06 ] = (unsigned-int fixed)iTemp1 [k4 lr5:25 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _memfree_pHeap_1_10}[r0x02 r0x03 ]
+00007A                00122 _00106_DS_:
+                      00123 ;       .line   45; stdlib/memfree.c    pHeap = (_malloc_rec _MALLOC_SPEC *)((unsigned int)pHeap + bLen);
+00007A 5000           00124         MOVF    r0x02, W
+00007C 6E00           00125         MOVWF   r0x04
+00007E 5000           00126         MOVF    r0x03, W
+000080 6E00           00127         MOVWF   r0x06
+                      00128 ; ;ic:21:       iTemp18 [k28 lr21:22 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x05 r0x07 ] = (int fixed)iTemp4 [k9 lr10:21 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x05 ]
+000082 6A00           00129         CLRF    r0x07
+                      00130 ; ;ic:22:       iTemp19 [k29 lr22:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x05 r0x07 ] = (unsigned-int fixed)iTemp18 [k28 lr21:22 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x05 r0x07 ]
+                      00131 ; ;ic:23:       iTemp20 [k30 lr23:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x06 ] = iTemp17 [k27 lr20:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x06 ] + iTemp19 [k29 lr22:23 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x05 r0x07 ]
+000084 5000           00132         MOVF    r0x05, W
+000086 2600           00133         ADDWF   r0x04, F
+000088 5000           00134         MOVF    r0x07, W
+00008A 2200           00135         ADDWFC  r0x06, F
+                      00136 ; ;ic:24:       iTemp1 [k4 lr5:25 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _memfree_pHeap_1_10}[r0x02 r0x03 ] = (struct __00000000 near* fixed)iTemp20 [k30 lr23:24 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x06 ]
+00008C 5000           00137         MOVF    r0x04, W
+00008E 6E00           00138         MOVWF   r0x02
+000090 5000           00139         MOVF    r0x06, W
+000092 6E00           00140         MOVWF   r0x03
+                      00141 ; ;ic:25:        goto _whilecontinue_0($3)
+000094 D000           00142         BRA     _00107_DS_
+                      00143 ; ;ic:26:  _whilebreak_0($5) :
+                      00144 ; ;ic:27:       ret iTemp0 [k2 lr3:27 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-int fixed}{ sir@ _memfree_hsize_1_10}[r0x00 r0x01 ]
+000096                00145 _00109_DS_:
+                      00146 ;       .line   48; stdlib/memfree.c    return (hsize);
+000096 C000 FFF3      00147         MOVFF   r0x01, PRODL
+00009A 5000           00148         MOVF    r0x00, W
+                      00149 ; ;ic:28:  _return($6) :
+                      00150 ; ;ic:29:       eproc _memfree [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int function ( ) fixed}
+00009C CFE4 F000      00151         MOVFF   PREINC1, r0x07
+0000A0 CFE4 F000      00152         MOVFF   PREINC1, r0x06
+0000A4 CFE4 F000      00153         MOVFF   PREINC1, r0x05
+0000A8 CFE4 F000      00154         MOVFF   PREINC1, r0x04
+0000AC CFE4 F000      00155         MOVFF   PREINC1, r0x03
+0000B0 CFE4 F000      00156         MOVFF   PREINC1, r0x02
+0000B4 CFE4 F000      00157         MOVFF   PREINC1, r0x01
+0000B8 CFE4 F000      00158         MOVFF   PREINC1, r0x00
+0000BC 0012           00159         RETURN  
+gpasm-0.14.1 (Aug 18 2017)   memfree.asm        8-18-2017  19:21:56          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00160 
+                      00161 
+                      00162 
+                      00163 ; Statistics:
+                      00164 ; code size:      190 (0x00be) bytes ( 0.14%)
+                      00165 ;                  95 (0x005f) words
+                      00166 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00167 ; access size:      8 (0x0008) bytes
+                      00168 
+                      00169 
+                      00170         end
+gpasm-0.14.1 (Aug 18 2017)   memfree.asm        8-18-2017  19:21:56          PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0H                             00000FEA
+FSR0L                             00000FE9
+INDF0                             00000FEF
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00106_DS_                        0000007A
+_00107_DS_                        0000002C
+_00109_DS_                        00000096
+__18F452                          00000001
+_heap                             00000000
+_memfree                          00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+

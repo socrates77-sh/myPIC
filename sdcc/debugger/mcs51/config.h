@@ -2,10 +2,10 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
 
 /* XXX */
-#define DATADIR "\\usr\\local\\share"
+#define DATADIR "/usr/local/share"
 
 /* XXX */
-#define DIR_SEPARATOR_STRING "\\"
+#define DIR_SEPARATOR_STRING "/"
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -53,7 +53,7 @@
 #define HAVE_WINSOCK2_H 1
 
 /* XXX */
-#define LIB_DIR_SUFFIX DIR_SEPARATOR_STRING "sdcc\\lib"
+#define LIB_DIR_SUFFIX DIR_SEPARATOR_STRING "sdcc/lib"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT ""

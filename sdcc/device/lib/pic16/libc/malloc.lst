@@ -1,0 +1,370 @@
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;--------------------------------------------------------
+                      00002 ; File Created by SDCC : free open source ANSI-C Compiler
+                      00003 ; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
+                      00004 ; This file was generated Fri Aug 18 19:21:55 2017
+                      00005 ;--------------------------------------------------------
+                      00006 ; PIC16 port for the Microchip 16-bit core micros
+                      00007 ;--------------------------------------------------------
+                      00008         list    p=18f452
+                      00009 
+                      00010         radix dec
+                      00011 
+                      00012 ;--------------------------------------------------------
+                      00013 ; public variables in this module
+                      00014 ;--------------------------------------------------------
+                      00015         global  _malloc
+                      00016 
+                      00017 ;--------------------------------------------------------
+                      00018 ; extern variables in this module
+                      00019 ;--------------------------------------------------------
+                      00020         extern  _heap
+                      00021         extern  __mergeHeapBlock
+                      00022 
+                      00023 ;--------------------------------------------------------
+                      00024 ;       Equates to used internal registers
+                      00025 ;--------------------------------------------------------
+  00000FD8            00026 STATUS  equ     0xfd8
+  00000FE8            00027 WREG    equ     0xfe8
+  00000FE9            00028 FSR0L   equ     0xfe9
+  00000FEA            00029 FSR0H   equ     0xfea
+  00000FE1            00030 FSR1L   equ     0xfe1
+  00000FD9            00031 FSR2L   equ     0xfd9
+  00000FEF            00032 INDF0   equ     0xfef
+  00000FE5            00033 POSTDEC1        equ     0xfe5
+  00000FE4            00034 PREINC1 equ     0xfe4
+  00000FDB            00035 PLUSW2  equ     0xfdb
+  00000FF3            00036 PRODL   equ     0xff3
+                      00037 
+                      00038 
+                      00039 ; Internal registers
+                      00040 .registers      udata_ovr       0x0000
+000000                00041 r0x00   res     1
+000001                00042 r0x01   res     1
+000002                00043 r0x02   res     1
+000003                00044 r0x03   res     1
+000004                00045 r0x04   res     1
+000005                00046 r0x05   res     1
+000006                00047 r0x06   res     1
+000007                00048 r0x07   res     1
+000008                00049 r0x08   res     1
+000009                00050 r0x09   res     1
+00000A                00051 r0x0a   res     1
+                      00052 
+                      00053 ;--------------------------------------------------------
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ; global & static initialisations
+                      00055 ;--------------------------------------------------------
+                      00056 ; I code from now on!
+                      00057 ; ; Starting pCode block
+                      00058 ; ;ic:1:  _entry($19) :
+                      00059 ; ;ic:2:        proc _malloc [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* function ( unsigned-char fixed) data}
+                      00060 S_malloc__malloc        code
+000000                00061 _malloc:
+                      00062 ;       .line   35; stdlib/malloc.c     unsigned char _MALLOC_SPEC *malloc(unsigned char len)
+000000 CFD9 FFE5      00063         MOVFF   FSR2L, POSTDEC1
+000004 CFE1 FFD9      00064         MOVFF   FSR1L, FSR2L
+000008 C000 FFE5      00065         MOVFF   r0x00, POSTDEC1
+00000C C000 FFE5      00066         MOVFF   r0x01, POSTDEC1
+000010 C000 FFE5      00067         MOVFF   r0x02, POSTDEC1
+000014 C000 FFE5      00068         MOVFF   r0x03, POSTDEC1
+000018 C000 FFE5      00069         MOVFF   r0x04, POSTDEC1
+00001C C000 FFE5      00070         MOVFF   r0x05, POSTDEC1
+000020 C000 FFE5      00071         MOVFF   r0x06, POSTDEC1
+000024 C000 FFE5      00072         MOVFF   r0x07, POSTDEC1
+000028 C000 FFE5      00073         MOVFF   r0x08, POSTDEC1
+00002C C000 FFE5      00074         MOVFF   r0x09, POSTDEC1
+000030 C000 FFE5      00075         MOVFF   r0x0a, POSTDEC1
+                      00076 ; ;ic:3: iTemp0 [k2 lr3:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_len_1_9}[r0x00 ] = recv _malloc [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* function ( unsigned-char fixed) data}
+000034 0E02           00077         MOVLW   0x02
+000036 CFDB F000      00078         MOVFF   PLUSW2, r0x00
+                      00079 ; ;ic:4:        iTemp1 [k4 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp0 [k2 lr3:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_len_1_9}[r0x00 ] < 0x7f {const-unsigned-char literal}
+                      00080 ;       .line   44; stdlib/malloc.c     if(len >= MAX_BLOCK_SIZE)
+00003A 0E7F           00081         MOVLW   0x7f
+00003C 5C00           00082         SUBWF   r0x00, W
+00003E B0D8           00083         BTFSC   STATUS, 0
+000040 D000           00084         BRA     _00121_DS_
+                      00085 ; ;ic:5:        if iTemp1 [k4 lr4:5 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto do_end($17)
+                      00086 ; ;ic:6:        iTemp3 [k8 lr6:7 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-char near* near* fixed}[remat] = &[_heap [k7 lr0:0 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* fixed}]
+                      00087 ; ;ic:7:        iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ] = (struct __00000000 near* fixed)iTemp3 [k8 lr6:7 so:0]{ ia0 a2p0 re0 rm1 nos0 ru0 dp0}{unsigned-char near* near* fixed}[remat]
+                      00088 ;       .line   47; stdlib/malloc.c     pHeap = (_malloc_rec _MALLOC_SPEC *)&heap;
+000042 0E00           00089         MOVLW   LOW(_heap)
+000044 6E00           00090         MOVWF   r0x01
+000046 0E00           00091         MOVLW   HIGH(_heap)
+000048 6E00           00092         MOVWF   r0x02
+                      00093 ; ;ic:9:  _whilebody_0($15) :
+                      00094 ; ;ic:10:       iTemp8 [k16 lr10:11 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x03 r0x04 ] := iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]
+00004A                00095 _00119_DS_:
+                      00096 ;       .line   50; stdlib/malloc.c     bLen = pHeap->bits.count;
+00004A C000 F000      00097         MOVFF   r0x01, r0x03
+00004E C000 F000      00098         MOVFF   r0x02, r0x04
+                      00099 ; ;ic:11:       iTemp9 [k17 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ] = @[iTemp8 [k16 lr10:11 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x03 r0x04 ] + 0x0 {const-unsigned-char literal}]
+000052 C000 FFE9      00100         MOVFF   r0x03, FSR0L
+000056 C000 FFEA      00101         MOVFF   r0x04, FSR0H
+00005A 50EF           00102         MOVF    INDF0, W
+00005C 0B7F           00103         ANDLW   0x7f
+00005E 6E00           00104         MOVWF   r0x03
+                      00105 ; ;ic:12:       iTemp5 [k10 lr12:47 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ] := iTemp9 [k17 lr11:12 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ]
+                      00106 ; ;ic:13:       iTemp12 [k21 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}[r0x04 ] = @[iTemp2 [k5 lr7:51 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ] + 0x0 {const-unsigned-char literal}]
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00107 ;       .line   53; stdlib/malloc.c     if(pHeap->datum == 0) {
+000060 C000 FFE9      00108         MOVFF   r0x01, FSR0L
+000064 C000 FFEA      00109         MOVFF   r0x02, FSR0H
+000068 CFEF F000      00110         MOVFF   INDF0, r0x04
+                      00111 ; ;ic:14:       if iTemp12 [k21 lr13:14 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-char fixed}[r0x04 ] == 0 goto do_end($17)
+00006C 5000           00112         MOVF    r0x04, W
+00006E B4D8           00113         BTFSC   STATUS, 2
+000070 D000           00114         BRA     _00121_DS_
+                      00115 ; ;ic:15:       iTemp15 [k26 lr15:16 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} near* fixed}[r0x04 r0x05 ] := iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]
+                      00116 ;       .line   70; stdlib/malloc.c     if(pHeap->bits.alloc)
+000072 C000 F000      00117         MOVFF   r0x01, r0x04
+000076 C000 F000      00118         MOVFF   r0x02, r0x05
+                      00119 ; ;ic:16:       iTemp16 [k27 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} fixed}[r0x04 ] = @[iTemp15 [k26 lr15:16 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} near* fixed}[r0x04 r0x05 ] + 0x0 {const-unsigned-char literal}]
+00007A 6AE8           00120         CLRF    WREG
+00007C C000 FFE9      00121         MOVFF   r0x04, FSR0L
+000080 C000 FFEA      00122         MOVFF   r0x05, FSR0H
+000084 BEEF           00123         BTFSC   INDF0, 7
+000086 2AE8           00124         INCF    WREG, F
+000088 6E00           00125         MOVWF   r0x04
+                      00126 ; ;ic:17:       if iTemp16 [k27 lr16:17 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {7,1} fixed}[r0x04 ] != 0 goto do_continue($13)
+00008A 5000           00127         MOVF    r0x04, W
+00008C A4D8           00128         BTFSS   STATUS, 2
+00008E D000           00129         BRA     _00117_DS_
+                      00130 ; ;ic:18:       iTemp17 [k28 lr18:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp5 [k10 lr12:47 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ] > iTemp0 [k2 lr3:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_len_1_9}[r0x00 ]
+                      00131 ;       .line   77; stdlib/malloc.c     if(bLen <= len) {
+000090 5000           00132         MOVF    r0x03, W
+000092 5C00           00133         SUBWF   r0x00, W
+000094 E300           00134         BNC     _00114_DS_
+                      00135 ; ;ic:19:       if iTemp17 [k28 lr18:19 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} != 0 goto _iffalse_4($10)
+                      00136 ; ;ic:20:       send iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]{argreg = 1}
+                      00137 ; ;ic:21:       send iTemp0 [k2 lr3:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_len_1_9}[r0x00 ]{argreg = 2}
+                      00138 ; ;ic:22:       iTemp18 [k29 lr22:39 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_temp_1_10}[r0x04 r0x05 ] = call __mergeHeapBlock [k31 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{struct __00000000 near* function ( struct __00000000 near* fixed, unsigned-char fixed) fixed}
+                      00139 ;       .line   87; stdlib/malloc.c     temp = _mergeHeapBlock(pHeap, len);
+000096 5000           00140         MOVF    r0x00, W
+000098 6EE5           00141         MOVWF   POSTDEC1
+00009A 5000           00142         MOVF    r0x02, W
+00009C 6EE5           00143         MOVWF   POSTDEC1
+00009E 5000           00144         MOVF    r0x01, W
+0000A0 6EE5           00145         MOVWF   POSTDEC1
+0000A2 EC00 F000      00146         CALL    __mergeHeapBlock
+0000A6 6E00           00147         MOVWF   r0x04
+0000A8 CFF3 F000      00148         MOVFF   PRODL, r0x05
+0000AC 0E03           00149         MOVLW   0x03
+0000AE 26E1           00150         ADDWF   FSR1L, F
+                      00151 ; ;ic:23:       if iTemp18 [k29 lr22:39 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_temp_1_10}[r0x04 r0x05 ] == 0 goto do_continue($13)
+                      00152 ;       .line   89; stdlib/malloc.c     if(!temp)
+0000B0 5000           00153         MOVF    r0x04, W
+0000B2 1000           00154         IORWF   r0x05, W
+0000B4 B4D8           00155         BTFSC   STATUS, 2
+0000B6 D000           00156         BRA     _00117_DS_
+                      00157 ; ;ic:24:       iTemp22 [k39 lr24:25 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x06 r0x07 ] := iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]
+                      00158 ;       .line   94; stdlib/malloc.c     bLen = pHeap->bits.count;
+0000B8 C000 F000      00159         MOVFF   r0x01, r0x06
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000BC C000 F000      00160         MOVFF   r0x02, r0x07
+                      00161 ; ;ic:25:       iTemp23 [k40 lr25:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}[r0x06 ] = @[iTemp22 [k39 lr24:25 so:0]{ ia1 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} near* fixed}[r0x06 r0x07 ] + 0x0 {const-unsigned-char literal}]
+0000C0 C000 FFE9      00162         MOVFF   r0x06, FSR0L
+0000C4 C000 FFEA      00163         MOVFF   r0x07, FSR0H
+0000C8 50EF           00164         MOVF    INDF0, W
+0000CA 0B7F           00165         ANDLW   0x7f
+0000CC 6E00           00166         MOVWF   r0x06
+                      00167 ; ;ic:26:       iTemp5 [k10 lr12:47 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ] := iTemp23 [k40 lr25:26 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{volatile-unsigned-bitfield {0,7} fixed}[r0x06 ]
+0000CE C000 F000      00168         MOVFF   r0x06, r0x03
+                      00169 ; ;ic:27:  _iffalse_4($10) :
+                      00170 ; ;ic:28:       iTemp24 [k41 lr28:38 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_eLen_1_10}[r0x06 ] = iTemp0 [k2 lr3:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_len_1_9}[r0x00 ] + 0x1 {const-unsigned-char literal}
+0000D2                00171 _00114_DS_:
+                      00172 ;       .line   100; stdlib/malloc.c    eLen = (len+1);
+0000D2 2800           00173         INCF    r0x00, W
+0000D4 6E00           00174         MOVWF   r0x06
+                      00175 ; ;ic:29:       iTemp28 [k47 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char register}[r0x07 ] = iTemp24 [k41 lr28:38 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_eLen_1_10}[r0x06 ] | 0x80 {const-unsigned-char literal}
+                      00176 ;       .line   101; stdlib/malloc.c    pHeap->datum = 0x80 | eLen;
+0000D6 0E80           00177         MOVLW   0x80
+0000D8 1000           00178         IORWF   r0x06, W
+0000DA 6E00           00179         MOVWF   r0x07
+                      00180 ; ;ic:30:       *(iTemp2 [k5 lr7:51 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]) := iTemp28 [k47 lr29:30 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char register}[r0x07 ]
+0000DC C000 FFE9      00181         MOVFF   r0x01, FSR0L
+0000E0 C000 FFEA      00182         MOVFF   r0x02, FSR0H
+0000E4 C000 FFEF      00183         MOVFF   r0x07, INDF0
+                      00184 ; ;ic:31:       iTemp29 [k48 lr31:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} = iTemp5 [k10 lr12:47 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ] > iTemp24 [k41 lr28:38 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_eLen_1_10}[r0x06 ]
+                      00185 ;       .line   103; stdlib/malloc.c    if(bLen > eLen) {
+0000E8 5000           00186         MOVF    r0x03, W
+0000EA 5C00           00187         SUBWF   r0x06, W
+0000EC E200           00188         BC      _00116_DS_
+                      00189 ; ;ic:32:       if iTemp29 [k48 lr31:32 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{char fixed} == 0 goto _iffalse_5($12)
+                      00190 ; ;ic:33:       iTemp30 [k49 lr33:36 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x07 r0x08 ] = (unsigned-int fixed)iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]
+                      00191 ;       .line   106; stdlib/malloc.c    temp = (_malloc_rec _MALLOC_SPEC *)((unsigned int)pHeap + eLen);
+0000EE 5000           00192         MOVF    r0x01, W
+0000F0 6E00           00193         MOVWF   r0x07
+0000F2 5000           00194         MOVF    r0x02, W
+0000F4 6E00           00195         MOVWF   r0x08
+                      00196 ; ;ic:34:       iTemp31 [k50 lr34:35 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x09 r0x0a ] = (int fixed)iTemp24 [k41 lr28:38 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_eLen_1_10}[r0x06 ]
+0000F6 C000 F000      00197         MOVFF   r0x06, r0x09
+0000FA 6A00           00198         CLRF    r0x0a
+                      00199 ; ;ic:35:       iTemp32 [k51 lr35:36 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x09 r0x0a ] = (unsigned-int fixed)iTemp31 [k50 lr34:35 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x09 r0x0a ]
+                      00200 ; ;ic:36:       iTemp33 [k52 lr36:37 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x07 r0x08 ] = iTemp30 [k49 lr33:36 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x07 r0x08 ] + iTemp32 [k51 lr35:36 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x09 r0x0a ]
+0000FC 5000           00201         MOVF    r0x09, W
+0000FE 2600           00202         ADDWF   r0x07, F
+000100 5000           00203         MOVF    r0x0a, W
+000102 2200           00204         ADDWFC  r0x08, F
+                      00205 ; ;ic:37:       iTemp18 [k29 lr22:39 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_temp_1_10}[r0x04 r0x05 ] = (struct __00000000 near* fixed)iTemp33 [k52 lr36:37 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x07 r0x08 ]
+000104 5000           00206         MOVF    r0x07, W
+000106 6E00           00207         MOVWF   r0x04
+000108 5000           00208         MOVF    r0x08, W
+00010A 6E00           00209         MOVWF   r0x05
+                      00210 ; ;ic:38:       iTemp37 [k57 lr38:39 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x06 ] = iTemp5 [k10 lr12:47 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ] - iTemp24 [k41 lr28:38 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_eLen_1_10}[r0x06 ]
+                      00211 ;       .line   107; stdlib/malloc.c    temp->datum = (bLen - eLen);
+00010C 5000           00212         MOVF    r0x06, W
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00010E 5C00           00213         SUBWF   r0x03, W
+000110 6E00           00214         MOVWF   r0x06
+                      00215 ; ;ic:39:       *(iTemp18 [k29 lr22:39 so:0]{ ia1 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_temp_1_10}[r0x04 r0x05 ]) := iTemp37 [k57 lr38:39 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char fixed}[r0x06 ]
+000112 C000 FFE9      00216         MOVFF   r0x04, FSR0L
+000116 C000 FFEA      00217         MOVFF   r0x05, FSR0H
+00011A C000 FFEF      00218         MOVFF   r0x06, INDF0
+                      00219 ; ;ic:40:  _iffalse_5($12) :
+                      00220 ; ;ic:41:       iTemp38 [k58 lr41:42 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] = (unsigned-int fixed)iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]
+00011E                00221 _00116_DS_:
+                      00222 ;       .line   110; stdlib/malloc.c    return ((unsigned char _MALLOC_SPEC *)((unsigned int)pHeap + 1));
+00011E 5000           00223         MOVF    r0x01, W
+000120 6E00           00224         MOVWF   r0x04
+000122 5000           00225         MOVF    r0x02, W
+000124 6E00           00226         MOVWF   r0x05
+                      00227 ; ;ic:42:       iTemp39 [k59 lr42:43 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int register}[r0x04 r0x05 ] = iTemp38 [k58 lr41:42 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] + 0x1 {unsigned-int literal}
+000126 4A00           00228         INFSNZ  r0x04, F
+000128 2A00           00229         INCF    r0x05, F
+                      00230 ; ;ic:43:       iTemp40 [k60 lr43:44 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* fixed}[r0x04 r0x05 ] = (unsigned-char near* fixed)iTemp39 [k59 lr42:43 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int register}[r0x04 r0x05 ]
+                      00231 ; ;ic:44:       ret iTemp40 [k60 lr43:44 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* fixed}[r0x04 r0x05 ]
+00012A C000 FFF3      00232         MOVFF   r0x05, PRODL
+00012E 5000           00233         MOVF    r0x04, W
+000130 D000           00234         BRA     _00122_DS_
+                      00235 ; ;ic:45:  do_continue($13) :
+                      00236 ; ;ic:46:       iTemp41 [k61 lr46:49 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] = (unsigned-int fixed)iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ]
+000132                00237 _00117_DS_:
+                      00238 ;       .line   113; stdlib/malloc.c    pHeap = (_malloc_rec _MALLOC_SPEC *)((unsigned int)pHeap + bLen);
+000132 5000           00239         MOVF    r0x01, W
+000134 6E00           00240         MOVWF   r0x04
+000136 5000           00241         MOVF    r0x02, W
+000138 6E00           00242         MOVWF   r0x05
+                      00243 ; ;ic:47:       iTemp42 [k62 lr47:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x03 r0x06 ] = (int fixed)iTemp5 [k10 lr12:47 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{unsigned-char fixed}{ sir@ _malloc_bLen_1_10}[r0x03 ]
+00013A 6A00           00244         CLRF    r0x06
+                      00245 ; ;ic:48:       iTemp43 [k63 lr48:49 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x03 r0x06 ] = (unsigned-int fixed)iTemp42 [k62 lr47:48 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{int fixed}[r0x03 r0x06 ]
+                      00246 ; ;ic:49:       iTemp44 [k64 lr49:50 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] = iTemp41 [k61 lr46:49 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ] + iTemp43 [k63 lr48:49 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x03 r0x06 ]
+00013C 5000           00247         MOVF    r0x03, W
+00013E 2600           00248         ADDWF   r0x04, F
+000140 5000           00249         MOVF    r0x06, W
+000142 2200           00250         ADDWFC  r0x05, F
+                      00251 ; ;ic:50:       iTemp2 [k5 lr7:51 so:0]{ ia0 a2p0 re1 rm0 nos0 ru0 dp0}{struct __00000000 near* fixed}{ sir@ _malloc_pHeap_1_10}[r0x01 r0x02 ] = (struct __00000000 near* fixed)iTemp44 [k64 lr49:50 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-int fixed}[r0x04 r0x05 ]
+000144 5000           00252         MOVF    r0x04, W
+000146 6E00           00253         MOVWF   r0x01
+000148 5000           00254         MOVF    r0x05, W
+00014A 6E00           00255         MOVWF   r0x02
+                      00256 ; ;ic:51:        goto _whilebody_0($15)
+00014C D000           00257         BRA     _00119_DS_
+                      00258 ; ;ic:52:  do_end($17) :
+                      00259 ; ;ic:53:       ret 0x0 {unsigned-char near* literal}
+00014E                00260 _00121_DS_:
+                      00261 ;       .line   117; stdlib/malloc.c    return ((unsigned char _MALLOC_SPEC *)0);
+00014E 6AF3           00262         CLRF    PRODL
+000150 6AE8           00263         CLRF    WREG
+                      00264 ; ;ic:54:  _return($18) :
+                      00265 ; ;ic:55:       eproc _malloc [k1 lr0:0 so:0]{ ia0 a2p0 re0 rm0 nos0 ru0 dp0}{unsigned-char near* function ( unsigned-char fixed) data}
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000152                00266 _00122_DS_:
+000152 CFE4 F000      00267         MOVFF   PREINC1, r0x0a
+000156 CFE4 F000      00268         MOVFF   PREINC1, r0x09
+00015A CFE4 F000      00269         MOVFF   PREINC1, r0x08
+00015E CFE4 F000      00270         MOVFF   PREINC1, r0x07
+000162 CFE4 F000      00271         MOVFF   PREINC1, r0x06
+000166 CFE4 F000      00272         MOVFF   PREINC1, r0x05
+00016A CFE4 F000      00273         MOVFF   PREINC1, r0x04
+00016E CFE4 F000      00274         MOVFF   PREINC1, r0x03
+000172 CFE4 F000      00275         MOVFF   PREINC1, r0x02
+000176 CFE4 F000      00276         MOVFF   PREINC1, r0x01
+00017A CFE4 F000      00277         MOVFF   PREINC1, r0x00
+00017E CFE4 FFD9      00278         MOVFF   PREINC1, FSR2L
+000182 0012           00279         RETURN  
+                      00280 
+                      00281 
+                      00282 
+                      00283 ; Statistics:
+                      00284 ; code size:      388 (0x0184) bytes ( 0.30%)
+                      00285 ;                 194 (0x00c2) words
+                      00286 ; udata size:       0 (0x0000) bytes ( 0.00%)
+                      00287 ; access size:     11 (0x000b) bytes
+                      00288 
+                      00289 
+                      00290         end
+gpasm-0.14.1 (Aug 18 2017)   malloc.asm         8-18-2017  19:21:55          PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE
+
+FSR0H                             00000FEA
+FSR0L                             00000FE9
+FSR1L                             00000FE1
+FSR2L                             00000FD9
+INDF0                             00000FEF
+PLUSW2                            00000FDB
+POSTDEC1                          00000FE5
+PREINC1                           00000FE4
+PRODL                             00000FF3
+STATUS                            00000FD8
+WREG                              00000FE8
+_00114_DS_                        000000D2
+_00116_DS_                        0000011E
+_00117_DS_                        00000132
+_00119_DS_                        0000004A
+_00121_DS_                        0000014E
+_00122_DS_                        00000152
+__18F452                          00000001
+__mergeHeapBlock                  00000000
+_heap                             00000000
+_malloc                           00000000
+r0x00                             00000000
+r0x01                             00000001
+r0x02                             00000002
+r0x03                             00000003
+r0x04                             00000004
+r0x05                             00000005
+r0x06                             00000006
+r0x07                             00000007
+r0x08                             00000008
+r0x09                             00000009
+r0x0a                             0000000A
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
