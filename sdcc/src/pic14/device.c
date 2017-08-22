@@ -255,7 +255,7 @@ find_device(char *pic_name)
        !pic_file && dir;
        dir = setNextItem(userIncDirsSet))
   {
-    // fprintf (stderr, "searching1 %s\n", dir);
+    //fprintf (stderr, "searching1 %s\n", dir);
     SNPRINTF(&filename[0], len, "%s%s", dir,
              DIR_SEPARATOR_STRING DEVICE_FILE_NAME);
     pic_file = fopen(filename, "rt");
@@ -267,7 +267,7 @@ find_device(char *pic_name)
        !pic_file && dir;
        dir = setNextItem(includeDirsSet))
   {
-    // fprintf (stderr, "searching2 %s\n", dir);
+    //fprintf (stderr, "searching2 %s\n", dir);
     SNPRINTF(&filename[0], len, "%s%s", dir,
              DIR_SEPARATOR_STRING DEVICE_FILE_NAME);
     pic_file = fopen(filename, "rt");
@@ -279,7 +279,7 @@ find_device(char *pic_name)
        !pic_file && dir;
        dir = setNextItem(libDirsSet))
   {
-    // fprintf (stderr, "searching3 %s\n", dir);
+    //fprintf (stderr, "searching3 %s\n", dir);
     SNPRINTF(&filename[0], len, "%s%s", dir,
              DIR_SEPARATOR_STRING DEVICE_FILE_NAME);
     pic_file = fopen(filename, "rt");
@@ -291,7 +291,7 @@ find_device(char *pic_name)
        !pic_file && dir;
        dir = setNextItem(libPathsSet))
   {
-    // fprintf (stderr, "searching4 %s\n", dir);
+    //fprintf (stderr, "searching4 %s\n", dir);
     SNPRINTF(&filename[0], len, "%s%s", dir,
              DIR_SEPARATOR_STRING DEVICE_FILE_NAME);
     pic_file = fopen(filename, "rt");

@@ -5,7 +5,7 @@ INSTALL_DIR = ../bin
 srcdir = .
 
 CC = $(SDCC_BASE)/bin/sdcc
-LIB = /e/tools/pic/gputils-0.14.1/gputils/gplib.exe
+LIB = gplib
 CP = cp
 RM = rm -f
 RMDIR = rmdir

@@ -25,7 +25,8 @@ void main()
 
 	while(1)
 	{
-		PORTA=~PORTA;       
+		PORTA=~PORTA;
+		RB0 = ~RB0;       
 	}    
 }
 

@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
-; Version 3.2.0 #8004 (Aug 18 2017) (MINGW32)
-; This file was generated Fri Aug 18 08:25:24 2017
+; Version 3.2.0 #8004 (Aug 21 2017) (MINGW32)
+; This file was generated Mon Aug 21 17:16:44 2017
 ;--------------------------------------------------------
 ; PIC port for the 14-bit core
 ;--------------------------------------------------------
@@ -181,11 +181,14 @@ _main	;Function start
 	MOVWF	_PORTA
 ;; BANKOPT3 drop assumptions: PCI with label or call found
 _00114_DS_
-;	.line	28; "main.c"	PORTA=~PORTA;       
+;	.line	28; "main.c"	PORTA=~PORTA;
 	BANKSEL	_PORTA
 	COMF	_PORTA,W
 ;; BANKOPT2 BANKSEL dropped; _PORTA present in same bank as _PORTA
 	MOVWF	_PORTA
+;; BANKOPT2 BANKSEL dropped; _PORTBbits present in same bank as _PORTA
+;	.line	29; "main.c"	RB0 = ~RB0;       
+	BSF	_PORTBbits,0
 	GOTO	_00114_DS_
 	RETURN	
 ; exit point of _main
@@ -226,6 +229,6 @@ _00108_DS_
 
 
 ;	code size estimation:
-;	   18+    6 =    24 instructions (   60 byte)
+;	   19+    6 =    25 instructions (   62 byte)
 
 	end

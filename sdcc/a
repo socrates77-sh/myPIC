@@ -1,0 +1,160 @@
+make -C support/librarian
+make[1]: Entering directory `/e/tools/pic/sdcc/support/librarian'
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I../.. -I./../../support/util -I. -c sdcclib.c -o sdcclib.o
+gcc  -o ../../bin/sdcclib.exe sdcclib.o
+make[1]: Leaving directory `/e/tools/pic/sdcc/support/librarian'
+for lib in support/makebin support/cpp; do make -C $lib; done
+make[1]: Entering directory `/e/tools/pic/sdcc/support/makebin'
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I../.. -I./../../support/util -I.  -c -o makebin.o makebin.c
+mkdir -p ../../bin
+gcc  -o ../../bin/makebin.exe makebin.o 
+make[1]: Leaving directory `/e/tools/pic/sdcc/support/makebin'
+make[1]: Entering directory `/e/tools/pic/sdcc/support/cpp'
+gawk -f ./opt-gather.awk ./sdcpp.opt  > tmp-optionlist
+/bin/sh ./move-if-change tmp-optionlist optionlist
+echo timestamp > s-options
+gawk -f ./opt-functions.awk -f ./opth-gen.awk \
+	       < optionlist > tmp-options.h
+/bin/sh ./move-if-change tmp-options.h options.h
+echo timestamp > s-options-h
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. sdcpp.c -o sdcpp.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. sdcpp-opts.c -o sdcpp-opts.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. sdcpp-diagnostic.c -o sdcpp-diagnostic.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. c-ppoutput.c -o c-ppoutput.o
+gcc    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. \
+	  -DGCC_INCLUDE_DIR=\"/include\" -DGPLUSPLUS_INCLUDE_DIR=\"\" -DGPLUSPLUS_TOOL_INCLUDE_DIR=\"/\" -DGPLUSPLUS_BACKWARD_INCLUDE_DIR=\"/backward\" -DLOCAL_INCLUDE_DIR=\"/usr/local/include\" -DCROSS_INCLUDE_DIR=\"/sys-include\" -DTOOL_INCLUDE_DIR=\"/include\" \
+	  -c ./cppdefault.c
+gcc    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. \
+	-DPREFIX=\"/usr/local\" \
+	  -c ./prefix.c
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. version.c -o version.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. opts.c -o opts.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. opts-common.c -o opts-common.o
+gawk -f ./opt-functions.awk -f ./optc-gen.awk \
+	       -v header_name="config.h system.h options.h" < optionlist > options.c
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. options.c -o options.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. c-incpath.c -o c-incpath.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/alloca.c -o alloca.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/concat.c -o concat.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/fopen_unlocked.c -o fopen_unlocked.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/getpwd.c -o getpwd.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/hashtab.c -o hashtab.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/hex.c -o hex.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/lbasename.c -o lbasename.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/md5.c -o md5.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/obstack.c -o obstack.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/safe-ctype.c -o safe-ctype.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/splay-tree.c -o splay-tree.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/vasprintf.c -o vasprintf.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/xexit.c -o xexit.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/xmalloc.c -o xmalloc.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/xmemdup.c -o xmemdup.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/xstrdup.c -o xstrdup.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libiberty/xstrerror.c -o xstrerror.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/charset.c -o charset.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/directives.c -o directives.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/errors.c -o errors.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/expr.c -o expr.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/files.c -o files.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/identifiers.c -o identifiers.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/init.c -o init.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/lex.c -o lex.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/line-map.c -o line-map.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/macro.c -o macro.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/mkdeps.c -o mkdeps.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/symtab.c -o symtab.o
+gcc -c    -g -Wall   -DHAVE_CONFIG_H    -I. -I./libcpp -I./libcpp/include -I./libiberty -I. libcpp/traditional.c -o traditional.o
+rm -rf libcpp.a
+ar rc libcpp.a charset.o directives.o errors.o expr.o files.o identifiers.o init.o lex.o line-map.o macro.o mkdeps.o symtab.o traditional.o
+ranlib libcpp.a
+mkdir -p ../../bin/
+gcc    -g -Wall   -DHAVE_CONFIG_H  -o ../../bin/sdcpp.exe sdcpp.o sdcpp-opts.o sdcpp-diagnostic.o c-ppoutput.o cppdefault.o prefix.o version.o opts.o opts-common.o options.o c-incpath.o \
+	alloca.o concat.o fopen_unlocked.o getpwd.o hashtab.o hex.o lbasename.o md5.o obstack.o safe-ctype.o splay-tree.o vasprintf.o xexit.o xmalloc.o xmemdup.o xstrdup.o xstrerror.o libcpp.a 
+make[1]: Leaving directory `/e/tools/pic/sdcc/support/cpp'
+make -C src
+make[1]: Entering directory `/e/tools/pic/sdcc/src'
+gawk -f ./version.awk ../ChangeLog > version.h
+bison -y -d -v -o SDCCy.c SDCC.y
+flex -8 -f -t SDCC.lex >SDCClex.c
+gcc -MM  -I. -I.. -I./../support/util -I. -I. SDCCy.c SDCChasht.c SDCCmain.c SDCCsymt.c SDCCopt.c SDCCast.c SDCCmem.c SDCCval.c SDCCicode.c SDCCbitv.c SDCCset.c SDCClabel.c SDCCBBlock.c SDCCloop.c SDCCcse.c SDCCcflow.c SDCCdflow.c SDCClrange.c SDCCptropt.c SDCCpeeph.c SDCCglue.c SDCCasm.c SDCCmacro.c SDCCutil.c SDCCdebug.c cdbFile.c SDCCdwarf2.c SDCCerr.c SDCCsystem.c SDCCgen.c SDCClex.c ../support/util/NewAlloc.c ../support/util/dbuf.c ../support/util/dbuf_string.c ../support/util/findme.c SDCCnaddr.cc >Makefile.dep
+make[1]: Leaving directory `/e/tools/pic/sdcc/src'
+make[1]: Entering directory `/e/tools/pic/sdcc/src'
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c ../support/util/NewAlloc.c -o NewAlloc.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c ../support/util/dbuf.c -o dbuf.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c ../support/util/dbuf_string.c -o dbuf_string.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c ../support/util/findme.c -o findme.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCy.c -o SDCCy.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCChasht.c -o SDCChasht.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCmain.c -o SDCCmain.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCsymt.c -o SDCCsymt.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCopt.c -o SDCCopt.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCast.c -o SDCCast.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCmem.c -o SDCCmem.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCval.c -o SDCCval.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCicode.c -o SDCCicode.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCbitv.c -o SDCCbitv.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCset.c -o SDCCset.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCClabel.c -o SDCClabel.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCBBlock.c -o SDCCBBlock.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCloop.c -o SDCCloop.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCcse.c -o SDCCcse.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCcflow.c -o SDCCcflow.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCdflow.c -o SDCCdflow.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCClrange.c -o SDCClrange.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCptropt.c -o SDCCptropt.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCpeeph.c -o SDCCpeeph.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCglue.c -o SDCCglue.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCasm.c -o SDCCasm.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCmacro.c -o SDCCmacro.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCutil.c -o SDCCutil.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCdebug.c -o SDCCdebug.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c cdbFile.c -o cdbFile.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCdwarf2.c -o SDCCdwarf2.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCerr.c -o SDCCerr.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCsystem.c -o SDCCsystem.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCCgen.c -o SDCCgen.o
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I. -c SDCClex.c -o SDCClex.o
+g++ -pipe -ggdb -g -Wall -Wno-parentheses  -I. -I.. -I./../support/util -I. -I.  -c -o SDCCnaddr.o SDCCnaddr.cc
+make -C pic14/
+make[2]: Entering directory `/e/tools/pic/sdcc/src/pic14'
+gcc -MM -I./.. -I.. -I. -I../.. -I./../../support/util -I. device.c gen.c genarith.c glue.c main.c pcode.c pcodeflow.c pcodepeep.c pcoderegs.c ralloc.c >Makefile.dep
+make[2]: Leaving directory `/e/tools/pic/sdcc/src/pic14'
+make[2]: Entering directory `/e/tools/pic/sdcc/src/pic14'
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o device.o device.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o gen.o gen.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o genarith.o genarith.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o glue.o glue.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o main.o main.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o pcode.o pcode.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o pcodeflow.o pcodeflow.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o pcodepeep.o pcodepeep.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o pcoderegs.o pcoderegs.c
+gcc -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -I./.. -I.. -I. -I../.. -I./../../support/util -I.  -c -o ralloc.o ralloc.c
+rm -f port.a
+ar rc port.a device.o gen.o genarith.o glue.o main.o pcode.o pcodeflow.o pcodepeep.o pcoderegs.o ralloc.o 
+ranlib port.a
+make[2]: Leaving directory `/e/tools/pic/sdcc/src/pic14'
+g++  -o ../bin/sdcc.exe NewAlloc.o dbuf.o dbuf_string.o findme.o SDCCy.o SDCChasht.o SDCCmain.o SDCCsymt.o SDCCopt.o SDCCast.o SDCCmem.o SDCCval.o SDCCicode.o SDCCbitv.o SDCCset.o SDCClabel.o SDCCBBlock.o SDCCloop.o SDCCcse.o SDCCcflow.o SDCCdflow.o SDCClrange.o SDCCptropt.o SDCCpeeph.o SDCCglue.o SDCCasm.o SDCCmacro.o SDCCutil.o SDCCdebug.o cdbFile.o SDCCdwarf2.o SDCCerr.o SDCCsystem.o SDCCgen.o SDCClex.o SDCCnaddr.o pic14/port.a  -lm 
+make[1]: Leaving directory `/e/tools/pic/sdcc/src'
+make -C device/include
+make[1]: Entering directory `/e/tools/pic/sdcc/device/include'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/e/tools/pic/sdcc/device/include'
+make -C device/non-free/include
+make[1]: Entering directory `/e/tools/pic/sdcc/device/non-free/include'
+make[1]: Nothing to be done for `all'.
+make[1]: Leaving directory `/e/tools/pic/sdcc/device/non-free/include'
+for as in ; do make -C $as ; done
+make -C sdas/linksrc 
+make[1]: Entering directory `/e/tools/pic/sdcc/sdas/linksrc'
+gcc -MM -I.. -I./..  -I. -I../.. -I./../../support/util -I. lk_readnl.c lkaomf51.c lkar.c lkarea.c lkdata.c lkelf.c lkeval.c lkhead.c lklex.c lklib.c lklibr.c lklist.c lkmain.c lkmem.c lknoice.c lkout.c lkrel.c lkrloc.c lkrloc3.c lks19.c lksdcclib.c lksym.c sdld.c lksdcdb.c lkbank.c ../asxxsrc/strcmpi.c >Makefile.dep
+make[1]: Leaving directory `/e/tools/pic/sdcc/sdas/linksrc'
+make[1]: Entering directory `/e/tools/pic/sdcc/sdas/linksrc'
+mkdir -p obj
+touch obj/.stamp
+gcc -c -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -DINDEXLIB -DUNIX -I. -I. -fms-extensions -pipe -ggdb -g -Wall -Wno-parentheses -o obj/lk_readnl.o lk_readnl.c
+make[1]: Leaving directory `/e/tools/pic/sdcc/sdas/linksrc'
+make -C support/scripts
+make[1]: Entering directory `/e/tools/pic/sdcc/support/scripts'
+cp ./as2gbmap.py ../../bin/as2gbmap && chmod +x ../../bin/as2gbmap
+make[1]: Leaving directory `/e/tools/pic/sdcc/support/scripts'

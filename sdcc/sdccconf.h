@@ -108,7 +108,7 @@
 #define OPT_DISABLE_AVR 1
 
 /* XXX */
-#define OPT_DISABLE_DEVICE_LIB 0
+#define OPT_DISABLE_DEVICE_LIB 1
 
 /* XXX */
 #define OPT_DISABLE_DS390 1
@@ -129,10 +129,10 @@
 #define OPT_DISABLE_PACKIHX 1
 
 /* XXX */
-#define OPT_DISABLE_PIC14 1
+#define OPT_DISABLE_PIC14 0
 
 /* XXX */
-#define OPT_DISABLE_PIC16 0
+#define OPT_DISABLE_PIC16 1
 
 /* XXX */
 #define OPT_DISABLE_R2K 1

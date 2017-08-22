@@ -1,7 +1,3 @@
-export GPASM=/e/tools/pic/gputils-0.14.1/gpasm/gpasm.exe
-export GPLINK=/e/tools/pic/gputils-0.14.1/gplink/gplink.exe
-export GPLIB=/e/tools/pic/gputils-0.14.1/gputils/gplib.exe
-
 configure \
 CFLAGS=-g \
 CXXFLAGS=-g \
@@ -20,7 +16,8 @@ sdccconf_h_dir_separator='\\' \
 --disable-packihx \
 --disable-sdbinutils \
 --disable-sdcdb \
---disable-pic14-port \
+--disable-pic16-port \
+--disable-device-lib \
 --disable-ucsim
 
 #--disable-pic14-port \

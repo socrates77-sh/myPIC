@@ -70,9 +70,9 @@ LIBFLAGS += -c
 ### programs to use
 CPP	= $(top_builddir)/../../../bin/sdcpp
 CC	= $(top_builddir)/../../../bin/sdcc
-AS	= /e/tools/pic/gputils-0.14.1/gpasm/gpasm.exe
-LD	= /e/tools/pic/gputils-0.14.1/gplink/gplink.exe
-LIB	= /e/tools/pic/gputils-0.14.1/gputils/gplib.exe
+AS	= gpasm
+LD	= gplink
+LIB	= gplib
 
 SED	?= sed
 GREP	?= /bin/grep -E
