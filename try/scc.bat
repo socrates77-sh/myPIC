@@ -7,7 +7,8 @@ PATH=%SDCC_HOME%;%SDCC_HOME%\bin;%GPUTILS_HOME%\gpasm;%GPUTILS_HOME%\gplink
 set GPASM_ARG=-p p16f87 -I"%GPUTILS_HOME%\header"
 set GPLINK_ARG=-I"%GPUTILS_HOME%\lkr" -s 16f87.lkr
 
-set SDCC_ARG=-V -S --verbose --use-non-free -mpic14 -p16f87 ^
+set SDCC_ARG= ^
+-V -S --verbose --use-non-free -mpic14 -p16f87 ^
 -I"%SDCC_HOME%\device\include\pic14" ^
 -I"%SDCC_HOME%\device\non-free\include\pic14" ^
 -Wa"-I%GPUTILS_HOME%\header" ^

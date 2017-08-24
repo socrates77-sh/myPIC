@@ -9250,7 +9250,7 @@ sdcc ${VERSION} is now configured for
     hc08                ${enable_hc08_port}
     s08                 ${enable_s08_port}
     mcs51               ${enable_mcs51_port}
-    mc30               ${enable_mc30_port}
+    mc30                ${enable_mc30_port}
     pic14               ${enable_pic14_port}
     pic16               ${enable_pic16_port}
     xa51                ${enable_xa51_port}
@@ -9316,7 +9316,7 @@ sdcc ${VERSION} is now configured for
     hc08                ${enable_hc08_port}
     s08                 ${enable_s08_port}
     mcs51               ${enable_mcs51_port}
-    mc30               ${enable_mc30_port}
+    mc30                ${enable_mc30_port}
     pic14               ${enable_pic14_port}
     pic16               ${enable_pic16_port}
     xa51                ${enable_xa51_port}

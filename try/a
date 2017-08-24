@@ -1,0 +1,8 @@
+
+E:\tools\pic\try>sdcc  -V -S --verbose --use-non-free -mpic14 -p16f87 -I"e:\tools\pic\sdcc\device\include\pic14" -I"e:\tools\pic\sdcc\device\non-free\include\pic14" -Wa"-Ie:\tools\pic\gputils-0.14.1\header" -Wl"-se:\tools\pic\gputils-0.14.1\lkr\16f87.lkr" main.c 
+Processor: 16f87
+Using devices from e:\tools\pic\sdcc\device\include\pic14\pic14devices.txt.
+sdcc: Calling preprocessor...
++ e:\tools\pic\sdcc\bin\sdcpp.exe -nostdinc -Wall -Ie:\\tools\\pic\\sdcc\\device\\include\\pic14 -Ie:\\tools\\pic\\sdcc\\device\\non-free\\include\\pic14 -D__SDCC_PROCESSOR="16f87" -DSDCC_PROCESSOR="16f87" -D__SDCC_PIC16F87 -obj-ext=.o -D__SDCC_USE_NON_FREE -DSDCC_USE_NON_FREE -D__SDCC=3_2_0 -DSDCC=320 -D__SDCC_REVISION=8004 -DSDCC_REVISION=8004 -D__SDCC_pic14 -DSDCC_pic14 -D__pic14 -D__STDC_NO_COMPLEX__ -D__STDC_NO_THREADS__ -D__STDC_NO_ATOMICS__ -D__STDC_NO_VLA__ -isystem "e:\tools\pic\sdcc\bin\..\share\sdcc\include\pic14" -isystem "e:\tools\pic\sdcc\share\sdcc\include\pic14" -isystem "e:\tools\pic\sdcc\bin\..\share\sdcc\include" -isystem "e:\tools\pic\sdcc\share\sdcc\include" -isystem "e:\tools\pic\sdcc\bin\..\share\sdcc\non-free\include\pic14" -isystem "e:\tools\pic\sdcc\share\sdcc\non-free\include\pic14" -isystem "e:\tools\pic\sdcc\bin\..\share\sdcc\non-free\include" -isystem "e:\tools\pic\sdcc\share\sdcc\non-free\include"  "main.c" 
+sdcc: Generating code...
+main.c:29: warning 180: using ~ on bit/bool/unsigned char variables can give unexpected results due to promotion to int

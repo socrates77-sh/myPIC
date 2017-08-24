@@ -621,7 +621,7 @@ configure:4843: $? = 0
 configure:4843: result: yes
 configure:4843: checking for strsignal
 configure:4843: gcc -o conftest.exe -g   conftest.c  >&5
-C:\Users\SINOMC~1\AppData\Local\Temp\cccGsjQG.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccopfk1m.o: In function `main':
 e:\tools\pic\sdcc\support\cpp/conftest.c:76: undefined reference to `strsignal'
 collect2.exe: error: ld returned 1 exit status
 configure:4843: $? = 1
@@ -722,7 +722,7 @@ configure:4843: $? = 0
 configure:4843: result: yes
 configure:4843: checking for lstat
 configure:4843: gcc -o conftest.exe -g   conftest.c  >&5
-C:\Users\SINOMC~1\AppData\Local\Temp\cciDF6V1.o: In function `main':
+C:\Users\SINOMC~1\AppData\Local\Temp\ccuHYHq0.o: In function `main':
 e:\tools\pic\sdcc\support\cpp/conftest.c:78: undefined reference to `lstat'
 collect2.exe: error: ld returned 1 exit status
 configure:4843: $? = 1
@@ -1083,7 +1083,7 @@ configure: failed program was:
 |   int fd;
 |   struct stat st;
 | 
-|   fd = open("conftestdata956", O_RDONLY);
+|   fd = open("conftestdata5292", O_RDONLY);
 |   if (fd < 0)
 |     exit(1);
 | 
