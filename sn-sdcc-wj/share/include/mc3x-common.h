@@ -1,5 +1,5 @@
-#ifndef __MC30-COMMON_H
-#define __MC30-COMMON_H
+#ifndef __MC30_COMMON_H
+#define __MC30_COMMON_H
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
